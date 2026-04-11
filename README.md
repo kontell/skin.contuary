@@ -7,4 +7,4 @@ Simple Mod of Kodi Default Skin (Estuary)
 
 &nbsp;
 
-[Screenshot\](Screenshot.png)
+![Screenshot\](Screenshot.png)
