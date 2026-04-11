@@ -1,0 +1,55 @@
+[B]1.2.2[/B]
+• Remove failed workarounds for Kodi Piers black screen bug (xbmc/xbmc#27805)
+
+[B]1.2.1[/B]
+• Version bump to test upgrade path
+
+[B]1.2.0[/B]
+• Added KodiSeerr request button to embuary info dialog for items not in library
+• Added embuary info dialog override (script-embuary-video.xml)
+• Default color scheme changed to concrete
+
+[B]0.8.5[/B]
+• Updated language files from Transifex
+
+[B]0.8.3[/B]
+• Updated language files from Transifex
+
+[B]0.8.2[/B]
+• Updated language files from Transifex
+
+[B]0.8.1[/B]
+• Updated language files from Transifex
+
+[B]0.7.13[/B]
+• Updated language files from Transifex
+
+[B]0.7.12[/B]
+• Updated language files from Transifex
+
+[B]0.7.11[/B]
+• Updated language files from Transifex
+
+[B]0.7.10[/B]
+• Updated language files from Transifex
+
+[B]0.7.8[/B]
+• Updated language files from Transifex
+
+[B]0.7.7[/B]
+• Updated language files from Transifex
+
+[B]0.7.3[/B]
+• Updated language files from Transifex
+
+[B]0.7.1[/B]
+• Updated language files from Transifex
+
+[B]0.6.2[/B]
+• Updated language files from Transifex
+
+[B]0.6.1[/B]
+• Updated language files from Transifex
+
+﻿[B]0.0.1[/B]
+• Initial commit

@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<addon id="skin.contuary" version="1.2.2" name="Contuary" provider-name="Kontell">
+	<requires>
+		<import addon="xbmc.gui" version="5.17.0"/>
+	</requires>
+	<extension point="xbmc.gui.skin" debugging="false">
+		<res width="1920" height="1440" aspect="4:3" default="false" folder="xml" />
+		<res width="1920" height="1280" aspect="3:2" default="false" folder="xml" />
+		<res width="1920" height="1200" aspect="16:10" default="false" folder="xml" />
+		<res width="2040" height="1080" aspect="17:9" default="false" folder="xml" />
+		<res width="1920" height="1080" aspect="16:9" default="true" folder="xml" />
+		<res width="1280" height="720" aspect="16:9" default="false" folder="xml" />
+	</extension>
+	<extension point="xbmc.addon.metadata">
+		<summary lang="en_GB">Contuary - A light mod of Estuary for Kodi Omega</summary>
+		<description lang="en_GB">Contuary is a lightly modified version of the default Estuary skin. Based on Estuary for Kodi 21 (Omega).</description>
+		<platform>all</platform>
+		<license>GPL-2.0-or-later</license>
+		<assets>
+			<icon>resources/icon.png</icon>
+			<fanart>resources/fanart.jpg</fanart>
+			<screenshot>Screenshot.png</screenshot>
+		</assets>
+	</extension>
+</addon>
