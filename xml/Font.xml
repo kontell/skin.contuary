@@ -155,7 +155,13 @@
 			<filename>NotoMono-Regular.ttf</filename>
 			<size>26</size>
 		</font>
-		<!-- Weather-screen fonts: ~0.95× of the matching non-weather font -->
+		<!-- Home-widget fonts: ~0.945× of the matching non-home font -->
+		<font>
+			<name>font10_w</name>
+			<filename>NotoSans-Regular.ttf</filename>
+			<size>22</size>
+			<style>lighten</style>
+		</font>
 		<font>
 			<name>font12_w</name>
 			<filename>NotoSans-Regular.ttf</filename>
@@ -175,11 +181,30 @@
 			<style>lighten</style>
 		</font>
 		<font>
+			<name>font25_narrow_w</name>
+			<filename>NotoSans-Regular.ttf</filename>
+			<size>24</size>
+			<style>lighten</style>
+			<linespacing>0.8</linespacing>
+		</font>
+		<font>
+			<name>font27_w</name>
+			<filename>NotoSans-Regular.ttf</filename>
+			<size>26</size>
+			<style>lighten</style>
+		</font>
+		<font>
 			<name>font27_narrow_w</name>
 			<filename>NotoSans-Regular.ttf</filename>
 			<size>26</size>
 			<style>lighten</style>
 			<linespacing>0.8</linespacing>
+		</font>
+		<font>
+			<name>font20_title_w</name>
+			<filename>NotoSans-Regular.ttf</filename>
+			<size>19</size>
+			<style>bold</style>
 		</font>
 		<font>
 			<name>font30_title_w</name>
@@ -333,7 +358,12 @@
 			<filename>arial.ttf</filename>
 			<size>26</size>
 		</font>
-		<!-- Weather-screen fonts: ~0.95× of the matching non-weather font -->
+		<!-- Home-widget fonts: ~0.945× of the matching non-home font -->
+		<font>
+			<name>font10_w</name>
+			<filename>arial.ttf</filename>
+			<size>17</size>
+		</font>
 		<font>
 			<name>font12_w</name>
 			<filename>arial.ttf</filename>
@@ -350,10 +380,27 @@
 			<size>28</size>
 		</font>
 		<font>
+			<name>font25_narrow_w</name>
+			<filename>arial.ttf</filename>
+			<size>24</size>
+			<linespacing>0.8</linespacing>
+		</font>
+		<font>
+			<name>font27_w</name>
+			<filename>arial.ttf</filename>
+			<size>26</size>
+		</font>
+		<font>
 			<name>font27_narrow_w</name>
 			<filename>arial.ttf</filename>
 			<size>26</size>
 			<linespacing>0.8</linespacing>
+		</font>
+		<font>
+			<name>font20_title_w</name>
+			<filename>arial.ttf</filename>
+			<size>19</size>
+			<style>bold</style>
 		</font>
 		<font>
 			<name>font30_title_w</name>

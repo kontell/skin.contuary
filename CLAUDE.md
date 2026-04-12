@@ -64,9 +64,10 @@ the card-row right edge (`right=25` matches the current card width).
 
 ## Font conventions
 
-Weather-screen text uses `_w`-suffixed font variants
-(`font12_w`, `font13_w`, `font14_w`, `font27_narrow_w`,
-`font30_title_w`), scaled ~0.95× of their non-suffixed originals in
+Home-widget text (all per-category widgets) uses `_w`-suffixed font
+variants (`font10_w`, `font12_w`, `font13_w`, `font14_w`,
+`font25_narrow_w`, `font27_w`, `font27_narrow_w`, `font20_title_w`,
+`font30_title_w`), scaled ~0.945× of their non-suffixed originals in
 both fontsets. Rule of thumb: if you shrink the cards, shrink the
 text the same amount; introduce a new `*_w` variant rather than
 editing the shared font.
@@ -74,3 +75,40 @@ editing the shared font.
 If another sub-area of the skin needs its own scaled fonts, follow the
 same pattern with a different suffix (e.g. `_small`) rather than
 reusing `_w`.
+
+## Scaling other home widgets to 6 cards across
+
+The widget panel inside group 2000 spans 1850 skin px. To fit 6 slots
+evenly with ≈25 px right margin matching the weather row, each slot is
+scaled by 0.945 from the original card width. Widgets covered:
+
+- `WidgetListPoster` (movies, tvshows posters)
+- `WidgetListEpisodes` (recently added episodes)
+- `WidgetListSquare` (music albums)
+- `WidgetListCategories` (inline — categories/genre rows, addons)
+- `WidgetListPVR` (live TV channel tiles)
+
+For each, update the outer slot `width`, `itemlayout`/`focusedlayout`
+`height`, inner `<group>` `<left>` (to centre the card in its slot),
+focus `<effect type="zoom">` `center="x,y"`, and any hard-coded
+dimensions inside inline layouts.
+
+## Forking shared InfoWall layouts
+
+`WidgetListPoster`, `WidgetListEpisodes`, `WidgetListSquare` reference
+layout includes defined in `View_54_InfoWall.xml` that are *also* used
+by the full-screen View 54 (movies/tvshows/episodes/music browser).
+To scale the home variants without touching View 54, fork the layout:
+add `InfoWallMovieLayoutHome`, `InfoWallEpisodeLayoutHome`,
+`InfoWallMusicLayoutHome` as new includes in that file and point the
+home widget include at the `*Home` variant. All internal dimensions
+(bg width/height/left/top, textbox, overlay, progress, rating offsets,
+bordersize) must be scaled together — they are hard-coded, not
+derived from the slot width.
+
+## Left-aligning widget category labels
+
+`CategoryLabel` has a `posx` parameter (default 55). For home widgets,
+pass `posx=82` so the label lines up with the first card's left edge
+within the widget slot. Also pass `font=font13_w` for the scaled
+variant.
