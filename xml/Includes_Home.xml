@@ -12,9 +12,10 @@
 	<include name="CategoryLabel">
 		<param name="visible">true</param>
 		<param name="item_treshold">0</param>
+		<param name="posx">55</param>
 		<definition>
 			<control type="label" id="$PARAM[list_id]666">
-				<left>55</left>
+				<left>$PARAM[posx]</left>
 				<top>80</top>
 				<width>900</width>
 				<height>90</height>
@@ -626,123 +627,124 @@
 		</definition>
 	</include>
 	<include name="WeatherWidget">
-		<param name="width">266</param>
+		<param name="width">253</param>
 		<definition>
 			<include content="CategoryLabel">
 				<param name="label">$PARAM[widget_header]</param>
 				<param name="list_id" value="$PARAM[list_id]"/>
 				<param name="visible" value="$PARAM[visible]"/>
+				<param name="posx" value="82"/>
 			</include>
 			<control type="panel" id="$PARAM[list_id]">
 				<left>0</left>
 				<top>90</top>
 				<right>0</right>
-				<height>396</height>
+				<height>377</height>
 				<include content="WidgetListCommon">
 					<param name="list_id" value="$PARAM[list_id]"/>
 				</include>
 				<visible>$PARAM[visible]</visible>
-				<itemlayout width="$PARAM[width]" height="320">
+				<itemlayout width="$PARAM[width]" height="304">
 					<control type="group">
-						<left>70</left>
+						<left>66</left>
 						<control type="image">
 							<left>0</left>
-							<top>20</top>
-							<width>254</width>
-							<height>280</height>
+							<top>19</top>
+							<width>241</width>
+							<height>266</height>
 							<texture>dialogs/dialog-bg-nobo.png</texture>
 							<bordertexture border="21" infill="false">overlays/shadow.png</bordertexture>
-							<bordersize>20</bordersize>
+							<bordersize>19</bordersize>
 						</control>
 						<control type="image">
-							<left>60</left>
-							<top>108</top>
-							<width>130</width>
-							<height>130</height>
+							<left>57</left>
+							<top>103</top>
+							<width>124</width>
+							<height>124</height>
 							<texture>$INFO[ListItem.Icon]</texture>
 						</control>
 						<control type="label">
-							<left>15</left>
-							<top>45</top>
+							<left>14</left>
+							<top>43</top>
 							<align>center</align>
 							<label>$INFO[ListItem.Label]</label>
-							<width>230</width>
+							<width>219</width>
 						</control>
 						<control type="label">
-							<left>15</left>
-							<top>78</top>
+							<left>14</left>
+							<top>74</top>
 							<align>center</align>
 							<font>font12</font>
 							<label>$INFO[ListItem.Property(ShortDate)]</label>
-							<width>230</width>
+							<width>219</width>
 						</control>
 						<control type="label">
-							<left>15</left>
-							<top>236</top>
+							<left>14</left>
+							<top>225</top>
 							<align>center</align>
 							<label>$INFO[ListItem.Label2]</label>
 							<font>font12</font>
-							<width>230</width>
+							<width>219</width>
 						</control>
 					</control>
 				</itemlayout>
-				<focusedlayout width="$PARAM[width]" height="400">
+				<focusedlayout width="$PARAM[width]" height="380">
 					<control type="group">
-						<left>70</left>
+						<left>66</left>
 						<depth>DepthContentPopout</depth>
 						<animation type="Focus">
-							<effect type="zoom" start="100" end="110" time="200" tween="sine" easing="inout" center="180,140" />
+							<effect type="zoom" start="100" end="110" time="200" tween="sine" easing="inout" center="171,133" />
 						</animation>
 						<animation type="Unfocus">
-							<effect type="zoom" start="110" end="100" time="200" tween="sine" easing="inout" center="180,140" />
+							<effect type="zoom" start="110" end="100" time="200" tween="sine" easing="inout" center="171,133" />
 						</animation>
 						<control type="image">
 							<left>0</left>
-							<top>20</top>
-							<width>254</width>
-							<height>280</height>
+							<top>19</top>
+							<width>241</width>
+							<height>266</height>
 							<texture>dialogs/dialog-bg-nobo.png</texture>
 							<bordertexture border="21" infill="false">overlays/shadow.png</bordertexture>
-							<bordersize>20</bordersize>
+							<bordersize>19</bordersize>
 						</control>
 						<control type="image">
 							<left>0</left>
-							<top>20</top>
-							<width>254</width>
-							<height>280</height>
+							<top>19</top>
+							<width>241</width>
+							<height>266</height>
 							<texture colordiffuse="button_focus">colors/grey.png</texture>
-							<bordersize>20</bordersize>
+							<bordersize>19</bordersize>
 							<include>Animation_FocusTextureFade</include>
 						</control>
 						<control type="image">
-							<left>60</left>
-							<top>108</top>
-							<width>130</width>
-							<height>130</height>
+							<left>57</left>
+							<top>103</top>
+							<width>124</width>
+							<height>124</height>
 							<texture>$INFO[ListItem.Icon]</texture>
 						</control>
 						<control type="label">
-							<left>15</left>
-							<top>45</top>
+							<left>14</left>
+							<top>43</top>
 							<align>center</align>
 							<label>$INFO[ListItem.Label]</label>
-							<width>230</width>
+							<width>219</width>
 						</control>
 						<control type="label">
-							<left>15</left>
-							<top>78</top>
+							<left>14</left>
+							<top>74</top>
 							<align>center</align>
 							<font>font12</font>
 							<label>$INFO[ListItem.Property(ShortDate)]</label>
-							<width>230</width>
+							<width>219</width>
 						</control>
 						<control type="label">
-							<left>15</left>
-							<top>236</top>
+							<left>14</left>
+							<top>225</top>
 							<align>center</align>
 							<label>$INFO[ListItem.Label2]</label>
 							<font>font12</font>
-							<width>230</width>
+							<width>219</width>
 						</control>
 					</control>
 				</focusedlayout>

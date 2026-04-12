@@ -593,9 +593,9 @@
 						<control type="group" id="16678">
 							<description>Weather info</description>
 							<left>68</left>
-							<right>70</right>
+							<right>25</right>
 							<top>102</top>
-							<height>360</height>
+							<height>342</height>
 							<visible>!String.IsEmpty(Weather.plugin)</visible>
 							<control type="image">
 								<bottom>90</bottom>
