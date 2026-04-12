@@ -542,7 +542,7 @@
 				<top>110</top>
 				<width>160</width>
 				<height>63</height>
-				<font>font27_narrow</font>
+				<font>font27_narrow_w</font>
 				<align>center</align>
 				<aligny>center</aligny>
 				<label>$INFO[$PARAM[label]]</label>

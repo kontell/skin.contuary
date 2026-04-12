@@ -13,12 +13,14 @@
 		<param name="visible">true</param>
 		<param name="item_treshold">0</param>
 		<param name="posx">55</param>
+		<param name="font">font13</param>
 		<definition>
 			<control type="label" id="$PARAM[list_id]666">
 				<left>$PARAM[posx]</left>
 				<top>80</top>
 				<width>900</width>
 				<height>90</height>
+				<font>$PARAM[font]</font>
 				<label>$PARAM[label]</label>
 				<shadowcolor>text_shadow</shadowcolor>
 				<visible>$PARAM[visible]</visible>
@@ -634,6 +636,7 @@
 				<param name="list_id" value="$PARAM[list_id]"/>
 				<param name="visible" value="$PARAM[visible]"/>
 				<param name="posx" value="82"/>
+				<param name="font" value="font13_w"/>
 			</include>
 			<control type="panel" id="$PARAM[list_id]">
 				<left>0</left>
@@ -667,6 +670,7 @@
 							<left>14</left>
 							<top>43</top>
 							<align>center</align>
+							<font>font13_w</font>
 							<label>$INFO[ListItem.Label]</label>
 							<width>219</width>
 						</control>
@@ -674,7 +678,7 @@
 							<left>14</left>
 							<top>74</top>
 							<align>center</align>
-							<font>font12</font>
+							<font>font12_w</font>
 							<label>$INFO[ListItem.Property(ShortDate)]</label>
 							<width>219</width>
 						</control>
@@ -683,7 +687,7 @@
 							<top>225</top>
 							<align>center</align>
 							<label>$INFO[ListItem.Label2]</label>
-							<font>font12</font>
+							<font>font12_w</font>
 							<width>219</width>
 						</control>
 					</control>
@@ -727,6 +731,7 @@
 							<left>14</left>
 							<top>43</top>
 							<align>center</align>
+							<font>font13_w</font>
 							<label>$INFO[ListItem.Label]</label>
 							<width>219</width>
 						</control>
@@ -734,7 +739,7 @@
 							<left>14</left>
 							<top>74</top>
 							<align>center</align>
-							<font>font12</font>
+							<font>font12_w</font>
 							<label>$INFO[ListItem.Property(ShortDate)]</label>
 							<width>219</width>
 						</control>
@@ -743,7 +748,7 @@
 							<top>225</top>
 							<align>center</align>
 							<label>$INFO[ListItem.Label2]</label>
-							<font>font12</font>
+							<font>font12_w</font>
 							<width>219</width>
 						</control>
 					</control>

@@ -155,6 +155,38 @@
 			<filename>NotoMono-Regular.ttf</filename>
 			<size>26</size>
 		</font>
+		<!-- Weather-screen fonts: ~0.95× of the matching non-weather font -->
+		<font>
+			<name>font12_w</name>
+			<filename>NotoSans-Regular.ttf</filename>
+			<size>24</size>
+			<style>lighten</style>
+		</font>
+		<font>
+			<name>font13_w</name>
+			<filename>NotoSans-Regular.ttf</filename>
+			<size>28</size>
+			<style>lighten</style>
+		</font>
+		<font>
+			<name>font14_w</name>
+			<filename>NotoSans-Regular.ttf</filename>
+			<size>31</size>
+			<style>lighten</style>
+		</font>
+		<font>
+			<name>font27_narrow_w</name>
+			<filename>NotoSans-Regular.ttf</filename>
+			<size>26</size>
+			<style>lighten</style>
+			<linespacing>0.8</linespacing>
+		</font>
+		<font>
+			<name>font30_title_w</name>
+			<filename>NotoSans-Regular.ttf</filename>
+			<size>28</size>
+			<style>bold</style>
+		</font>
 	</fontset>
 	<fontset id="Arial" idloc="31053">
 		<!-- Arial Font better for non English -->
@@ -300,6 +332,34 @@
 			<name>Mono26</name>
 			<filename>arial.ttf</filename>
 			<size>26</size>
+		</font>
+		<!-- Weather-screen fonts: ~0.95× of the matching non-weather font -->
+		<font>
+			<name>font12_w</name>
+			<filename>arial.ttf</filename>
+			<size>21</size>
+		</font>
+		<font>
+			<name>font13_w</name>
+			<filename>arial.ttf</filename>
+			<size>26</size>
+		</font>
+		<font>
+			<name>font14_w</name>
+			<filename>arial.ttf</filename>
+			<size>28</size>
+		</font>
+		<font>
+			<name>font27_narrow_w</name>
+			<filename>arial.ttf</filename>
+			<size>26</size>
+			<linespacing>0.8</linespacing>
+		</font>
+		<font>
+			<name>font30_title_w</name>
+			<filename>arial.ttf</filename>
+			<size>28</size>
+			<style>bold</style>
 		</font>
 	</fontset>
 </fonts>
