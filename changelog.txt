@@ -1,3 +1,9 @@
+[B]1.4.0[/B]
+• Home: hide Kodi vendor logo, align main menu focus highlight with icons
+• Home weather: scale 7-day forecast and hourly widgets to fit on screen, align labels to card edges, scale all text ~0.95x
+• Home widgets: scale movies / TV shows / music / live TV / add-ons / videos / favourites rows to 6 cards across evenly, with left-aligned labels and scaled text
+• Home music: prevent 7th album card from peeking on the right
+
 [B]1.2.2[/B]
 • Remove failed workarounds for Kodi Piers black screen bug (xbmc/xbmc#27805)
 
