@@ -871,9 +871,10 @@
 						<control type="group">
 							<animation effect="fade" start="100" end="0" time="0">UnFocus</animation>
 							<control type="image">
-								<left>0</left>
+								<!-- Highlight matched to icon bounds so it is flush with unfocused items. Original was left=0 width=462. -->
+								<left>-3</left>
 								<top>0</top>
-								<width>462</width>
+								<width>95</width>
 								<height>95</height>
 								<texture colordiffuse="button_focus">lists/focus.png</texture>
 								<animation effect="fade" start="100" end="0" time="0" condition="[!Control.HasFocus(9000) + !ControlGroup(700).HasFocus] | System.HasActiveModalDialog">Conditional</animation>
@@ -887,7 +888,8 @@
 								<animation effect="fade" start="0" end="100" time="300" reversible="false">Focus</animation>
 							</control>
 							<control type="image">
-								<left>0</left>
+								<!-- Dim overlay aligned to the same icon bounds so it stops at the same right edge as the highlight. Original was left=0 width=95. -->
+								<left>-3</left>
 								<top>0</top>
 								<width>95</width>
 								<height>95</height>
@@ -1122,6 +1124,7 @@
 			<include content="TopBar">
 				<param name="breadcrumbs_label" value="" />
 			</include>
+			<!-- Kodi vendor logo removed - reintroduced accidentally from upstream Estuary
 			<control type="group">
 				<depth>DepthBars</depth>
 				<animation effect="slide" end="0,-90" time="300" tween="sine" easing="inout" condition="$EXP[infodialog_active]">conditional</animation>
@@ -1138,6 +1141,7 @@
 					<texture>special://xbmc/media/vendor_logo.png</texture>
 				</control>
 			</control>
+			-->
 		</control>
 	</controls>
 </window>
