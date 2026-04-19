@@ -665,7 +665,7 @@
 					<visible>String.IsEqual(ListItem.DBtype,tvshow) | String.IsEqual(ListItem.DBtype,set) | String.IsEqual(ListItem.DBType,season)</visible>
 				</control>
 				<control type="image">
-					<left>240</left>
+					<left>266</left>
 					<top>370</top>
 					<width>23</width>
 					<height>23</height>
