@@ -563,8 +563,8 @@
 				<control type="image">
 					<left>14</left>
 					<top>-9</top>
-					<width>274</width>
-					<height>392</height>
+					<width>300</width>
+					<height>429</height>
 					<texture>dialogs/dialog-bg-nobo.png</texture>
 					<bordertexture border="21" infill="false">overlays/shadow.png</bordertexture>
 					<bordersize>19</bordersize>
@@ -572,8 +572,8 @@
 				<control type="image">
 					<left>14</left>
 					<top>-9</top>
-					<width>274</width>
-					<height>392</height>
+					<width>300</width>
+					<height>429</height>
 					<texture colordiffuse="button_focus">colors/grey.png</texture>
 					<bordersize>19</bordersize>
 					<visible>$PARAM[focused]</visible>
@@ -606,8 +606,8 @@
 				<control type="image">
 					<left>10</left>
 					<top>-13</top>
-					<width>282</width>
-					<height>400</height>
+					<width>309</width>
+					<height>438</height>
 					<texture colordiffuse="button_focus">colors/grey.png</texture>
 					<bordertexture border="21" infill="false">overlays/shadow.png</bordertexture>
 					<bordersize>19</bordersize>
@@ -617,8 +617,8 @@
 				<control type="image">
 					<left>14</left>
 					<top>-9</top>
-					<width>274</width>
-					<height>392</height>
+					<width>300</width>
+					<height>429</height>
 					<texture background="true">$INFO[ListItem.Art(poster)]</texture>
 					<aspectratio>scale</aspectratio>
 					<bordertexture border="21" infill="false">overlays/shadow.png</bordertexture>
@@ -629,15 +629,15 @@
 				<visible>String.IsEqual(ListItem.DBtype,tvshow) | String.IsEqual(ListItem.DBType,season) | ListItem.IsRecording | ListItem.HasReminder | ListItem.HasTimer | ListItem.IsCollection | ListItem.HasVideoVersions | ListItem.IsPlaying | ListItem.IsResumable | ListItem.HasVideoExtras | ListItem.HasArchive | Integer.IsGreater(ListItem.Playcount,0)</visible>
 				<control type="image">
 					<left>33</left>
-					<top>316</top>
-					<width>236</width>
-					<height>47</height>
+					<top>346</top>
+					<width>258</width>
+					<height>52</height>
 					<texture colordiffuse="CCFFFFFF">overlays/overlayfade.png</texture>
 					<visible>!String.IsEmpty(ListItem.Art(poster))</visible>
 				</control>
 				<control type="image">
 					<left>38</left>
-					<top>338</top>
+					<top>370</top>
 					<width>23</width>
 					<height>23</height>
 					<align>left</align>
@@ -646,7 +646,7 @@
 				</control>
 				<control type="image">
 					<left>66</left>
-					<top>338</top>
+					<top>370</top>
 					<width>23</width>
 					<height>23</height>
 					<align>left</align>
@@ -655,9 +655,9 @@
 					<visible>ListItem.HasVideoVersions + ListItem.HasVideoExtras</visible>
 				</control>
 				<control type="label">
-					<left>99</left>
-					<top>335</top>
-					<width>137</width>
+					<left>108</left>
+					<top>367</top>
+					<width>150</width>
 					<label>$VAR[WatchedStatusVar]</label>
 					<font>font20_title_w</font>
 					<shadowcolor>text_shadow</shadowcolor>
@@ -666,7 +666,7 @@
 				</control>
 				<control type="image">
 					<left>240</left>
-					<top>338</top>
+					<top>370</top>
 					<width>23</width>
 					<height>23</height>
 					<texture>$VAR[ItemStatusIconVar]</texture>
@@ -679,8 +679,8 @@
 			</control>
 			<control type="progress">
 				<left>33</left>
-				<top>345</top>
-				<width>236</width>
+				<top>378</top>
+				<width>258</width>
 				<height>1</height>
 				<texturebg></texturebg>
 				<midtexture colordiffuse="button_focus" border="3">progress/texturebg_alt_white.png</midtexture>

@@ -405,6 +405,7 @@
 							<param name="item_limit" value="15"/>
 							<param name="list_id" value="12200"/>
 							<param name="info_update" value="5000"/>
+							<param name="panel_height" value="426"/>
 						</include>
 						<include content="WidgetListPVR" condition="System.HasPVRAddon">
 							<param name="content_path" value="pvr://recordings/tv/active?view=flat"/>
@@ -434,6 +435,8 @@
 							<param name="widget_target" value="tvguide"/>
 							<param name="list_id" value="12500"/>
 							<param name="item_treshold" value="1"/>
+							<param name="label_top" value="100"/>
+							<param name="panel_top" value="120"/>
 						</include>
 						<include content="WidgetListPVR" condition="System.HasPVRAddon">
 							<param name="content_path" value="pvr://search/tv/savedsearches"/>

@@ -13,11 +13,12 @@
 		<param name="visible">true</param>
 		<param name="item_treshold">0</param>
 		<param name="posx">55</param>
+		<param name="posy">80</param>
 		<param name="font">font13</param>
 		<definition>
 			<control type="label" id="$PARAM[list_id]666">
 				<left>$PARAM[posx]</left>
-				<top>80</top>
+				<top>$PARAM[posy]</top>
 				<width>900</width>
 				<height>90</height>
 				<font>$PARAM[font]</font>
@@ -47,14 +48,14 @@
 				<top>115</top>
 				<visible>Integer.IsGreater(Container($PARAM[list_id]).NumItems,0) | Container($PARAM[list_id]).IsUpdating</visible>
 				<right>0</right>
-				<height>489</height>
+				<height>529</height>
 				<onclick condition="$PARAM[onclick_condition]">$PARAM[onclick_action]</onclick>
 				<include content="WidgetListCommon">
 					<param name="list_id" value="$PARAM[list_id]"/>
 				</include>
 				<itemlayout width="293" height="459">
 					<control type="group">
-						<left>64</left>
+						<left>52</left>
 						<top>9</top>
 						<include content="InfoWallMovieLayoutHome">
 							<param name="focused" value="false" />
@@ -64,7 +65,7 @@
 				<focusedlayout width="293" height="459">
 					<control type="group">
 						<depth>DepthContentPopout</depth>
-						<left>64</left>
+						<left>52</left>
 						<top>9</top>
 						<animation type="Focus">
 							<effect type="zoom" start="100" end="110" time="200" tween="sine" easing="inout" center="217,123" />
@@ -428,12 +429,16 @@
 		<param name="label2">$INFO[ListItem.Title]</param>
 		<param name="info_update">0</param>
 		<param name="browse_mode">auto</param>
+		<param name="panel_height">406</param>
+		<param name="label_top">80</param>
+		<param name="panel_top">120</param>
 		<definition>
 			<include content="CategoryLabel">
 				<param name="label">$PARAM[widget_header]</param>
 				<param name="list_id" value="$PARAM[list_id]"/>
 				<param name="item_treshold" value="$PARAM[item_treshold]"/>
 				<param name="posx" value="82"/>
+				<param name="posy" value="$PARAM[label_top]"/>
 				<param name="font" value="font13_w"/>
 			</include>
 			<include content="BusyListSpinner">
@@ -442,9 +447,9 @@
 			</include>
 			<control type="panel" id="$PARAM[list_id]">
 				<left>0</left>
-				<top>120</top>
+				<top>$PARAM[panel_top]</top>
 				<right>0</right>
-				<height>406</height>
+				<height>$PARAM[panel_height]</height>
 				<include content="WidgetListCommon">
 					<param name="list_id" value="$PARAM[list_id]"/>
 				</include>
