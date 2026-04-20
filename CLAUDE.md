@@ -5,18 +5,54 @@ editing the home screen. The iteration loop (kodi-remote / kodi-shot /
 kodi-diff / kodi-logtail / kodi-builtin) lives in Claude's auto-memory,
 not here.
 
+## Card-size variants
+
+The skin ships three layout templates targeting 16:9 displays:
+
+- `xml_large/` — 6 cards across (reference layout; scaling factor 1.0)
+- `xml_medium/` — 7 cards across (factor ~0.857)
+- `xml_small/` — 8 cards across (factor ~0.75)
+
+`addon.xml` `<res>` points at `xml/` — the **live render target**. It
+is a copy of whichever template is currently selected and is
+gitignored; populate it by running the variant switcher at least once
+after install. The companion script addon `script.skin.contuary`
+swaps templates at runtime:
+
+- `RunScript(script.skin.contuary,<variant>)` — apply a named variant
+- `RunScript(script.skin.contuary)` — cycle small → medium → large → small
+
+The script rmtree's `xml/`, copytree's `xml_<variant>/` into `xml/`,
+sets `Skin.String(card_size,<variant>)`, then `ReloadSkin()`. No Kodi
+restart needed.
+
+User-facing switches:
+- Settings → Skin settings → Card size (button id=708 in `SkinSettings.xml`)
+- F6 keyboard shortcut (developer-local, kept in `userdata/keymaps/keymap.xml`
+  — Kodi does not auto-load skin-shipped keymaps)
+
+**When editing layout**: modify the templates under `xml_<variant>/`,
+then let the script repopulate `xml/`. Direct edits to `xml/` are
+wiped on the next variant switch. The weather widget is intentionally
+identical across all three variants — don't scale it.
+
 ## Home-screen layout files
 
-- `xml/Home.xml` — window definition, per-category widget groups
+Paths below are relative to each template (`xml_large/`, `xml_medium/`,
+`xml_small/`); `xml/` mirrors whichever template is active.
+
+- `Home.xml` — window definition, per-category widget groups
   (movies=5000, tvshows=7000, weather=15000, …). Weather info top strip
-  is `<control type="group" id="16678">`.
-- `xml/Includes_Home.xml` — reusable widget templates: `CategoryLabel`,
+  is `<control type="group" id="16678">`. Main Menu Title label is
+  `id="2099"`, positioned at `<left>82</left>` inside group 2000 so it
+  aligns with the first card of the widget row below.
+- `Includes_Home.xml` — reusable widget templates: `CategoryLabel`,
   `WidgetListPoster`, `WidgetListEpisodes`, `WeatherWidget`, …
-- `xml/Includes.xml` — generic includes used from multiple windows,
+- `Includes.xml` — generic includes used from multiple windows,
   e.g. `WeatherIconHome` (only used on the home weather screen).
-- `xml/Font.xml` — two fontsets: `Default` (NotoSans) and `Arial`.
+- `Font.xml` — two fontsets: `Default` (NotoSans) and `Arial`.
   Changes that touch a font must be mirrored in both.
-- `xml/Defaults.xml` — element defaults. `<label>` default font is
+- `Defaults.xml` — element defaults. `<label>` default font is
   `font13`; relevant when a label has no explicit `<font>` tag.
 
 ## Position chain on the home widgets area
@@ -67,10 +103,14 @@ the card-row right edge (`right=25` matches the current card width).
 Home-widget text (all per-category widgets) uses `_w`-suffixed font
 variants (`font10_w`, `font12_w`, `font13_w`, `font14_w`,
 `font25_narrow_w`, `font27_w`, `font27_narrow_w`, `font20_title_w`,
-`font30_title_w`), scaled ~0.945× of their non-suffixed originals in
-both fontsets. Rule of thumb: if you shrink the cards, shrink the
-text the same amount; introduce a new `*_w` variant rather than
-editing the shared font.
+`font30_title_w`). In `xml_large/Font.xml` these are ~0.945× the
+non-suffixed originals; `xml_medium/` and `xml_small/` scale those
+`_w` sizes by the same factor as the cards (0.857 and 0.75
+respectively) so text shrinks in lockstep with slot width. The
+non-suffixed fonts are identical across variants.
+
+The Main Menu Title uses `font_mainmenu` (also scaled per variant:
+45 / 39 / 34 for large / medium / small).
 
 If another sub-area of the skin needs its own scaled fonts, follow the
 same pattern with a different suffix (e.g. `_small`) rather than
@@ -112,3 +152,16 @@ derived from the slot width.
 pass `posx=82` so the label lines up with the first card's left edge
 within the widget slot. Also pass `font=font13_w` for the scaled
 variant.
+
+## Main Menu Title and hidden Categories label
+
+The home screen shows the current main-menu section name (Movies,
+TV shows, …) as a heading above the Categories row. Implemented as a
+single label `id="2099"` inside group 2000, sourcing its text from
+`$INFO[Container(9000).ListItem.Label]`. Positioned at `<left>82</left>`
+to align with the first card.
+
+The stock Categories widget title is suppressed by passing
+`widget_header=""` at the `WidgetListCategories` call site (rather
+than `visible=false`, which would hide the card panel too). The
+CategoryLabel control still renders — it's just empty.

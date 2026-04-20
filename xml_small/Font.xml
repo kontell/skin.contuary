@@ -72,6 +72,12 @@
 			<style>lighten</style>
 		</font>
 		<font>
+			<name>font_mainmenu</name>
+			<filename>NotoSans-Regular.ttf</filename>
+			<size>34</size>
+			<style>lighten</style>
+		</font>
+		<font>
 			<name>font60</name>
 			<filename>NotoSans-Regular.ttf</filename>
 			<size>60</size>
@@ -159,57 +165,57 @@
 		<font>
 			<name>font10_w</name>
 			<filename>NotoSans-Regular.ttf</filename>
-			<size>22</size>
+			<size>16</size>
 			<style>lighten</style>
 		</font>
 		<font>
 			<name>font12_w</name>
 			<filename>NotoSans-Regular.ttf</filename>
-			<size>24</size>
+			<size>18</size>
 			<style>lighten</style>
 		</font>
 		<font>
 			<name>font13_w</name>
 			<filename>NotoSans-Regular.ttf</filename>
-			<size>28</size>
+			<size>21</size>
 			<style>lighten</style>
 		</font>
 		<font>
 			<name>font14_w</name>
 			<filename>NotoSans-Regular.ttf</filename>
-			<size>31</size>
+			<size>23</size>
 			<style>lighten</style>
 		</font>
 		<font>
 			<name>font25_narrow_w</name>
 			<filename>NotoSans-Regular.ttf</filename>
-			<size>24</size>
+			<size>18</size>
 			<style>lighten</style>
 			<linespacing>0.8</linespacing>
 		</font>
 		<font>
 			<name>font27_w</name>
 			<filename>NotoSans-Regular.ttf</filename>
-			<size>26</size>
+			<size>20</size>
 			<style>lighten</style>
 		</font>
 		<font>
 			<name>font27_narrow_w</name>
 			<filename>NotoSans-Regular.ttf</filename>
-			<size>26</size>
+			<size>20</size>
 			<style>lighten</style>
 			<linespacing>0.8</linespacing>
 		</font>
 		<font>
 			<name>font20_title_w</name>
 			<filename>NotoSans-Regular.ttf</filename>
-			<size>19</size>
+			<size>14</size>
 			<style>bold</style>
 		</font>
 		<font>
 			<name>font30_title_w</name>
 			<filename>NotoSans-Regular.ttf</filename>
-			<size>28</size>
+			<size>21</size>
 			<style>bold</style>
 		</font>
 	</fontset>
@@ -272,6 +278,11 @@
 			<name>font45</name>
 			<filename>arial.ttf</filename>
 			<size>45</size>
+		</font>
+		<font>
+			<name>font_mainmenu</name>
+			<filename>arial.ttf</filename>
+			<size>34</size>
 		</font>
 		<font>
 			<name>font60</name>
@@ -362,50 +373,50 @@
 		<font>
 			<name>font10_w</name>
 			<filename>arial.ttf</filename>
-			<size>17</size>
+			<size>13</size>
 		</font>
 		<font>
 			<name>font12_w</name>
 			<filename>arial.ttf</filename>
-			<size>21</size>
+			<size>16</size>
 		</font>
 		<font>
 			<name>font13_w</name>
 			<filename>arial.ttf</filename>
-			<size>26</size>
+			<size>20</size>
 		</font>
 		<font>
 			<name>font14_w</name>
 			<filename>arial.ttf</filename>
-			<size>28</size>
+			<size>21</size>
 		</font>
 		<font>
 			<name>font25_narrow_w</name>
 			<filename>arial.ttf</filename>
-			<size>24</size>
+			<size>18</size>
 			<linespacing>0.8</linespacing>
 		</font>
 		<font>
 			<name>font27_w</name>
 			<filename>arial.ttf</filename>
-			<size>26</size>
+			<size>20</size>
 		</font>
 		<font>
 			<name>font27_narrow_w</name>
 			<filename>arial.ttf</filename>
-			<size>26</size>
+			<size>20</size>
 			<linespacing>0.8</linespacing>
 		</font>
 		<font>
 			<name>font20_title_w</name>
 			<filename>arial.ttf</filename>
-			<size>19</size>
+			<size>14</size>
 			<style>bold</style>
 		</font>
 		<font>
 			<name>font30_title_w</name>
 			<filename>arial.ttf</filename>
-			<size>28</size>
+			<size>21</size>
 			<style>bold</style>
 		</font>
 	</fontset>

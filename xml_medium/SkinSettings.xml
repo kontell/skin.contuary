@@ -73,6 +73,16 @@
 					<onclick>Skin.SelectBool(31164, 31165|show_profilename, 31166|show_profileavatar, 16018|show_none)</onclick>
 					<label2>$VAR[ProfileIdentificationLabel2Var]</label2>
 				</control>
+				<control type="button" id="708">
+					<label>Card size</label>
+					<label2>$INFO[Skin.String(card_size)]</label2>
+					<include>DefaultSettingButton</include>
+					<enable>System.HasAddon(script.skin.contuary)</enable>
+					<onclick condition="String.IsEqual(Skin.String(card_size),small)">RunScript(script.skin.contuary,medium)</onclick>
+					<onclick condition="String.IsEqual(Skin.String(card_size),medium)">RunScript(script.skin.contuary,large)</onclick>
+					<onclick condition="String.IsEqual(Skin.String(card_size),large)">RunScript(script.skin.contuary,small)</onclick>
+					<onclick condition="String.IsEmpty(Skin.String(card_size))">RunScript(script.skin.contuary,medium)</onclick>
+				</control>
 			</control>
 			<control type="grouplist" id="600">
 				<top>133</top>

@@ -43,6 +43,15 @@
 					<effect type="slide" end="0,20" time="180" tween="sine" delay="80" />
 				</animation>
 				<include>OpenClose_Right</include>
+				<control type="label" id="2099">
+					<top>20</top>
+					<left>82</left>
+					<width>1800</width>
+					<height>60</height>
+					<font>font_mainmenu</font>
+					<label>$INFO[Container(9000).ListItem.Label]</label>
+					<shadowcolor>text_shadow</shadowcolor>
+				</control>
 				<control type="group" id="5000">
 					<visible>String.IsEqual(Container(9000).ListItem.Property(id),movies)</visible>
 					<include content="Visible_Right_Delayed">
@@ -54,7 +63,7 @@
 						<include content="WidgetListCategories" condition="Library.HasContent(movies) + !Skin.HasSetting(home_no_categories_widget)">
 							<param name="content_path" value="library://video/movies/"/>
 							<param name="additional_movie_items" value="true"/>
-							<param name="widget_header" value="$LOCALIZE[31148]"/>
+							<param name="widget_header" value=""/>
 							<param name="widget_target" value="videos"/>
 							<param name="list_id" value="5900"/>
 						</include>
@@ -89,7 +98,7 @@
 							<param name="widget_target" value="videos"/>
 							<param name="list_id" value="5500"/>
 							<param name="icon" value="$VAR[WidgetGenreIconVar]"/>
-							<param name="icon_height" value="70"/>
+							<param name="icon_height" value="60"/>
 						</include>
 						<include content="WidgetListPoster" condition="Library.HasContent(movies)">
 							<param name="content_path" value="videodb://movies/sets/"/>
@@ -123,7 +132,7 @@
 						<include content="WidgetListCategories" condition="Library.HasContent(tvshows) + !Skin.HasSetting(home_no_categories_widget)">
 							<param name="content_path" value="library://video/tvshows/"/>
 							<param name="additional_tvshow_items" value="true"/>
-							<param name="widget_header" value="$LOCALIZE[31148]"/>
+							<param name="widget_header" value=""/>
 							<param name="widget_target" value="videos"/>
 							<param name="list_id" value="6900"/>
 						</include>
@@ -157,7 +166,7 @@
 							<param name="widget_target" value="videos"/>
 							<param name="list_id" value="6400"/>
 							<param name="icon" value="$VAR[WidgetGenreIconVar]"/>
-							<param name="icon_height" value="70"/>
+							<param name="icon_height" value="60"/>
 						</include>
 						<include content="WidgetListCategories" condition="Library.HasContent(tvshows)">
 							<param name="content_path" value="videodb://tvshows/studios/"/>
@@ -165,7 +174,7 @@
 							<param name="widget_target" value="videos"/>
 							<param name="list_id" value="6500"/>
 							<param name="icon" value="$VAR[WidgetStudioIconVar]"/>
-							<param name="icon_height" value="70"/>
+							<param name="icon_height" value="60"/>
 						</include>
 					</control>
 					<include content="ImageWidget" condition="!Library.HasContent(tvshows)">
@@ -189,7 +198,7 @@
 						<pagecontrol>7010</pagecontrol>
 						<include content="WidgetListCategories" condition="Library.HasContent(music) + !Skin.HasSetting(home_no_categories_widget)">
 							<param name="content_path" value="library://music/"/>
-							<param name="widget_header" value="$LOCALIZE[31148]"/>
+							<param name="widget_header" value=""/>
 							<param name="widget_target" value="music"/>
 							<param name="list_id" value="7900"/>
 						</include>
@@ -271,7 +280,7 @@
 						<pagecontrol>8010</pagecontrol>
 						<include content="WidgetListCategories" condition="!Skin.HasSetting(home_no_categories_widget)" >
 							<param name="content_path" value="addons://"/>
-							<param name="widget_header" value="$LOCALIZE[31148]"/>
+							<param name="widget_header" value=""/>
 							<param name="widget_target" value="addonbrowser"/>
 							<param name="list_id" value="8900"/>
 							<param name="visible" value="Integer.IsGreater(Container(8100).NumItems,0) | Integer.IsGreater(Container(8200).NumItems,0) | Integer.IsGreater(Container(8300).NumItems,0) | Integer.IsGreater(Container(8400).NumItems,0) | Integer.IsGreater(Container(8500).NumItems,0) | Integer.IsGreater(Container(8700).NumItems,0)"/>
@@ -353,7 +362,7 @@
 						<pagecontrol>11010</pagecontrol>
 						<include content="WidgetListCategories">
 							<param name="content_path" value="library://video/"/>
-							<param name="widget_header" value="$LOCALIZE[31148]"/>
+							<param name="widget_header" value=""/>
 							<param name="widget_target" value="videos"/>
 							<param name="list_id" value="11900"/>
 						</include>
@@ -393,7 +402,7 @@
 						<pagecontrol>12010</pagecontrol>
 						<include content="WidgetListCategories" condition="System.HasPVRAddon">
 							<param name="content_path" value="pvr://tv/"/>
-							<param name="widget_header" value="$LOCALIZE[31148]"/>
+							<param name="widget_header" value=""/>
 							<param name="list_id" value="12900"/>
 						</include>
 						<include content="WidgetListPVR" condition="System.HasPVRAddon">
@@ -468,7 +477,7 @@
 						<pagecontrol>13010</pagecontrol>
 						<include content="WidgetListCategories" condition="System.HasPVRAddon">
 							<param name="content_path" value="pvr://radio/"/>
-							<param name="widget_header" value="$LOCALIZE[31148]"/>
+							<param name="widget_header" value=""/>
 							<param name="list_id" value="13900"/>
 						</include>
 						<include content="WidgetListPVR" condition="System.HasPVRAddon">
@@ -703,7 +712,7 @@
 						<pagecontrol>16010</pagecontrol>
 						<include content="WidgetListCategories" condition="Library.HasContent(musicvideos) + !Skin.HasSetting(home_no_categories_widget)">
 							<param name="content_path" value="library://video/musicvideos/"/>
-							<param name="widget_header" value="$LOCALIZE[31148]"/>
+							<param name="widget_header" value=""/>
 							<param name="widget_target" value="videos"/>
 							<param name="list_id" value="16900"/>
 						</include>
@@ -773,7 +782,7 @@
 							<param name="widget_target" value="music"/>
 							<param name="list_id" value="16600"/>
 							<param name="icon" value="$VAR[WidgetStudioIconVar]"/>
-							<param name="icon_height" value="70"/>
+							<param name="icon_height" value="60"/>
 						</include>
 					</control>
 					<include content="ImageWidget" condition="!Library.HasContent(musicvideos)">
@@ -799,7 +808,7 @@
 							<param name="widget_header" value="$LOCALIZE[20094]"/>
 							<param name="widget_target" value="pictures"/>
 							<param name="list_id" value="4100"/>
-							<param name="icon_height" value="110"/>
+							<param name="icon_height" value="94"/>
 						</include>
 					</control>
 				</control>

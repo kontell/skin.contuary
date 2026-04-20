@@ -377,17 +377,17 @@
 		<definition>
 			<control type="image">
 				<top>0</top>
-				<width>299</width>
-				<height>365</height>
+				<width>224</width>
+				<height>274</height>
 				<texture>dialogs/dialog-bg-nobo.png</texture>
 				<bordertexture border="21" infill="false">overlays/shadow.png</bordertexture>
 				<bordersize>19</bordersize>
 			</control>
 			<control type="image">
-				<top>-4</top>
-				<left>-4</left>
-				<width>306</width>
-				<height>372</height>
+				<top>-3</top>
+				<left>-3</left>
+				<width>230</width>
+				<height>279</height>
 				<texture colordiffuse="button_focus">colors/grey.png</texture>
 				<bordertexture border="21" infill="false">overlays/shadow.png</bordertexture>
 				<bordersize>19</bordersize>
@@ -397,17 +397,17 @@
 			<control type="image">
 				<left>0</left>
 				<top>0</top>
-				<width>299</width>
-				<height>299</height>
+				<width>224</width>
+				<height>224</height>
 				<texture fallback="$PARAM[fallback_image]" background="true">$VAR[InfoWallThumbVar]</texture>
 				<aspectratio>keep</aspectratio>
 				<bordersize>19</bordersize>
 			</control>
 			<control type="textbox">
-				<left>26</left>
-				<top>273</top>
-				<width>248</width>
-				<height>76</height>
+				<left>20</left>
+				<top>205</top>
+				<width>186</width>
+				<height>57</height>
 				<font>font12_w</font>
 				<align>center</align>
 				<aligny>center</aligny>
@@ -417,9 +417,9 @@
 			<control type="group">
 				<visible>String.IsEqual(ListItem.DBType,album)</visible>
 				<control type="label">
-					<left>27</left>
-					<top>283</top>
-					<width>246</width>
+					<left>20</left>
+					<top>212</top>
+					<width>184</width>
 					<label>$PARAM[sub_label]</label>
 					<font>font10_w</font>
 					<shadowcolor>text_shadow</shadowcolor>
@@ -427,9 +427,9 @@
 					<align>center</align>
 				</control>
 				<control type="label">
-					<left>27</left>
-					<top>310</top>
-					<width>246</width>
+					<left>20</left>
+					<top>232</top>
+					<width>184</width>
 					<label>$PARAM[main_label]</label>
 					<font>font12_w</font>
 					<shadowcolor>text_shadow</shadowcolor>
@@ -438,7 +438,7 @@
 				</control>
 			</control>
 			<control type="group">
-				<left>126</left>
+				<left>94</left>
 				<top>2</top>
 				<include condition="Skin.HasSetting(circle_rating) | Skin.HasSetting(circle_userrating)">RatingCircle</include>
 			</control>
@@ -452,18 +452,18 @@
 		<param name="focused">false</param>
 		<definition>
 			<control type="image">
-				<top>9</top>
-				<width>299</width>
-				<height>272</height>
+				<top>7</top>
+				<width>224</width>
+				<height>204</height>
 				<texture>dialogs/dialog-bg-nobo.png</texture>
 				<bordertexture border="21" infill="false">overlays/shadow.png</bordertexture>
 				<bordersize>19</bordersize>
 			</control>
 			<control type="image">
-				<top>6</top>
-				<left>-4</left>
-				<width>306</width>
-				<height>280</height>
+				<top>4</top>
+				<left>-3</left>
+				<width>230</width>
+				<height>210</height>
 				<texture colordiffuse="button_focus">colors/grey.png</texture>
 				<bordertexture border="21" infill="false">overlays/shadow.png</bordertexture>
 				<bordersize>19</bordersize>
@@ -472,43 +472,43 @@
 			</control>
 			<control type="image">
 				<left>0</left>
-				<top>9</top>
-				<width>299</width>
-				<height>206</height>
+				<top>7</top>
+				<width>224</width>
+				<height>154</height>
 				<texture fallback="$PARAM[fallback_image]" background="true">$VAR[InfoWallThumbVar]</texture>
 				<aspectratio>scale</aspectratio>
 				<bordersize>19</bordersize>
 			</control>
 			<control type="image">
-				<left>19</left>
-				<top>130</top>
-				<width>261</width>
-				<height>66</height>
+				<left>14</left>
+				<top>98</top>
+				<width>196</width>
+				<height>50</height>
 				<texture>overlays/overlayfade.png</texture>
 				<visible>!ListItem.IsParentFolder</visible>
 			</control>
 			<control type="label">
-				<left>28</left>
-				<top>168</top>
-				<width>208</width>
+				<left>21</left>
+				<top>126</top>
+				<width>156</width>
 				<label>$PARAM[thumb_label]</label>
 				<font>font20_title_w</font>
 				<shadowcolor>text_shadow</shadowcolor>
 				<align>left</align>
 			</control>
 			<control type="image">
-				<left>246</left>
-				<top>165</top>
-				<width>30</width>
-				<height>30</height>
+				<left>184</left>
+				<top>124</top>
+				<width>22</width>
+				<height>22</height>
 				<align>right</align>
 				<texture>$VAR[ItemStatusIconVar]</texture>
 			</control>
 			<control type="textbox">
-				<left>26</left>
-				<top>191</top>
-				<width>248</width>
-				<height>76</height>
+				<left>20</left>
+				<top>143</top>
+				<width>186</width>
+				<height>57</height>
 				<font>font12_w</font>
 				<align>center</align>
 				<aligny>center</aligny>
@@ -518,9 +518,9 @@
 			<control type="group">
 				<visible>!Window.IsActive(videos)</visible>
 				<control type="label">
-					<left>27</left>
-					<top>198</top>
-					<width>246</width>
+					<left>20</left>
+					<top>148</top>
+					<width>184</width>
 					<label>$PARAM[sub_label]</label>
 					<font>font12_w</font>
 					<shadowcolor>text_shadow</shadowcolor>
@@ -528,9 +528,9 @@
 					<align>center</align>
 				</control>
 				<control type="label">
-					<left>27</left>
-					<top>227</top>
-					<width>246</width>
+					<left>20</left>
+					<top>170</top>
+					<width>184</width>
 					<label>$PARAM[main_label]</label>
 					<font>font10_w</font>
 					<shadowcolor>text_shadow</shadowcolor>
@@ -539,9 +539,9 @@
 				</control>
 			</control>
 			<control type="progress">
-				<left>19</left>
-				<top>244</top>
-				<width>261</width>
+				<left>14</left>
+				<top>183</top>
+				<width>196</width>
 				<height>1</height>
 				<texturebg></texturebg>
 				<midtexture colordiffuse="button_focus" border="3">progress/texturebg_alt_white.png</midtexture>
@@ -549,8 +549,8 @@
 				<visible>!Integer.IsEqual(ListItem.PercentPlayed,0)</visible>
 			</control>
 			<control type="group">
-				<left>127</left>
-				<top>8</top>
+				<left>95</left>
+				<top>6</top>
 				<include condition="Skin.HasSetting(circle_rating) | Skin.HasSetting(circle_userrating)">RatingCircle</include>
 			</control>
 		</definition>
@@ -561,29 +561,29 @@
 			<control type="group">
 				<visible>String.IsEmpty(ListItem.Art(poster))</visible>
 				<control type="image">
-					<left>14</left>
-					<top>-9</top>
-					<width>300</width>
-					<height>429</height>
+					<left>10</left>
+					<top>-7</top>
+					<width>225</width>
+					<height>322</height>
 					<texture>dialogs/dialog-bg-nobo.png</texture>
 					<bordertexture border="21" infill="false">overlays/shadow.png</bordertexture>
 					<bordersize>19</bordersize>
 				</control>
 				<control type="image">
-					<left>14</left>
-					<top>-9</top>
-					<width>300</width>
-					<height>429</height>
+					<left>10</left>
+					<top>-7</top>
+					<width>225</width>
+					<height>322</height>
 					<texture colordiffuse="button_focus">colors/grey.png</texture>
 					<bordersize>19</bordersize>
 					<visible>$PARAM[focused]</visible>
 					<include condition="$PARAM[focused]">Animation_FocusTextureFade</include>
 				</control>
 				<control type="textbox">
-					<left>38</left>
-					<top>231</top>
-					<width>229</width>
-					<height>113</height>
+					<left>28</left>
+					<top>173</top>
+					<width>172</width>
+					<height>85</height>
 					<font>font27_w</font>
 					<align>center</align>
 					<aligny>center</aligny>
@@ -592,10 +592,10 @@
 					<visible>!ListItem.IsParentFolder</visible>
 				</control>
 				<control type="image">
-					<left>23</left>
+					<left>17</left>
 					<top>-1</top>
-					<width>257</width>
-					<height>255</height>
+					<width>193</width>
+					<height>191</height>
 					<texture fallback="DefaultMovies.png" background="true">$INFO[ListItem.Icon]</texture>
 					<aspectratio>scale</aspectratio>
 					<bordersize>19</bordersize>
@@ -604,10 +604,10 @@
 			<control type="group">
 				<visible>!String.IsEmpty(ListItem.Art(poster))</visible>
 				<control type="image">
-					<left>10</left>
-					<top>-13</top>
-					<width>309</width>
-					<height>438</height>
+					<left>8</left>
+					<top>-10</top>
+					<width>232</width>
+					<height>328</height>
 					<texture colordiffuse="button_focus">colors/grey.png</texture>
 					<bordertexture border="21" infill="false">overlays/shadow.png</bordertexture>
 					<bordersize>19</bordersize>
@@ -615,10 +615,10 @@
 					<include condition="$PARAM[focused]">Animation_FocusTextureFade</include>
 				</control>
 				<control type="image">
-					<left>14</left>
-					<top>-9</top>
-					<width>300</width>
-					<height>429</height>
+					<left>10</left>
+					<top>-7</top>
+					<width>225</width>
+					<height>322</height>
 					<texture background="true">$INFO[ListItem.Art(poster)]</texture>
 					<aspectratio>scale</aspectratio>
 					<bordertexture border="21" infill="false">overlays/shadow.png</bordertexture>
@@ -628,36 +628,36 @@
 			<control type="group">
 				<visible>String.IsEqual(ListItem.DBtype,tvshow) | String.IsEqual(ListItem.DBType,season) | ListItem.IsRecording | ListItem.HasReminder | ListItem.HasTimer | ListItem.IsCollection | ListItem.HasVideoVersions | ListItem.IsPlaying | ListItem.IsResumable | ListItem.HasVideoExtras | ListItem.HasArchive | Integer.IsGreater(ListItem.Playcount,0)</visible>
 				<control type="image">
-					<left>33</left>
-					<top>346</top>
-					<width>258</width>
-					<height>52</height>
+					<left>25</left>
+					<top>260</top>
+					<width>194</width>
+					<height>39</height>
 					<texture colordiffuse="CCFFFFFF">overlays/overlayfade.png</texture>
 					<visible>!String.IsEmpty(ListItem.Art(poster))</visible>
 				</control>
 				<control type="image">
-					<left>38</left>
-					<top>370</top>
-					<width>23</width>
-					<height>23</height>
+					<left>28</left>
+					<top>278</top>
+					<width>17</width>
+					<height>17</height>
 					<align>left</align>
 					<aligny>center</aligny>
 					<texture>$VAR[ItemTypeIconVar]</texture>
 				</control>
 				<control type="image">
-					<left>66</left>
-					<top>370</top>
-					<width>23</width>
-					<height>23</height>
+					<left>50</left>
+					<top>278</top>
+					<width>17</width>
+					<height>17</height>
 					<align>left</align>
 					<aligny>center</aligny>
 					<texture>overlays/extras.png</texture>
 					<visible>ListItem.HasVideoVersions + ListItem.HasVideoExtras</visible>
 				</control>
 				<control type="label">
-					<left>108</left>
-					<top>367</top>
-					<width>150</width>
+					<left>81</left>
+					<top>275</top>
+					<width>112</width>
 					<label>$VAR[WatchedStatusVar]</label>
 					<font>font20_title_w</font>
 					<shadowcolor>text_shadow</shadowcolor>
@@ -665,22 +665,22 @@
 					<visible>String.IsEqual(ListItem.DBtype,tvshow) | String.IsEqual(ListItem.DBtype,set) | String.IsEqual(ListItem.DBType,season)</visible>
 				</control>
 				<control type="image">
-					<left>266</left>
-					<top>370</top>
-					<width>23</width>
-					<height>23</height>
+					<left>200</left>
+					<top>278</top>
+					<width>17</width>
+					<height>17</height>
 					<texture>$VAR[ItemStatusIconVar]</texture>
 				</control>
 			</control>
 			<control type="group">
-				<left>128</left>
-				<top>-8</top>
+				<left>96</left>
+				<top>-6</top>
 				<include condition="Skin.HasSetting(circle_rating) | Skin.HasSetting(circle_userrating)">RatingCircle</include>
 			</control>
 			<control type="progress">
-				<left>33</left>
-				<top>378</top>
-				<width>258</width>
+				<left>25</left>
+				<top>284</top>
+				<width>194</width>
 				<height>1</height>
 				<texturebg></texturebg>
 				<midtexture colordiffuse="button_focus" border="3">progress/texturebg_alt_white.png</midtexture>
