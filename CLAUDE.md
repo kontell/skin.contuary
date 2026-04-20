@@ -36,6 +36,27 @@ then let the script repopulate `xml/`. Direct edits to `xml/` are
 wiped on the next variant switch. The weather widget is intentionally
 identical across all three variants — don't scale it.
 
+**Dev tree vs installed tree — the propagation trap.** There are TWO
+copies of every `xml_<variant>/`:
+
+- Dev tree: `/media/minipie/bluecon/docs/IT/devel/skins/skin.contuary/xml_<variant>/`
+- Installed tree: `/home/conor/.kodi/addons/skin.contuary/xml_<variant>/`
+
+The variant script reads from `special://home/addons/skin.contuary/xml_<variant>/`
+— i.e. the **installed tree**. A `ReloadSkin()` after editing only the
+active `xml/` appears to work, but the next variant cycle rebuilds
+`xml/` from the installed `xml_<variant>/` and reverts the edit.
+
+Any edit to a template must be propagated to **all** of:
+- dev `xml_<variant>/` (source of truth under version control)
+- installed `xml_<variant>/` (what the cycle script reads)
+- installed `xml/` (only if you want to see the change before the next cycle)
+
+If the edit only applies to one variant (e.g. the group-wrapped
+IconButton in large), the other two variants still need their own
+synced copy in the installed tree so cycling away and back doesn't
+break anything.
+
 ## Home-screen layout files
 
 Paths below are relative to each template (`xml_large/`, `xml_medium/`,

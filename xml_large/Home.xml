@@ -869,14 +869,14 @@
 				</include>
 				<control type="fixedlist" id="9000">
 					<left>0</left>
-					<top>240</top>
+					<top>295</top>
 					<width>100</width>
 					<bottom>-10</bottom>
 					<movement>7</movement>
 					<focusposition>0</focusposition>
 					<onfocus>ClearProperty(listposition,home)</onfocus>
 					<onright>SetFocus($INFO[Container(9000).ListItem.Property(menu_id)])</onright>
-					<onup>802</onup>
+					<onup>801</onup>
 					<ondown>804</ondown>
 					<scrolltime tween="cubic" easing="out">500</scrolltime>
 					<focusedlayout height="95">
@@ -1063,9 +1063,9 @@
 				<control type="grouplist" id="700">
 					<orientation>vertical</orientation>
 					<itemgap>0</itemgap>
-					<left>-14</left>
+					<left>-3</left>
 					<width>480</width>
-					<height>250</height>
+					<height>285</height>
 					<top>0</top>
 					<onup>SetFocus(9000,99,absolute)</onup>
 					<ondown>SetFocus(9000,0,absolute)</ondown>
@@ -1073,23 +1073,53 @@
 					<align>justify</align>
 					<include content="IconButton">
 						<param name="control_id" value="804" />
+						<param name="width" value="95" />
+						<param name="height" value="95" />
+						<param name="radioposx" value="27" />
+						<param name="focus_left" value="-6" />
+						<param name="focus_top" value="-6" />
+						<param name="focus_width" value="107" />
+						<param name="focus_height" value="107" />
 						<param name="onclick" value="ActivateWindow(shutdownmenu)" />
 						<param name="icon" value="special://skin/media/k.png" />
 						<param name="label" value="$LOCALIZE[33060]" />
+						<param name="onup" value="SetFocus(9000,99,absolute)" />
+						<param name="ondown" value="802" />
+						<param name="onright" value="2000" />
 					</include>
 					<include content="IconButton">
 						<param name="control_id" value="802" />
+						<param name="width" value="95" />
+						<param name="height" value="95" />
+						<param name="radioposx" value="27" />
+						<param name="focus_left" value="-6" />
+						<param name="focus_top" value="-6" />
+						<param name="focus_width" value="107" />
+						<param name="focus_height" value="107" />
 						<param name="onclick" value="ActivateWindow(settings)" />
 						<param name="icon" value="icons/settings.png" />
 						<param name="label" value="$LOCALIZE[21417]" />
+						<param name="onup" value="804" />
+						<param name="ondown" value="801" />
+						<param name="onright" value="2000" />
 					</include>
-<!--					<include content="IconButton">
+					<include content="IconButton">
 						<param name="control_id" value="801" />
+						<param name="width" value="95" />
+						<param name="height" value="95" />
+						<param name="radioposx" value="27" />
+						<param name="focus_left" value="-6" />
+						<param name="focus_top" value="-6" />
+						<param name="focus_width" value="107" />
+						<param name="focus_height" value="107" />
 						<param name="onclick" value="ActivateWindow(1107)" />
 						<param name="icon" value="icons/search.png" />
 						<param name="label" value="$LOCALIZE[137]" />
+						<param name="onup" value="802" />
+						<param name="ondown" value="SetFocus(9000,0,absolute)" />
+						<param name="onright" value="2000" />
 					</include>
-					<include content="IconButton">
+<!--					<include content="IconButton">
 						<param name="control_id" value="803" />
 						<param name="onclick" value="Fullscreen" />
 						<param name="icon" value="icons/now-playing/fullscreen.png" />
