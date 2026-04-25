@@ -888,7 +888,7 @@
 								<top>0</top>
 								<width>95</width>
 								<height>95</height>
-								<texture colordiffuse="button_focus">lists/focus.png</texture>
+								<texture colordiffuse="list_focus">lists/focus.png</texture>
 								<animation effect="fade" start="100" end="0" time="0" condition="[!Control.HasFocus(9000) + !ControlGroup(700).HasFocus] | System.HasActiveModalDialog">Conditional</animation>
 							</control>
 							<control type="image">
@@ -1071,7 +1071,7 @@
 					<ondown>SetFocus(9000,0,absolute)</ondown>
 					<onright>2000</onright>
 					<align>justify</align>
-					<include content="IconButton">
+					<include content="IconButtonLarge">
 						<param name="control_id" value="804" />
 						<param name="width" value="95" />
 						<param name="height" value="95" />
@@ -1087,7 +1087,7 @@
 						<param name="ondown" value="802" />
 						<param name="onright" value="2000" />
 					</include>
-					<include content="IconButton">
+					<include content="IconButtonLarge">
 						<param name="control_id" value="802" />
 						<param name="width" value="95" />
 						<param name="height" value="95" />
@@ -1103,7 +1103,7 @@
 						<param name="ondown" value="801" />
 						<param name="onright" value="2000" />
 					</include>
-					<include content="IconButton">
+					<include content="IconButtonLarge">
 						<param name="control_id" value="801" />
 						<param name="width" value="95" />
 						<param name="height" value="95" />
@@ -1119,14 +1119,14 @@
 						<param name="ondown" value="SetFocus(9000,0,absolute)" />
 						<param name="onright" value="2000" />
 					</include>
-<!--					<include content="IconButton">
+<!--					<include content="IconButtonLarge">
 						<param name="control_id" value="803" />
 						<param name="onclick" value="Fullscreen" />
 						<param name="icon" value="icons/now-playing/fullscreen.png" />
 						<param name="label" value="$LOCALIZE[31000]" />
 						<param name="visible" value="Player.HasMedia + !Player.IsRemote" />
 					</include>
-					<include content="IconButton">
+					<include content="IconButtonLarge">
 						<param name="control_id" value="805" />
 						<param name="onclick" value="ActivateWindow(playercontrols)" />
 						<param name="icon" value="icons/now-playing/fullscreen.png" />

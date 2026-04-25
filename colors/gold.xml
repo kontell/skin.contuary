@@ -5,5 +5,6 @@
 	<color name="dialog_tint">FF2B2B22</color>
 	<color name="button_focus">FFCFA700</color>
 	<color name="button_alt_focus">80CFA700</color>
+	<color name="list_focus">99CFA700</color>
 	<color name="selected">FFFFF000</color>
 </colors>

@@ -30,8 +30,8 @@
 				<textoffsetx>16</textoffsetx>
 				<aligny>center</aligny>
 				<font>font12</font>
-				<texturefocus colordiffuse="button_focus">lists/focus.png</texturefocus>
-				<alttexturefocus colordiffuse="button_focus">lists/focus.png</alttexturefocus>
+				<texturefocus colordiffuse="list_focus">lists/focus.png</texturefocus>
+				<alttexturefocus colordiffuse="list_focus">lists/focus.png</alttexturefocus>
 				<texturenofocus />
 				<alttexturenofocus />
 				<onclick>noop</onclick>
@@ -55,7 +55,7 @@
 			<aligny>center</aligny>
 			<invalidcolor>invalid</invalidcolor>
 			<selectedcolor>selected</selectedcolor>
-			<texturefocus colordiffuse="button_focus">lists/focus.png</texturefocus>
+			<texturefocus colordiffuse="list_focus">lists/focus.png</texturefocus>
 			<texturenofocus />
 		</definition>
 	</include>
@@ -69,7 +69,7 @@
 			<aligny>center</aligny>
 			<invalidcolor>invalid</invalidcolor>
 			<selectedcolor>selected</selectedcolor>
-			<texturefocus colordiffuse="button_focus">lists/focus.png</texturefocus>
+			<texturefocus colordiffuse="list_focus">lists/focus.png</texturefocus>
 			<texturenofocus colordiffuse="dialog_tint">colors/white.png</texturenofocus>
 		</definition>
 	</include>
@@ -172,7 +172,7 @@
 				<height>110</height>
 				<align>left</align>
 				<aligny>top</aligny>
-				<texturefocus colordiffuse="button_focus">lists/focus.png</texturefocus>
+				<texturefocus colordiffuse="list_focus">lists/focus.png</texturefocus>
 				<texturenofocus />
 				<textoffsetx>40</textoffsetx>
 				<textoffsety>35</textoffsety>
@@ -183,6 +183,38 @@
 		</definition>
 	</include>
 	<include name="IconButton">
+		<param name="height">120</param>
+		<param name="visible">true</param>
+		<definition>
+			<control type="radiobutton" id="$PARAM[control_id]">
+				<width>120</width>
+				<height>$PARAM[height]</height>
+				<align>center</align>
+				<aligny>center</aligny>
+				<onclick>$PARAM[onclick]</onclick>
+				<onclick>$PARAM[onclick_2]</onclick>
+				<font></font>
+				<label>$PARAM[label]</label>
+				<texturefocus colordiffuse="button_focus">buttons/roundbutton-fo.png</texturefocus>
+				<texturenofocus />
+				<radioposx>40</radioposx>
+				<radioposy>0</radioposy>
+				<radiowidth>40</radiowidth>
+				<radioheight>40</radioheight>
+				<textureradioonfocus>$PARAM[icon]</textureradioonfocus>
+				<textureradioonnofocus colordiffuse="grey">$PARAM[icon]</textureradioonnofocus>
+				<textureradioofffocus>$PARAM[icon]</textureradioofffocus>
+				<textureradiooffnofocus colordiffuse="grey">$PARAM[icon]</textureradiooffnofocus>
+				<visible>$PARAM[visible]</visible>
+			</control>
+		</definition>
+	</include>
+	<include name="IconButtonLarge">
+		<!-- Variant of IconButton with an overhanging focus-ring image
+		     (larger than the button bounds). Because the outer control
+		     is a <group>, this cannot sit inside a grouplist that relies
+		     on auto-wiring; callers must supply explicit onup/ondown/
+		     onleft/onright. -->
 		<param name="height">120</param>
 		<param name="width">120</param>
 		<param name="radioposx">40</param>
@@ -391,7 +423,7 @@
 				<top>0</top>
 				<width>600</width>
 				<height>70</height>
-				<texture colordiffuse="button_focus">lists/focus.png</texture>
+				<texture colordiffuse="list_focus">lists/focus.png</texture>
 			</control>
 			<control type="label">
 				<left>0</left>

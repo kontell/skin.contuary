@@ -5,70 +5,73 @@ editing the home screen. The iteration loop (kodi-remote / kodi-shot /
 kodi-diff / kodi-logtail / kodi-builtin) lives in Claude's auto-memory,
 not here.
 
-## Card-size variants
+## Resolution variants
 
-The skin ships three layout templates targeting 16:9 displays:
+The skin authors XML in a single `xml/` tree. The active logical coord
+space is selected by the `<res>` element in `addon.xml`. Companion
+addon `script.skin.contuary` rewrites that line to switch resolutions.
 
-- `xml_large/` — 6 cards across (reference layout; scaling factor 1.0)
-- `xml_medium/` — 7 cards across (factor ~0.857)
-- `xml_small/` — 8 cards across (factor ~0.75)
+- `RunScript(script.skin.contuary)` — open a select dialog (preselects
+  the current resolution)
+- `RunScript(script.skin.contuary,<name>)` — apply the named option
+  directly (e.g. `1920x1080`, `2256x1269`)
+- `RunScript(script.skin.contuary,_sync)` — silently sync
+  `Skin.String(resolution)` to whatever is currently in `addon.xml`
 
-`addon.xml` `<res>` points at `xml/` — the **live render target**. It
-is a copy of whichever template is currently selected and is
-gitignored; populate it by running the variant switcher at least once
-after install. The companion script addon `script.skin.contuary`
-swaps templates at runtime:
+A Kodi restart is required after a `<res>` change because Kodi only
+parses `addon.xml` at skin load. The script prompts for the restart
+via a yes/no dialog. `ReloadSkin()` is *not* sufficient.
 
-- `RunScript(script.skin.contuary,<variant>)` — apply a named variant
-- `RunScript(script.skin.contuary)` — cycle small → medium → large → small
+User-facing entry point: Settings → Skin settings → Resolution
+(button id=708 in `SkinSettings.xml`). The button's `label2` shows
+`$INFO[Skin.String(resolution)]`; SkinSettings has an
+`<onload condition="System.HasAddon(script.skin.contuary)">RunScript(script.skin.contuary,_sync)</onload>`
+hook so the displayed value stays in sync if `addon.xml` was edited
+out of band.
 
-The script rmtree's `xml/`, copytree's `xml_<variant>/` into `xml/`,
-sets `Skin.String(card_size,<variant>)`, then `ReloadSkin()`. No Kodi
-restart needed.
+The full set of supported options lives in `OPTIONS` at the top of
+`script.skin.contuary/default.py` — add an entry there to expose a new
+resolution.
 
-User-facing switches:
-- Settings → Skin settings → Card size (button id=708 in `SkinSettings.xml`)
-- F6 keyboard shortcut (developer-local, kept in `userdata/keymaps/keymap.xml`
-  — Kodi does not auto-load skin-shipped keymaps)
+**Dev tree vs installed tree.** There are two copies of `xml/`:
 
-**When editing layout**: modify the templates under `xml_<variant>/`,
-then let the script repopulate `xml/`. Direct edits to `xml/` are
-wiped on the next variant switch. The weather widget is intentionally
-identical across all three variants — don't scale it.
+- Dev: `/media/minipie/bluecon/docs/IT/devel/skins/skin.contuary/xml/`
+- Installed: `/home/conor/.kodi/addons/skin.contuary/xml/`
 
-**Dev tree vs installed tree — the propagation trap.** There are TWO
-copies of every `xml_<variant>/`:
+`ReloadSkin()` reads the installed tree. Edits made only to dev are
+invisible until copied across. Keep the two in sync.
 
-- Dev tree: `/media/minipie/bluecon/docs/IT/devel/skins/skin.contuary/xml_<variant>/`
-- Installed tree: `/home/conor/.kodi/addons/skin.contuary/xml_<variant>/`
+## IconButton vs IconButtonLarge
 
-The variant script reads from `special://home/addons/skin.contuary/xml_<variant>/`
-— i.e. the **installed tree**. A `ReloadSkin()` after editing only the
-active `xml/` appears to work, but the next variant cycle rebuilds
-`xml/` from the installed `xml_<variant>/` and reverts the edit.
+Two round-icon button includes in `Includes_Buttons.xml`:
 
-Any edit to a template must be propagated to **all** of:
-- dev `xml_<variant>/` (source of truth under version control)
-- installed `xml_<variant>/` (what the cycle script reads)
-- installed `xml/` (only if you want to see the change before the next cycle)
+- `IconButton` — flat single `<control type="radiobutton">`. Safe to drop
+  into any grouplist; grouplist auto-wires up/down/left/right between
+  direct focusable children. Used by the playback-controls sidebar
+  (`grouplist id="14100"`, ids 14101..14106), the touchscreen row in
+  `Includes.xml`, and all other multi-button rows.
+- `IconButtonLarge` — `<control type="group">` wrapping an overhanging
+  focus-ring image + a radiobutton. Lets the focus ring be larger than
+  the button bounds. Because the outer control is a group,
+  grouplist auto-wiring **does not work** through it — callers must pass
+  explicit `onup`/`ondown`/`onleft`/`onright` params. Currently used
+  only by the three PSS buttons on the home screen.
 
-If the edit only applies to one variant (e.g. the group-wrapped
-IconButton in large), the other two variants still need their own
-synced copy in the installed tree so cycling away and back doesn't
-break anything.
+Rule: if you need a bigger focus ring on an existing auto-wired
+grouplist, convert just that *caller site* to `IconButtonLarge` and wire
+navigation by hand. Do not promote `IconButton` itself to the group form
+— it silently breaks every grouplist that uses it.
 
 ## Home-screen layout files
 
-Paths below are relative to each template (`xml_large/`, `xml_medium/`,
-`xml_small/`); `xml/` mirrors whichever template is active.
-
-- `Home.xml` — window definition, per-category widget groups
-  (movies=5000, tvshows=7000, weather=15000, …). Weather info top strip
-  is `<control type="group" id="16678">`. Main Menu Title label is
-  `id="2099"`, positioned at `<left>82</left>` inside group 2000 so it
-  aligns with the first card of the widget row below.
-- `Includes_Home.xml` — reusable widget templates: `CategoryLabel`,
-  `WidgetListPoster`, `WidgetListEpisodes`, `WeatherWidget`, …
+- `Home.xml` — window definition, per-category section groups
+  (movies=5000, tvshows=6000, music=7000, addons=8000, video=11000,
+  livetv=12000, radio=13000, favorites=14000, weather=15000,
+  musicvideos=16000, pictures=4000, games=17000, disc=21000). Weather
+  info top strip is `<control type="group" id="16678">`.
+- `Includes_Home.xml` — reusable widget templates: `MainMenuTitle`,
+  `CategoryLabel`, `WidgetListPoster`, `WidgetListEpisodes`,
+  `WeatherWidget`, …
 - `Includes.xml` — generic includes used from multiple windows,
   e.g. `WeatherIconHome` (only used on the home weather screen).
 - `Font.xml` — two fontsets: `Default` (NotoSans) and `Arial`.
@@ -79,7 +82,7 @@ Paths below are relative to each template (`xml_large/`, `xml_medium/`,
 ## Position chain on the home widgets area
 
 `<control type="group" id="2000">` has `<left>70</left>`. All
-per-category groups (5000, 15000, …) sit inside it and inherit that
+per-section groups (5000, 6000, …) sit inside it and inherit that
 offset. So a nominal "x=0" in a WeatherWidget is actually at skin x=70.
 Keep this in mind when aligning widgets with off-widget elements.
 
@@ -87,7 +90,7 @@ Keep this in mind when aligning widgets with off-widget elements.
 
 When you need to tweak *only one caller* of a shared include, add a
 param with a default that preserves existing behaviour rather than
-forking the include. Applied so far to `CategoryLabel`:
+forking the include. Applied to `CategoryLabel`:
 
 - `posx` (default 55) — left offset of the label
 - `font` (default `font13`) — lets the weather caller pick a smaller font
@@ -97,92 +100,129 @@ Pattern: add `<param name="X">default</param>` at the top of the
 `<param name="X" value="..."/>` only at the call site that needs a
 change. Unrelated callers keep the default and stay untouched.
 
-## WeatherWidget card scaling
+## Main Menu Title
 
-Card dimensions in `WeatherWidget` (Includes_Home.xml) are driven by a
-single `width` param but *the other numbers don't auto-scale* — they're
-hard-coded inside itemlayout and focusedlayout. When resizing, update
-together:
+Each section group on the home screen displays its name (Movies,
+Shows, Music, …) above the widget stack. Implemented as the
+`MainMenuTitle` include in `Includes_Home.xml` — a `<control type="group">`
+of `<height>140</height>` wrapping a `font_mainmenu` label at
+`<top>20</top><left>82</left>`. The 140 height reserves enough space
+to push the first widget down clear of the title (the grouplist
+otherwise pulls the next item up because of `itemgap=-160`).
 
-- `<param name="width">` — outer slot width (== bg + shadow)
-- `itemlayout` / `focusedlayout` `height`
-- inner `<group><left>` — centres the card horizontally in its slot
-- bg `<control type="image">` width/height/top and `bordersize`
-- icon width/height/left/top
-- label widths (so centred text stays inside the card)
-- focus `<effect type="zoom">` `center="x,y"` — midpoint of the bg image
+Each section's grouplist (5001, 6001, 7001, …) calls `MainMenuTitle`
+as its first child with a static label, e.g.
 
-Both `itemlayout` and `focusedlayout` contain duplicated structures;
-any dimension change must be applied to *both*.
+```xml
+<include content="MainMenuTitle">
+    <param name="label" value="$LOCALIZE[342]"/>
+</include>
+```
 
-The enclosing group `id="16678"` in Home.xml has its own `<right>` that
-defines where the top weather-info block ends — keep it aligned with
-the card-row right edge (`right=25` matches the current card width).
+Putting the title *inside* the grouplist achieves two things:
 
-## Font conventions
+1. The title scrolls up with the widgets when the user navigates down
+   the stack — they share the grouplist's scroll offset.
+2. The title inherits the section group's `Visible_Right_Delayed`
+   slide-in/out animation, so it animates together with the widgets
+   when cycling main menu sections.
 
-Home-widget text (all per-category widgets) uses `_w`-suffixed font
-variants (`font10_w`, `font12_w`, `font13_w`, `font14_w`,
-`font25_narrow_w`, `font27_w`, `font27_narrow_w`, `font20_title_w`,
-`font30_title_w`). In `xml_large/Font.xml` these are ~0.945× the
-non-suffixed originals; `xml_medium/` and `xml_small/` scale those
-`_w` sizes by the same factor as the cards (0.857 and 0.75
-respectively) so text shrinks in lockstep with slot width. The
-non-suffixed fonts are identical across variants.
+The label is static per section (passed in at the call site) rather
+than dynamic via `$INFO[Container(9000).ListItem.Label]` — a dynamic
+label would briefly show the *new* section's text while the *old*
+section is still sliding off-screen.
 
-The Main Menu Title uses `font_mainmenu` (also scaled per variant:
-45 / 39 / 34 for large / medium / small).
+Sections without a grouplist (favorites uses a `panel`, disc uses
+`ImageWidget`) keep a sibling `MainMenuTitle` instead — stationary
+title is acceptable there because those sections don't need
+widget-stack scrolling.
 
-If another sub-area of the skin needs its own scaled fonts, follow the
-same pattern with a different suffix (e.g. `_small`) rather than
-reusing `_w`.
-
-## Scaling other home widgets to 6 cards across
-
-The widget panel inside group 2000 spans 1850 skin px. To fit 6 slots
-evenly with ≈25 px right margin matching the weather row, each slot is
-scaled by 0.945 from the original card width. Widgets covered:
-
-- `WidgetListPoster` (movies, tvshows posters)
-- `WidgetListEpisodes` (recently added episodes)
-- `WidgetListSquare` (music albums)
-- `WidgetListCategories` (inline — categories/genre rows, addons)
-- `WidgetListPVR` (live TV channel tiles)
-
-For each, update the outer slot `width`, `itemlayout`/`focusedlayout`
-`height`, inner `<group>` `<left>` (to centre the card in its slot),
-focus `<effect type="zoom">` `center="x,y"`, and any hard-coded
-dimensions inside inline layouts.
+The stock Categories widget title is suppressed by passing
+`widget_header=""` at the `WidgetListCategories` call site (rather
+than `visible=false`, which would hide the card panel too). The
+CategoryLabel control still renders — it's just empty.
 
 ## Forking shared InfoWall layouts
 
 `WidgetListPoster`, `WidgetListEpisodes`, `WidgetListSquare` reference
 layout includes defined in `View_54_InfoWall.xml` that are *also* used
 by the full-screen View 54 (movies/tvshows/episodes/music browser).
-To scale the home variants without touching View 54, fork the layout:
-add `InfoWallMovieLayoutHome`, `InfoWallEpisodeLayoutHome`,
+To change home-widget dimensions without touching View 54, fork the
+layout: add `InfoWallMovieLayoutHome`, `InfoWallEpisodeLayoutHome`,
 `InfoWallMusicLayoutHome` as new includes in that file and point the
 home widget include at the `*Home` variant. All internal dimensions
 (bg width/height/left/top, textbox, overlay, progress, rating offsets,
-bordersize) must be scaled together — they are hard-coded, not
-derived from the slot width.
+bordersize) must be edited together — they are hard-coded, not derived
+from the slot width.
 
 ## Left-aligning widget category labels
 
 `CategoryLabel` has a `posx` parameter (default 55). For home widgets,
 pass `posx=82` so the label lines up with the first card's left edge
-within the widget slot. Also pass `font=font13_w` for the scaled
-variant.
+within the widget slot. Also pass `font=font13_w` for the home-widget
+text size.
 
-## Main Menu Title and hidden Categories label
+## Font conventions
 
-The home screen shows the current main-menu section name (Movies,
-TV shows, …) as a heading above the Categories row. Implemented as a
-single label `id="2099"` inside group 2000, sourcing its text from
-`$INFO[Container(9000).ListItem.Label]`. Positioned at `<left>82</left>`
-to align with the first card.
+Home-widget text uses `_w`-suffixed font variants (`font10_w`,
+`font12_w`, `font13_w`, `font14_w`, `font25_narrow_w`, `font27_w`,
+`font27_narrow_w`, `font20_title_w`, `font30_title_w`). Originally
+introduced for per-variant scaling; now they're a single set of fixed
+sizes.
 
-The stock Categories widget title is suppressed by passing
-`widget_header=""` at the `WidgetListCategories` call site (rather
-than `visible=false`, which would hide the card panel too). The
-CategoryLabel control still renders — it's just empty.
+The Main Menu Title uses `font_mainmenu`.
+
+If you need another scaled sub-area, prefer a new suffix (e.g. `_xl`)
+rather than reusing `_w`.
+
+## List-highlight colour
+
+`list_focus` (in every `colors/<theme>.xml`) is the colordiffuse used
+for focused list items across the skin. Currently set to 60 % opaque
+(alpha `99`) over each theme's accent hue, e.g. `99607D8B` in
+`defaults.xml`. Replaces the older `button_focus` / `button_alt_focus`
+references on `lists/focus.png`.
+
+## Skin `<res>` and script-addon WindowXML overrides
+
+`addon.xml` can declare a non-1080p logical coord space, e.g.
+`<res width="2256" height="1269" aspect="16:9" default="true" folder="xml"/>`.
+Skin XML is then authored in those units, which Kodi maps to the
+physical display. Estuary-derived skins tolerate this with top-left
+anchoring and relative sizing.
+
+**Trap: forking a script-addon's WindowXMLDialog into the skin.** If
+the skin ships a file with the same filename as a script addon's
+window XML (e.g. `script-embuary-video.xml` matching
+`script.embuary.info`'s movie-info dialog), Kodi prefers the skin's
+copy. Two paths with different scaling semantics:
+
+- **Addon's own** `resources/skins/default/1080i/foo.xml` → Kodi treats
+  the `1080i` folder as a declared 1920×1080 coord system and scales
+  the whole dialog to the skin's `<res>` space. Works at any res.
+- **Skin's `xml/foo.xml`** → Kodi treats contents as already in the
+  skin's coord space. Literal `<width>1920</width>` renders as 85 % of
+  screen at 2256×1269 — dialog pins top-left, content clipped or
+  undersized.
+
+Rule: **don't fork script-addon WindowXMLs into the skin** unless
+you're prepared to rescale them every time `<res>` changes. For mods
+to an addon's dialog (extra menu items, theming), prefer contributing
+upstream or letting the originating addon apply its own patch — e.g.
+KodiSeerr's Advanced-settings "Inject request button into Embuary
+info" action injects a seven-line `<item>` block plus an icon into
+`script.embuary.info` directly, so embuary's auto-scaling still
+applies.
+
+**Diagnosing which file Kodi loaded.** Tail `kodi.log` while opening
+the dialog and look for `Window Init (...)` lines — they print the
+full path, revealing skin-override vs addon-original. Example from
+the embuary debugging session:
+
+```
+Window Init (/.../skin.contuary/xml/script-embuary-video.xml)
+Window Init (/.../script.embuary.info/resources/skins/default/1080i/script-embuary-person.xml)
+```
+
+The first is a skin override (won't scale), the second is the addon
+original (auto-scales).

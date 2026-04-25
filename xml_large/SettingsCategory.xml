@@ -110,7 +110,7 @@
 				<textoffsetx>40</textoffsetx>
 				<aligny>center</aligny>
 				<font>font37</font>
-				<texturefocus colordiffuse="button_focus">lists/focus.png</texturefocus>
+				<texturefocus colordiffuse="list_focus">lists/focus.png</texturefocus>
 				<texturenofocus />
 			</control>
 		</control>
