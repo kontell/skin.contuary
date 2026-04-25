@@ -1,6 +1,3 @@
-[B]1.5.1[/B]
-• Home: fix watched-status icon drifting left on scaled posters (now flush to the poster's bottom-right, no longer overlapping the TV episode count)
-
 [B]1.5.0[/B]
 • Home: scale movie / TV show posters ~1.095x to match category-card row height; align posters with the category-card left edge
 • Home live TV: shift recent recordings down to accommodate the taller poster row; stop the TV channel groups title overlapping the widget above it
