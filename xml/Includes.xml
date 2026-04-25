@@ -253,7 +253,7 @@
 					<top>0</top>
 					<right>0</right>
 					<bottom>0</bottom>
-					<texture colordiffuse="button_focus">lists/focus.png</texture>
+					<texture colordiffuse="list_focus">lists/focus.png</texture>
 					<animation effect="fade" start="100" end="50" time="0">UnFocus</animation>
 				</control>
 				<control type="group">
@@ -534,7 +534,7 @@
 				<top>110</top>
 				<width>160</width>
 				<height>63</height>
-				<font>font27_narrow</font>
+				<font>font27_narrow_w</font>
 				<align>center</align>
 				<aligny>center</aligny>
 				<label>$INFO[$PARAM[label]]</label>
@@ -586,7 +586,7 @@
 						<top>0</top>
 						<right>0</right>
 						<bottom>0</bottom>
-						<texture colordiffuse="button_focus">lists/focus.png</texture>
+						<texture colordiffuse="list_focus">lists/focus.png</texture>
 						<animation effect="fade" start="100" end="0" time="0" condition="!Control.HasFocus($PARAM[list_id])">Conditional</animation>
 					</control>
 					<control type="image">
@@ -1730,7 +1730,7 @@
 					<top>0</top>
 					<right>0</right>
 					<bottom>0</bottom>
-					<texture colordiffuse="button_focus">lists/focus.png</texture>
+					<texture colordiffuse="list_focus">lists/focus.png</texture>
 					<animation effect="fade" start="100" end="50" time="0">UnFocus</animation>
 				</control>
 				<control type="image">

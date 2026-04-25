@@ -3,6 +3,7 @@
 	<defaultcontrol>9000</defaultcontrol>
 	<backgroundcolor>background</backgroundcolor>
 	<onload condition="String.IsEmpty(Skin.String(background_overlay))">Skin.SetString(background_overlay,1)</onload>
+	<onload condition="System.HasAddon(script.skin.contuary)">RunScript(script.skin.contuary,_sync)</onload>
 	<controls>
 		<include>DefaultBackground</include>
 		<control type="multiimage">
@@ -72,6 +73,13 @@
 					<include>DefaultSettingButton</include>
 					<onclick>Skin.SelectBool(31164, 31165|show_profilename, 31166|show_profileavatar, 16018|show_none)</onclick>
 					<label2>$VAR[ProfileIdentificationLabel2Var]</label2>
+				</control>
+				<control type="button" id="708">
+					<label>Resolution</label>
+					<label2>$INFO[Skin.String(resolution)]</label2>
+					<include>DefaultSettingButton</include>
+					<enable>System.HasAddon(script.skin.contuary)</enable>
+					<onclick>RunScript(script.skin.contuary)</onclick>
 				</control>
 			</control>
 			<control type="grouplist" id="600">
@@ -378,7 +386,7 @@
 					<control type="image">
 						<width>470</width>
 						<height>85</height>
-						<texture colordiffuse="button_focus">lists/focus.png</texture>
+						<texture colordiffuse="list_focus">lists/focus.png</texture>
 						<animation effect="fade" start="100" end="50" time="40" condition="!Control.HasFocus(9000)">Conditional</animation>
 					</control>
 					<control type="label">
