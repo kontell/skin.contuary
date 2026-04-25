@@ -1,3 +1,11 @@
+[B]2.0.0[/B]
+• Home: per-section main menu titles, animated with widget-stack scroll
+• Home: PSS sidebar (player / settings / search) with enlarged focus rings
+• Home weather: nudge widgets down to clear the section title
+• Home music: drop off-screen right-edge trim hack
+• Lists: replace button_focus with new list_focus tint (60% accent)
+• Fix watched-status icon position on scaled home posters
+
 [B]1.5.0[/B]
 • Home: scale movie / TV show posters ~1.095x to match category-card row height; align posters with the category-card left edge
 • Home live TV: shift recent recordings down to accommodate the taller poster row; stop the TV channel groups title overlapping the widget above it
