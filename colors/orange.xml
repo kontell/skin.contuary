@@ -6,5 +6,6 @@
 	<color name="dialog_header_tint">FFBF7509</color>
 	<color name="button_focus">FFFF9800</color>
 	<color name="button_alt_focus">80FF9800</color>
+	<color name="list_focus">99FF9800</color>
 	<color name="selected">FFFFF100</color>
 </colors>

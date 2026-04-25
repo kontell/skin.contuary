@@ -6,5 +6,6 @@
 	<color name="dialog_header_tint">FF0A756B</color>
 	<color name="button_focus">FF009688</color>
 	<color name="button_alt_focus">80009688</color>
+	<color name="list_focus">99009688</color>
 	<color name="selected">FFC67F03</color>
 </colors>

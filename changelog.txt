@@ -1,3 +1,24 @@
+[B]1.5.0[/B]
+• Home: scale movie / TV show posters ~1.095x to match category-card row height; align posters with the category-card left edge
+• Home live TV: shift recent recordings down to accommodate the taller poster row; stop the TV channel groups title overlapping the widget above it
+
+[B]1.4.0[/B]
+• Home: hide Kodi vendor logo, align main menu focus highlight with icons
+• Home weather: scale 7-day forecast and hourly widgets to fit on screen, align labels to card edges, scale all text ~0.95x
+• Home widgets: scale movies / TV shows / music / live TV / add-ons / videos / favourites rows to 6 cards across evenly, with left-aligned labels and scaled text
+• Home music: prevent 7th album card from peeking on the right
+
+[B]1.2.2[/B]
+• Remove failed workarounds for Kodi Piers black screen bug (xbmc/xbmc#27805)
+
+[B]1.2.1[/B]
+• Version bump to test upgrade path
+
+[B]1.2.0[/B]
+• Added KodiSeerr request button to embuary info dialog for items not in library
+• Added embuary info dialog override (script-embuary-video.xml)
+• Default color scheme changed to concrete
+
 [B]0.8.5[/B]
 • Updated language files from Transifex
 
