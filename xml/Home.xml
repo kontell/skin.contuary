@@ -617,9 +617,12 @@
 					<control type="grouplist" id="15001">
 						<include>WidgetGroupListCommon</include>
 						<pagecontrol>15010</pagecontrol>
-						<include content="MainMenuTitle">
-							<param name="label" value="$LOCALIZE[8]"/>
-						</include>
+						<control type="group">
+							<height>170</height>
+							<include content="MainMenuTitle">
+								<param name="label" value="$LOCALIZE[8]"/>
+							</include>
+						</control>
 						<control type="group" id="16678">
 							<description>Weather info</description>
 							<left>68</left>
