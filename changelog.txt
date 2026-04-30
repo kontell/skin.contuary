@@ -1,3 +1,6 @@
+[B]2.0.1[/B]
+• Fullscreen OSD: show premiered date with calendar icon, matching the browse-mode info bar
+
 [B]2.0.0[/B]
 • Piers (Kodi 22) compatibility: rebased onto Estuary 4.1.0 vendor drop; replays Contuary's Home / weather / widget customisations on top
 
