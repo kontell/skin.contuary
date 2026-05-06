@@ -1,3 +1,6 @@
+[B]2.0.2[/B]
+• Home live TV: nudge the Timers widget label down 20px so it no longer crowds the Recent Recordings widget above
+
 [B]2.0.0[/B]
 • Home: per-section main menu titles, animated with widget-stack scroll
 • Home: PSS sidebar (player / settings / search) with enlarged focus rings
