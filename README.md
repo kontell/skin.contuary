@@ -6,7 +6,7 @@ Simple Mod of Kodi Default Skin (Estuary)
 
 - Icons Only Main Menu
 - Script.skin.contuary
-  - Scale the skin through extended resolution selection
+- Scale the UI using [script.skin.contuary](https://github.com/kontell/script.skin.contuary/).
 
 ## Installation
 
