@@ -446,6 +446,7 @@
 							<param name="list_id" value="12400"/>
 							<param name="label" value="$INFO[ListItem.Title]$INFO[ListItem.Date, (,)]"/>
 							<param name="label2" value="$VAR[SeasonEpisodeLabel]$INFO[ListItem.EpisodeName]"/>
+							<param name="label_top" value="100"/>
 						</include>
 						<include content="WidgetListPVR" condition="System.HasPVRAddon">
 							<param name="content_path" value="pvr://channels/tv"/>
