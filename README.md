@@ -4,8 +4,8 @@
 
 Simple Mod of Kodi Default Skin (Estuary)
 
-- Icons Only Main Menu
-- Seerr request button for films & shows in Embuary info via KodiSeerr
+- Icons Only Main Menu;
+- Scale the UI using [script.skin.contuary](https://github.com/kontell/script.skin.contuary/).
 
 ## Installation
 
