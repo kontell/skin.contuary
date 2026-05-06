@@ -1,3 +1,6 @@
+[B]2.0.2[/B]
+• Home live TV: nudge the Timers widget label down 20px so it no longer crowds the Recent Recordings widget above
+
 [B]2.0.1[/B]
 • Fullscreen OSD: show premiered date with calendar icon, matching the browse-mode info bar
 
