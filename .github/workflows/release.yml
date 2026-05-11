@@ -1,0 +1,53 @@
+name: Release
+on:
+  push:
+    tags: ['omega/v*', 'piers/v*']
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+env:
+  addon_id: skin.contuary
+
+jobs:
+  release:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v5
+
+      - name: Build zip
+        run: ./build.sh "${{ github.workspace }}/artifacts"
+
+      - name: Get version and changelog
+        id: meta
+        run: |
+          version=$(sed -n 's/.*<addon[^>]* version="\([^"]*\)".*/\1/p' addon.xml | head -1)
+          echo "version=$version" >> $GITHUB_OUTPUT
+
+          if [[ "$GITHUB_REF" == refs/tags/* ]]; then
+            echo "tag=$GITHUB_REF_NAME" >> $GITHUB_OUTPUT
+          else
+            branch=$(git rev-parse --abbrev-ref HEAD)
+            echo "tag=${branch}/v${version}" >> $GITHUB_OUTPUT
+          fi
+
+          if [[ -f changelog.txt ]]; then
+            changes=$(awk -v RS= 'NR==1' changelog.txt)
+          else
+            changes="Release $version"
+          fi
+          EOF=$(dd if=/dev/urandom bs=15 count=1 status=none | base64)
+          echo "changes<<$EOF" >> $GITHUB_OUTPUT
+          echo "$changes" >> $GITHUB_OUTPUT
+          echo "$EOF" >> $GITHUB_OUTPUT
+
+      - name: Create release
+        uses: softprops/action-gh-release@v2
+        with:
+          tag_name: ${{ steps.meta.outputs.tag }}
+          name: ${{ env.addon_id }} ${{ steps.meta.outputs.version }}
+          body: ${{ steps.meta.outputs.changes }}
+          draft: true
+          files: artifacts/*.zip
