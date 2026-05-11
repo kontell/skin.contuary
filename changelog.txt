@@ -1,3 +1,7 @@
+[B]2.0.3[/B]
+• Add curial and flat theme texture packs
+• Add GitHub Actions release workflow
+
 [B]2.0.2[/B]
 • Home live TV: nudge the Timers widget label down 20px so it no longer crowds the Recent Recordings widget above
 
