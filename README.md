@@ -11,7 +11,3 @@ Simple Mod of Kodi Default Skin (Estuary)
 ## Installation
 
 Install via the [Kontell Repository](https://github.com/kontell/repository.kontell).
-
-&nbsp;
-![Screenshot](Screenshot.png)
-
