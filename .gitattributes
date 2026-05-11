@@ -1,4 +1,8 @@
-CLAUDE.md export-ignore
-Screenshot.png export-ignore
+.claude/ export-ignore
+.github/ export-ignore
 .gitattributes export-ignore
-make-zip.sh export-ignore
+.gitignore export-ignore
+build.sh export-ignore
+CLAUDE.md export-ignore
+README.md export-ignore
+Screenshot.png export-ignore
