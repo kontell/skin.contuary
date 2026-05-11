@@ -22,13 +22,22 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v5
 
+      - name: Detect branch from tag
+        id: branch
+        run: |
+          if [[ "$GITHUB_REF_NAME" == */* ]]; then
+            echo "name=${GITHUB_REF_NAME%%/*}" >> $GITHUB_OUTPUT
+          else
+            echo "name=$(git rev-parse --abbrev-ref HEAD)" >> $GITHUB_OUTPUT
+          fi
+
       - name: Build zip
-        run: ./build.sh "${{ github.workspace }}/artifacts"
+        run: ./build.sh "${{ github.workspace }}/artifacts" "${{ steps.branch.outputs.name }}"
 
       - name: Upload artifact
         uses: actions/upload-artifact@v4
         with:
-          name: ${{ env.addon_id }}
+          name: ${{ env.addon_id }}-${{ steps.branch.outputs.name }}
           path: ${{ github.workspace }}/artifacts/*.zip
 
   release:
@@ -41,10 +50,19 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v5
 
+      - name: Detect branch from tag
+        id: branch
+        run: |
+          if [[ "$GITHUB_REF_NAME" == */* ]]; then
+            echo "name=${GITHUB_REF_NAME%%/*}" >> $GITHUB_OUTPUT
+          else
+            echo "name=$(git rev-parse --abbrev-ref HEAD)" >> $GITHUB_OUTPUT
+          fi
+
       - name: Download artifact
         uses: actions/download-artifact@v4
         with:
-          name: ${{ env.addon_id }}
+          name: ${{ env.addon_id }}-${{ steps.branch.outputs.name }}
           path: artifacts
 
       - name: Get version and changelog
@@ -74,7 +92,7 @@ jobs:
         uses: softprops/action-gh-release@v2
         with:
           tag_name: ${{ steps.meta.outputs.tag }}
-          name: ${{ env.addon_id }} ${{ steps.meta.outputs.version }}
+          name: ${{ env.addon_id }} ${{ steps.meta.outputs.version }} (${{ steps.branch.outputs.name }})
           body: ${{ steps.meta.outputs.changes }}
           draft: true
           files: artifacts/*.zip
