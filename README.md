@@ -16,4 +16,5 @@ Install via the [Kontell Repository](https://github.com/kontell/repository.konte
 ## Screenshots
 
 ![Screenshot 1](resources/screenshot-01.jpg)
+
 ![Screenshot 2](resources/screenshot-02.jpg)
