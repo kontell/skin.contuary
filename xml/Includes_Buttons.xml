@@ -55,7 +55,7 @@
 			<aligny>center</aligny>
 			<invalidcolor>invalid</invalidcolor>
 			<selectedcolor>selected</selectedcolor>
-			<texturefocus colordiffuse="list_focus">lists/focus.png</texturefocus>
+			<texturefocus colordiffuse="button_focus">lists/focus.png</texturefocus>
 			<texturenofocus />
 		</definition>
 	</include>
@@ -71,7 +71,7 @@
 			<aligny>center</aligny>
 			<invalidcolor>invalid</invalidcolor>
 			<selectedcolor>selected</selectedcolor>
-			<texturefocus colordiffuse="list_focus">lists/focus.png</texturefocus>
+			<texturefocus colordiffuse="button_focus">lists/focus.png</texturefocus>
 			<texturenofocus colordiffuse="dialog_tint">colors/white.png</texturenofocus>
 		</definition>
 	</include>
