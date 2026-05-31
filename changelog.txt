@@ -1,3 +1,7 @@
+[B]2.0.4[/B]
+• Settings and stream-selection dialogs: restore the solid (opaque) focused-row highlight
+• Rebrand the addon icon to Contuary
+
 [B]2.0.3[/B]
 • Add curial and flat theme texture packs
 • Add GitHub Actions release workflow
