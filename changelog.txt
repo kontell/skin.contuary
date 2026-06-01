@@ -1,3 +1,6 @@
+[B]2.0.5[/B]
+• Home pictures: drop the Media sources widget and its label by 45px
+
 [B]2.0.4[/B]
 • Settings and stream-selection dialogs: restore the solid (opaque) focused-row highlight
 • Rebrand the addon icon to Contuary
