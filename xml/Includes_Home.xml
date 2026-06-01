@@ -31,9 +31,10 @@
 	</include>
 	<include name="MainMenuTitle">
 		<param name="label" value=""/>
+		<param name="height">140</param>
 		<definition>
 			<control type="group">
-				<height>140</height>
+				<height>$PARAM[height]</height>
 				<width>1800</width>
 				<control type="label">
 					<top>20</top>
