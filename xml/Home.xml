@@ -870,6 +870,7 @@
 						<include>WidgetGroupListCommon</include>
 						<include content="MainMenuTitle">
 							<param name="label" value="$LOCALIZE[1]"/>
+							<param name="height" value="185"/>
 						</include>
 						<include content="WidgetListCategories" condition="!Skin.HasSetting(HomeMenuNoPicturesButton)">
 							<param name="content_path" value="sources://pictures/"/>
