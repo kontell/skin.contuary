@@ -319,7 +319,7 @@
 		<value condition="Player.Paused">$LOCALIZE[112]</value>
 		<value condition="Player.Forwarding">$LOCALIZE[31039] $VAR[VideoPlayerForwardRewindVar]</value>
 		<value condition="Player.Rewinding">$LOCALIZE[31038] $VAR[VideoPlayerForwardRewindVar]</value>
-		<value condition="Player.IsTempo">$LOCALIZE[31142]: $INFO[Player.PlaySpeed]</value>
+		<value condition="Player.IsTempo + !Skin.HasSetting(hide_tempo_osd)">$LOCALIZE[31142]: $INFO[Player.PlaySpeed]</value>
 	</variable>
 	<variable name="SeekTimeLabelVar">
 		<value condition="!String.IsEmpty(Player.SeekNumeric)">[B]$INFO[Player.SeekNumeric(hh:mm:ss)][/B]</value>

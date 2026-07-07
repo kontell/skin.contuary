@@ -15,4 +15,11 @@
         <reset>Player.Seeking | Player.Forwarding | Player.Rewinding | Player.HasPerformedSeek(1)</reset>
         <stop>Integer.IsGreaterOrEqual(Skin.TimerElapsedSecs(1109_topbaroverlay),5) | Player.Playing</stop>
     </timer>
+    <timer>
+        <name>temposuppress</name>
+        <description>When "hide play speed OSD on tempo change" is enabled, holds seek-bar suppression from the moment tempo leaves 1.0 until 4s after it returns. Kodi runs a resync seek on every tempo change (including turning tempo off), which sets Player.HasPerformedSeek(3) and would otherwise pop the seek bar.</description>
+        <start reset="true">Skin.HasSetting(hide_tempo_osd) + Player.IsTempo</start>
+        <reset>Player.IsTempo</reset>
+        <stop>Integer.IsGreaterOrEqual(Skin.TimerElapsedSecs(temposuppress),4)</stop>
+    </timer>
 </timers>

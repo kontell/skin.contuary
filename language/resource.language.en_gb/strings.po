@@ -967,3 +967,9 @@ msgstr ""
 msgctxt "#31612"
 msgid "channels"
 msgstr ""
+
+#: /xml/SkinSettings.xml
+#. Skin setting: suppress the on-screen "Play speed" indicator when only the playback tempo changes (lets an addon sync playback silently)
+msgctxt "#31613"
+msgid "Hide play speed OSD on tempo change"
+msgstr ""
