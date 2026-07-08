@@ -8,6 +8,7 @@ Simple Mod of Kodi Default Skin (Estuary)
 - Suitable for 16:9 displays only
 - Scale the UI using [script.skin.contuary](https://github.com/kontell/script.skin.contuary/).
   - Settings -> Interface -> Skin -> Configure skin -> General -> Resolution
+- Settings option to suppress the seekbar during tempo changes
 
 ## Installation
 
