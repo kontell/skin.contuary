@@ -1,0 +1,103 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- Song lyrics overlay, fed by plugin.video.kofin.
+
+     Kodi's music database has no lyrics column, so lyrics only ever exist on
+     the playback that is running. An addon cannot draw them passively either:
+     a Python window shown over playback becomes the *active* window and
+     swallows navigation and the OSD. A skin control belongs to the window
+     that is already active, so it costs nothing and blocks nothing.
+
+     A fixedlist, not a stack of labels bound to properties: <focusposition>
+     pins the line being sung to one row and Kodi scrolls the rest beneath it,
+     animated by <scrolltime>. Swapping label text jumps a line at a time,
+     which is the thing that makes a lyrics view feel broken.
+
+     Kofin fills the list from its own directory and moves the highlight with
+     Control.SetFocus. The window tells kofin which control to drive by
+     setting kofin.lyric.control on load, so the addon drives whatever id a
+     skin declares and stays silent for skins that declare none.
+
+       kofin.lyric.show     non-empty while script.kofin.lyrics wants them on
+                            screen -- the gate. Not kofin's own "I have lyrics"
+                            flag: whether to show them is the lyrics addon's
+                            call, and it has a setting for waiting to be asked
+       kofin.lyric.path     the list's directory; carries the song id, so the
+                            path changes per song and Kodi re-reads it
+       kofin.lyric.control  set by us, read by kofin (see MusicVisualisation)
+       kofin.lyric.interactive  set by the addon while its own window has taken
+                            over for scrolling -- this overlay stands aside,
+                            because Kodi's keymap gives the arrow keys to
+                            StepBack/SkipNext for the whole visualisation
+                            window, so a list drawn here can never be scrolled
+                            by hand however it is focused
+-->
+<includes>
+	<include name="KofinLyricsOverlay">
+		<control type="group">
+			<!-- 40 from the right edge, 100 below the top, 180 above the
+			     bottom: 1080 - 100 - 180 = 800. Authored in the skin's own
+			     coordinate space, so it tracks resolution changes with
+			     everything else. -->
+			<right>40</right>
+			<width>700</width>
+			<top>100</top>
+			<height>800</height>
+			<include>Visible_Right</include>
+			<!-- The track-info panel is bottom-anchored and its labels run out
+			     to x=1890, so it collides with this whenever info or the OSD
+			     is up. Yielding is the default; kofin_lyrics_over_osd keeps
+			     both on screen for anyone who would rather have the overlap. -->
+			<visible>!String.IsEmpty(Window(Home).Property(kofin.lyric.show)) + String.IsEmpty(Window(Home).Property(kofin.lyric.interactive)) + [Skin.HasSetting(kofin_lyrics_over_osd) | ![Player.ShowInfo | Window.IsActive(musicosd)]]</visible>
+			<control type="image">
+				<left>0</left>
+				<top>0</top>
+				<width>700</width>
+				<height>800</height>
+				<!-- The same texture and diffuse the track-info panel uses, so
+				     the two read as one surface rather than two dialogs. -->
+				<texture colordiffuse="80FFFFFF">dialogs/dialog-bg-nobo.png</texture>
+			</control>
+			<control type="list" id="9500">
+				<left>20</left>
+				<top>10</top>
+				<width>660</width>
+				<height>780</height>
+				<!-- 13 rows of 60. A plain list, not a fixedlist: a fixedlist
+				     pins the sung line mid-panel from the very first line, so a
+				     track opens with blank space above the words. This lets the
+				     cursor walk down from the top, and kofin's lyrics addon
+				     scrolls it once the line reaches the middle. -->
+				<scrolltime tween="sine" easing="out">350</scrolltime>
+				<onup>9500</onup>
+				<ondown>9500</ondown>
+				<onleft>9500</onleft>
+				<onright>9500</onright>
+				<content>$INFO[Window(Home).Property(kofin.lyric.path)]</content>
+				<itemlayout height="60" width="660">
+					<control type="label">
+						<width>660</width>
+						<height>60</height>
+						<font>font27</font>
+						<textcolor>C0FFFFFF</textcolor>
+						<shadowcolor>black</shadowcolor>
+						<align>center</align>
+						<aligny>center</aligny>
+						<label>$INFO[ListItem.Label]</label>
+					</control>
+				</itemlayout>
+				<focusedlayout height="60" width="660">
+					<control type="label">
+						<width>660</width>
+						<height>60</height>
+						<font>font32</font>
+						<textcolor>FFFFFFFF</textcolor>
+						<shadowcolor>black</shadowcolor>
+						<align>center</align>
+						<aligny>center</aligny>
+						<label>$INFO[ListItem.Label]</label>
+					</control>
+				</focusedlayout>
+			</control>
+		</control>
+	</include>
+</includes>

@@ -2,6 +2,10 @@
 <window>
 	<defaultcontrol></defaultcontrol>
 	<backgroundcolor>background</backgroundcolor>
+	<!-- Name the lyrics list for plugin.video.kofin to drive. Cleared on
+	     unload, so the addon only drives a control that is on screen. -->
+	<onload>SetProperty(kofin.lyric.control,9500,Home)</onload>
+	<onunload>ClearProperty(kofin.lyric.control,Home)</onunload>
 	<onload condition="System.AddonIsEnabled(script.artistslideshow) + !Skin.HasSetting(hide_background_fanart)">RunScript(script.artistslideshow)</onload>
 	<controls>
 		<control type="visualisation" id="2">
@@ -36,6 +40,7 @@
 			<visible>!Visualisation.Enabled + [[String.IsEmpty(Player.Art(fanart)) + String.IsEmpty(Window(Visualisation).Property(ArtistSlideshow.Image))] | Skin.HasSetting(hide_background_fanart)]</visible>
 			<include>ColoredBackgroundImages</include>
 		</control>
+		<include>KofinLyricsOverlay</include>
 		<control type="group">
 			<visible>[Player.ShowInfo | Window.IsActive(musicosd)] + !MusicPlayer.Content(livetv)</visible>
 			<height>460</height>
