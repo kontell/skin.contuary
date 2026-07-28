@@ -1,3 +1,7 @@
+[B]2.2.0[/B]
+• Music visualisation: show song lyrics from a Jellyfin server, supplied by the Kofin Lyrics add-on. Lines scroll in time with the music, starting at the top of the panel and scrolling once the sung line reaches the middle
+• New "Lyrics over track info" setting in the music settings dialog: by default the lyrics panel steps aside while the track info or OSD is on screen, since the two overlap
+
 [B]2.1.0[/B]
 • On screen display: new "Hide play speed OSD on tempo change" setting that suppresses the seek bar and play-speed indicator on every tempo change (including returning to normal speed), so an add-on can adjust playback tempo without disturbing the OSD
 
