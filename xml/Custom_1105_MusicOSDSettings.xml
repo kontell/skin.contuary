@@ -78,7 +78,7 @@
 						<label>$LOCALIZE[31612]</label>
 						<onclick>Skin.ToggleSetting(kofin_lyrics_over_osd)</onclick>
 						<selected>Skin.HasSetting(kofin_lyrics_over_osd)</selected>
-						<visible>!String.IsEmpty(Window(Home).Property(kofin.lyric.has))</visible>
+						<visible>!String.IsEmpty(Window(Home).Property(kofin.lyric.show))</visible>
 					</control>
 				</control>
 			</control>

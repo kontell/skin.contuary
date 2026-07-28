@@ -17,7 +17,10 @@
      setting kofin.lyric.control on load, so the addon drives whatever id a
      skin declares and stays silent for skins that declare none.
 
-       kofin.lyric.has      non-empty while lyrics are up (visibility gate)
+       kofin.lyric.show     non-empty while script.kofin.lyrics wants them on
+                            screen -- the gate. Not kofin's own "I have lyrics"
+                            flag: whether to show them is the lyrics addon's
+                            call, and it has a setting for waiting to be asked
        kofin.lyric.path     the list's directory; carries the song id, so the
                             path changes per song and Kodi re-reads it
        kofin.lyric.control  set by us, read by kofin (see MusicVisualisation)
@@ -44,7 +47,7 @@
 			     to x=1890, so it collides with this whenever info or the OSD
 			     is up. Yielding is the default; kofin_lyrics_over_osd keeps
 			     both on screen for anyone who would rather have the overlap. -->
-			<visible>!String.IsEmpty(Window(Home).Property(kofin.lyric.has)) + String.IsEmpty(Window(Home).Property(kofin.lyric.interactive)) + [Skin.HasSetting(kofin_lyrics_over_osd) | ![Player.ShowInfo | Window.IsActive(musicosd)]]</visible>
+			<visible>!String.IsEmpty(Window(Home).Property(kofin.lyric.show)) + String.IsEmpty(Window(Home).Property(kofin.lyric.interactive)) + [Skin.HasSetting(kofin_lyrics_over_osd) | ![Player.ShowInfo | Window.IsActive(musicosd)]]</visible>
 			<control type="image">
 				<left>0</left>
 				<top>0</top>
