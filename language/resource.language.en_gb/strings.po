@@ -973,3 +973,7 @@ msgstr ""
 msgctxt "#31613"
 msgid "Hide play speed OSD on tempo change"
 msgstr ""
+
+msgctxt "#31614"
+msgid "Lyrics over track info"
+msgstr ""

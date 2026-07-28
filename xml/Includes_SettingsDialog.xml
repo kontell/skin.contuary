@@ -233,6 +233,13 @@
 			<onclick>Addon.OpenSettings($INFO[Skin.String(LyricScript_Path)])</onclick>
 			<visible>!String.IsEmpty(Skin.String(LyricScript_Path))</visible>
 		</control>
+		<control type="radiobutton" id="22109">
+			<include>DialogSettingButton</include>
+			<label>$LOCALIZE[31614]</label>
+			<onclick>Skin.ToggleSetting(kofin_lyrics_over_osd)</onclick>
+			<selected>Skin.HasSetting(kofin_lyrics_over_osd)</selected>
+			<visible>!String.IsEmpty(Window(Home).Property(kofin.lyric.show))</visible>
+		</control>
 	</include>
 	<include name="SettingsDialogMovieWidgetsContent">
 		<control type="radiobutton" id="22101">
