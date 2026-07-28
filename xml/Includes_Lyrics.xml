@@ -21,6 +21,12 @@
        kofin.lyric.path     the list's directory; carries the song id, so the
                             path changes per song and Kodi re-reads it
        kofin.lyric.control  set by us, read by kofin (see MusicVisualisation)
+       kofin.lyric.interactive  set by the addon while its own window has taken
+                            over for scrolling -- this overlay stands aside,
+                            because Kodi's keymap gives the arrow keys to
+                            StepBack/SkipNext for the whole visualisation
+                            window, so a list drawn here can never be scrolled
+                            by hand however it is focused
 -->
 <includes>
 	<include name="KofinLyricsOverlay">
@@ -38,7 +44,7 @@
 			     to x=1890, so it collides with this whenever info or the OSD
 			     is up. Yielding is the default; kofin_lyrics_over_osd keeps
 			     both on screen for anyone who would rather have the overlap. -->
-			<visible>!String.IsEmpty(Window(Home).Property(kofin.lyric.has)) + [Skin.HasSetting(kofin_lyrics_over_osd) | ![Player.ShowInfo | Window.IsActive(musicosd)]]</visible>
+			<visible>!String.IsEmpty(Window(Home).Property(kofin.lyric.has)) + String.IsEmpty(Window(Home).Property(kofin.lyric.interactive)) + [Skin.HasSetting(kofin_lyrics_over_osd) | ![Player.ShowInfo | Window.IsActive(musicosd)]]</visible>
 			<control type="image">
 				<left>0</left>
 				<top>0</top>
