@@ -231,8 +231,7 @@
 						<param name="texture" value="osd/fullscreen/buttons/settings-subtitle.png"/>
 					</include>
 					<onclick>Close</onclick>
-					<onclick condition="!String.IsEmpty(Window(Home).Property(kofin.lyric.has))">SetFocus(9500)</onclick>
-					<onclick condition="String.IsEmpty(Window(Home).Property(kofin.lyric.has)) + !String.IsEmpty(Skin.String(LyricScript_Path))">RunScript($INFO[Skin.String(LyricScript_Path)])</onclick>
+					<onclick condition="!String.IsEmpty(Skin.String(LyricScript_Path))">RunScript($INFO[Skin.String(LyricScript_Path)])</onclick>
 					<onclick condition="String.IsEmpty(Skin.String(LyricScript_Path))">Skin.SetAddon(LyricScript_Path,xbmc.python.lyrics)</onclick>
 					<onclick condition="String.IsEmpty(Skin.String(LyricScript_Path))">Close</onclick>
 					<onclick condition="String.IsEmpty(Skin.String(LyricScript_Path))">RunScript($INFO[Skin.String(LyricScript_Path)])</onclick>
