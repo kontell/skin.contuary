@@ -39,7 +39,7 @@
 			     coordinate space, so it tracks resolution changes with
 			     everything else. -->
 			<right>40</right>
-			<width>640</width>
+			<width>700</width>
 			<top>100</top>
 			<height>800</height>
 			<include>Visible_Right</include>
@@ -51,7 +51,7 @@
 			<control type="image">
 				<left>0</left>
 				<top>0</top>
-				<width>640</width>
+				<width>700</width>
 				<height>800</height>
 				<!-- The same texture and diffuse the track-info panel uses, so
 				     the two read as one surface rather than two dialogs. -->
@@ -60,7 +60,7 @@
 			<control type="list" id="9500">
 				<left>20</left>
 				<top>10</top>
-				<width>600</width>
+				<width>660</width>
 				<height>780</height>
 				<!-- 13 rows of 60. A plain list, not a fixedlist: a fixedlist
 				     pins the sung line mid-panel from the very first line, so a
@@ -73,9 +73,9 @@
 				<onleft>9500</onleft>
 				<onright>9500</onright>
 				<content>$INFO[Window(Home).Property(kofin.lyric.path)]</content>
-				<itemlayout height="60" width="600">
+				<itemlayout height="60" width="660">
 					<control type="label">
-						<width>600</width>
+						<width>660</width>
 						<height>60</height>
 						<font>font27</font>
 						<textcolor>C0FFFFFF</textcolor>
@@ -85,9 +85,9 @@
 						<label>$INFO[ListItem.Label]</label>
 					</control>
 				</itemlayout>
-				<focusedlayout height="60" width="600">
+				<focusedlayout height="60" width="660">
 					<control type="label">
-						<width>600</width>
+						<width>660</width>
 						<height>60</height>
 						<font>font32</font>
 						<textcolor>FFFFFFFF</textcolor>
