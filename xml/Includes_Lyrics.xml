@@ -5,44 +5,24 @@
      the playback that is running. An addon cannot draw them passively either:
      a Python window shown over playback becomes the *active* window and
      swallows navigation and the OSD. A skin control belongs to the window
-     that is already active, so it costs nothing and blocks nothing — which is
-     why this lives here rather than in the addon.
+     that is already active, so it costs nothing and blocks nothing.
 
-     Kofin publishes a fixed ladder of window properties on Home, because skin
-     XML cannot iterate a list. The line being sung is always in the middle
-     slot, so this styles one constant index and never computes anything:
-     scrolling is the text changing underneath a static ladder. Slots beyond
-     either end of the song arrive empty, so lyrics scroll in and out.
+     A fixedlist, not a stack of labels bound to properties: <focusposition>
+     pins the line being sung to one row and Kodi scrolls the rest beneath it,
+     animated by <scrolltime>. Swapping label text jumps a line at a time,
+     which is the thing that makes a lyrics view feel broken.
 
-       kofin.lyric.has     non-empty while lyrics are up (the visibility gate)
-       kofin.lyric.active  non-empty when a line is current; empty for
-                           unsynced lyrics, which have nothing to highlight
-       kofin.lyric.0..8    the ladder; 4 is the current line
+     Kofin fills the list from its own directory and moves the highlight with
+     Control.SetFocus. The window tells kofin which control to drive by
+     setting kofin.lyric.control on load, so the addon drives whatever id a
+     skin declares and stays silent for skins that declare none.
+
+       kofin.lyric.has      non-empty while lyrics are up (visibility gate)
+       kofin.lyric.path     the list's directory; carries the song id, so the
+                            path changes per song and Kodi re-reads it
+       kofin.lyric.control  set by us, read by kofin (see MusicVisualisation)
 -->
 <includes>
-	<!-- One rung. Kept as an include so the ladder below is nine lines rather
-	     than nine near-identical control blocks. -->
-	<include name="KofinLyricLine">
-		<param name="slot">0</param>
-		<param name="font">font27</param>
-		<param name="color">C0FFFFFF</param>
-		<param name="visible">true</param>
-		<definition>
-			<control type="label">
-				<width>600</width>
-				<height>88</height>
-				<font>$PARAM[font]</font>
-				<textcolor>$PARAM[color]</textcolor>
-				<shadowcolor>black</shadowcolor>
-				<align>center</align>
-				<aligny>center</aligny>
-				<scroll>true</scroll>
-				<visible>$PARAM[visible]</visible>
-				<label>$INFO[Window(Home).Property(kofin.lyric.$PARAM[slot])]</label>
-			</control>
-		</definition>
-	</include>
-
 	<include name="KofinLyricsOverlay">
 		<control type="group">
 			<!-- 40 from the right edge, 100 below the top, 180 above the
@@ -68,35 +48,44 @@
 				     the two read as one surface rather than two dialogs. -->
 				<texture colordiffuse="80FFFFFF">dialogs/dialog-bg-nobo.png</texture>
 			</control>
-			<control type="grouplist">
+			<control type="fixedlist" id="9500">
 				<left>20</left>
-				<top>4</top>
+				<top>10</top>
 				<width>600</width>
-				<height>792</height>
-				<orientation>vertical</orientation>
-				<itemgap>0</itemgap>
-				<include content="KofinLyricLine"><param name="slot" value="0"/></include>
-				<include content="KofinLyricLine"><param name="slot" value="1"/></include>
-				<include content="KofinLyricLine"><param name="slot" value="2"/></include>
-				<include content="KofinLyricLine"><param name="slot" value="3"/></include>
-				<!-- The line being sung, twice over: unsynced lyrics have no
-				     current line, and lighting the middle of a static block
-				     would be pointing at an arbitrary one. A grouplist skips
-				     hidden children, so exactly one of these takes the slot. -->
-				<include content="KofinLyricLine">
-					<param name="slot" value="4"/>
-					<param name="font" value="font32"/>
-					<param name="color" value="FFFFFFFF"/>
-					<param name="visible" value="!String.IsEmpty(Window(Home).Property(kofin.lyric.active))"/>
-				</include>
-				<include content="KofinLyricLine">
-					<param name="slot" value="4"/>
-					<param name="visible" value="String.IsEmpty(Window(Home).Property(kofin.lyric.active))"/>
-				</include>
-				<include content="KofinLyricLine"><param name="slot" value="5"/></include>
-				<include content="KofinLyricLine"><param name="slot" value="6"/></include>
-				<include content="KofinLyricLine"><param name="slot" value="7"/></include>
-				<include content="KofinLyricLine"><param name="slot" value="8"/></include>
+				<height>780</height>
+				<!-- 13 rows of 60; row 6 is the middle one, and the line being
+				     sung is held there while the song scrolls past it. -->
+				<focusposition>6</focusposition>
+				<scrolltime tween="sine" easing="out">350</scrolltime>
+				<onup>9500</onup>
+				<ondown>9500</ondown>
+				<onleft>9500</onleft>
+				<onright>9500</onright>
+				<content>$INFO[Window(Home).Property(kofin.lyric.path)]</content>
+				<itemlayout height="60" width="600">
+					<control type="label">
+						<width>600</width>
+						<height>60</height>
+						<font>font27</font>
+						<textcolor>C0FFFFFF</textcolor>
+						<shadowcolor>black</shadowcolor>
+						<align>center</align>
+						<aligny>center</aligny>
+						<label>$INFO[ListItem.Label]</label>
+					</control>
+				</itemlayout>
+				<focusedlayout height="60" width="600">
+					<control type="label">
+						<width>600</width>
+						<height>60</height>
+						<font>font32</font>
+						<textcolor>FFFFFFFF</textcolor>
+						<shadowcolor>black</shadowcolor>
+						<align>center</align>
+						<aligny>center</aligny>
+						<label>$INFO[ListItem.Label]</label>
+					</control>
+				</focusedlayout>
 			</control>
 		</control>
 	</include>
