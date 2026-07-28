@@ -57,14 +57,16 @@
 				     the two read as one surface rather than two dialogs. -->
 				<texture colordiffuse="80FFFFFF">dialogs/dialog-bg-nobo.png</texture>
 			</control>
-			<control type="fixedlist" id="9500">
+			<control type="list" id="9500">
 				<left>20</left>
 				<top>10</top>
 				<width>600</width>
 				<height>780</height>
-				<!-- 13 rows of 60; row 6 is the middle one, and the line being
-				     sung is held there while the song scrolls past it. -->
-				<focusposition>6</focusposition>
+				<!-- 13 rows of 60. A plain list, not a fixedlist: a fixedlist
+				     pins the sung line mid-panel from the very first line, so a
+				     track opens with blank space above the words. This lets the
+				     cursor walk down from the top, and kofin's lyrics addon
+				     scrolls it once the line reaches the middle. -->
 				<scrolltime tween="sine" easing="out">350</scrolltime>
 				<onup>9500</onup>
 				<ondown>9500</ondown>
