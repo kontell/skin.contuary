@@ -923,5 +923,5 @@ msgid "System"
 msgstr ""
 
 msgctxt "#31612"
-msgid "Keep song lyrics visible with track info"
+msgid "Lyrics over track info"
 msgstr ""
