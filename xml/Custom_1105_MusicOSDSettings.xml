@@ -72,6 +72,14 @@
 						<onclick>Addon.OpenSettings($INFO[Skin.String(LyricScript_Path)])</onclick>
 						<visible>!String.IsEmpty(Skin.String(LyricScript_Path))</visible>
 					</control>
+					<control type="radiobutton" id="5009">
+						<width>600</width>
+						<include>DialogSettingButton</include>
+						<label>$LOCALIZE[31612]</label>
+						<onclick>Skin.ToggleSetting(kofin_lyrics_over_osd)</onclick>
+						<selected>Skin.HasSetting(kofin_lyrics_over_osd)</selected>
+						<visible>!String.IsEmpty(Window(Home).Property(kofin.lyric.has))</visible>
+					</control>
 				</control>
 			</control>
 		</control>

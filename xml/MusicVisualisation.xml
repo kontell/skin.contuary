@@ -36,6 +36,7 @@
 			<visible>!Visualisation.Enabled + [[String.IsEmpty(Player.Art(fanart)) + String.IsEmpty(Window(Visualisation).Property(ArtistSlideshow.Image))] | Skin.HasSetting(hide_background_fanart)]</visible>
 			<include>ColoredBackgroundImages</include>
 		</control>
+		<include>KofinLyricsOverlay</include>
 		<control type="group">
 			<visible>[Player.ShowInfo | Window.IsActive(musicosd)] + !MusicPlayer.Content(livetv)</visible>
 			<height>460</height>
