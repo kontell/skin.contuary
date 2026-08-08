@@ -1,0 +1,82 @@
+# Tell repository.kontell that a release was published, so the Kodi repository
+# picks it up within seconds instead of at the next scheduled reconcile.
+#
+# Three things about this are easy to get wrong and expensive to debug:
+#
+# 1. `release` events only start a workflow run if the workflow file exists on the
+#    **default branch**. A copy on a feature branch, or on the non-default channel
+#    branch, never fires. Keep it on the default branch of this repo.
+# 2. An event raised by the default `GITHUB_TOKEN` does not start a workflow run.
+#    So publishing a draft from inside Actions with the default token will NOT
+#    trigger this — publish from the GitHub UI, or with your own credentials.
+#    `repository.kontell`'s scheduled reconcile is the backstop when that happens.
+# 3. Dispatching into another repository needs a token that is not this repo's
+#    `GITHUB_TOKEN`, which is scoped to this repo alone. A GitHub App installation
+#    token is used rather than a classic PAT: scoped to the one target repo, and
+#    nothing to re-issue when a PAT would have expired.
+#
+# Until the App is configured this workflow is inert on purpose — it reports that
+# it is unconfigured and succeeds, because the scheduled reconcile already keeps
+# the repository correct. See repository.kontell's README.
+name: Notify repository
+
+on:
+  release:
+    types: [published]
+  workflow_dispatch:
+    inputs:
+      tag:
+        description: "Release tag to announce (blank = latest published)"
+        type: string
+        default: ""
+
+# Needs nothing here: the cross-repo dispatch rides on the App token below.
+permissions: {}
+
+env:
+  ADDON_ID: skin.contuary
+  TARGET_REPO: kontell/repository.kontell
+
+jobs:
+  notify:
+    runs-on: ubuntu-24.04
+    steps:
+      - name: Check the dispatch App is configured
+        id: configured
+        run: |
+          if [[ -z "${{ vars.REPO_DISPATCH_APP_ID }}" ]]; then
+            echo "::notice::REPO_DISPATCH_APP_ID is not set, so no dispatch will be"\
+                 "sent. ${{ env.TARGET_REPO }} will pick this release up on its next"\
+                 "scheduled reconcile (within 30 minutes). See that repo's README to"\
+                 "configure the App."
+            echo "ready=false" >> "$GITHUB_OUTPUT"
+          else
+            echo "ready=true" >> "$GITHUB_OUTPUT"
+          fi
+
+      - name: Mint an App installation token
+        if: steps.configured.outputs.ready == 'true'
+        id: app-token
+        uses: actions/create-github-app-token@v2
+        with:
+          app-id: ${{ vars.REPO_DISPATCH_APP_ID }}
+          private-key: ${{ secrets.REPO_DISPATCH_APP_PRIVATE_KEY }}
+          owner: kontell
+          # Scoped to the one repo it needs to write to.
+          repositories: repository.kontell
+
+      - name: Dispatch
+        if: steps.configured.outputs.ready == 'true'
+        env:
+          GH_TOKEN: ${{ steps.app-token.outputs.token }}
+          TAG: ${{ github.event.release.tag_name || inputs.tag }}
+        run: |
+          set -euo pipefail
+          echo "announcing ${ADDON_ID} ${TAG:-<latest>} to ${TARGET_REPO}"
+          gh api "repos/${TARGET_REPO}/dispatches" \
+            -f event_type=addon-released \
+            -f "client_payload[addon]=${ADDON_ID}" \
+            -f "client_payload[tag]=${TAG}" \
+            -f "client_payload[source]=${GITHUB_REPOSITORY}"
+          echo "dispatched. Follow it at" \
+               "https://github.com/${TARGET_REPO}/actions/workflows/publish.yml"
