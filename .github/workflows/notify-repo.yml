@@ -17,7 +17,7 @@
 #
 # Until the App is configured this workflow is inert on purpose — it reports that
 # it is unconfigured and succeeds, because the scheduled reconcile already keeps
-# the repository correct. See repository.kontell's README.
+# the repository correct. See repository.kontell's docs/publishing.md.
 name: Notify repository
 
 on:
@@ -47,8 +47,8 @@ jobs:
           if [[ -z "${{ vars.REPO_DISPATCH_APP_ID }}" ]]; then
             echo "::notice::REPO_DISPATCH_APP_ID is not set, so no dispatch will be"\
                  "sent. ${{ env.TARGET_REPO }} will pick this release up on its next"\
-                 "scheduled reconcile (within 30 minutes). See that repo's README to"\
-                 "configure the App."
+                 "scheduled reconcile (within 30 minutes). See that repo's"\
+                 "docs/publishing.md to configure the App."
             echo "ready=false" >> "$GITHUB_OUTPUT"
           else
             echo "ready=true" >> "$GITHUB_OUTPUT"
