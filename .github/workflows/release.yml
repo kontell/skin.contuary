@@ -1,98 +1,166 @@
+# Tag release: gate, build the channel's zip, draft a GitHub release whose body
+# is the top paragraph of changelog.txt.
+#
+# Releases are per-channel: omega/vX.Y.Z and piers/vX.Y.Z. The channel is the
+# tag's own prefix, and the guard below refuses a tag pointing into the other
+# channel's history — omega and piers have no common ancestor, so that check is
+# exact rather than heuristic.
 name: Release
+
 on:
   push:
-    tags: ['omega/v*', 'piers/v*']
+    tags: ["omega/v*", "piers/v*"]
   workflow_dispatch:
     inputs:
       dry_run:
-        description: 'Skip release creation — build the zip only'
+        description: "Skip release creation — run checks and build only"
         type: boolean
         default: false
 
+# Least privilege by default: check/package only read. The release job alone
+# needs write. (Was contents: write at workflow level, which gave the build write
+# access it never needed.)
 permissions:
-  contents: write
+  contents: read
 
 env:
-  addon_id: skin.contuary
+  ADDON_ID: skin.contuary
 
 jobs:
-  build:
-    runs-on: ubuntu-latest
+  check:
+    name: xml
+    runs-on: ubuntu-24.04
     steps:
-      - name: Checkout
-        uses: actions/checkout@v5
+      - uses: actions/checkout@v5
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+      - name: XML is well-formed
+        run: python3 tools/check_xml.py
 
-      - name: Detect branch from tag
-        id: branch
+  package:
+    name: package
+    needs: check
+    runs-on: ubuntu-24.04
+    outputs:
+      channel: ${{ steps.channel.outputs.name }}
+      version: ${{ steps.channel.outputs.version }}
+    steps:
+      - uses: actions/checkout@v5
+        with:
+          # Needed by the channel guard: it asks whether the tag's commit is an
+          # ancestor of the channel branch, which a shallow clone cannot answer.
+          fetch-depth: 0
+
+      - name: Resolve channel and version
+        id: channel
+        shell: bash
         run: |
-          if [[ "$GITHUB_REF_NAME" == */* ]]; then
-            echo "name=${GITHUB_REF_NAME%%/*}" >> $GITHUB_OUTPUT
+          set -euo pipefail
+          if [[ "$GITHUB_REF" == refs/tags/* ]]; then
+            tag="$GITHUB_REF_NAME"
+            channel="${tag%%/*}"
           else
-            echo "name=$(git rev-parse --abbrev-ref HEAD)" >> $GITHUB_OUTPUT
+            channel="$(git rev-parse --abbrev-ref HEAD)"
+            tag=""
+          fi
+          case "$channel" in
+            omega|piers) ;;
+            *) echo "channel '$channel' is neither omega nor piers" >&2; exit 1 ;;
+          esac
+          version="$(sed -n 's/.*<addon[^>]* version="\([^"]*\)".*/\1/p' addon.xml | head -1)"
+          echo "name=$channel" >> "$GITHUB_OUTPUT"
+          echo "version=$version" >> "$GITHUB_OUTPUT"
+          echo "tag=$tag" >> "$GITHUB_OUTPUT"
+          echo "channel=$channel version=$version tag=${tag:-<none>}"
+
+      - name: Assert tag matches addon.xml version
+        if: startsWith(github.ref, 'refs/tags/')
+        shell: bash
+        run: |
+          set -euo pipefail
+          version="${{ steps.channel.outputs.version }}"
+          # omega/v2.2.0 -> 2.2.0
+          tag_version="${GITHUB_REF_NAME#*/v}"
+          echo "addon.xml version=$version  tag version=$tag_version"
+          if [[ "$tag_version" != "$version" ]]; then
+            echo "tag $GITHUB_REF_NAME does not match addon.xml version $version" >&2
+            exit 1
           fi
 
+      - name: Assert the tag is in its own channel's history
+        if: startsWith(github.ref, 'refs/tags/')
+        shell: bash
+        run: |
+          set -euo pipefail
+          channel="${{ steps.channel.outputs.name }}"
+          git fetch --quiet origin "$channel"
+          if ! git merge-base --is-ancestor "$GITHUB_REF_NAME" "origin/$channel"; then
+            echo "::error::tag $GITHUB_REF_NAME is not an ancestor of origin/$channel." \
+                 "A ${channel} tag on the other channel's history would publish the wrong" \
+                 "skin into ${channel}/ in the repository. Retag on $channel."
+            exit 1
+          fi
+          echo "$GITHUB_REF_NAME is in origin/$channel — correct channel."
+
       - name: Build zip
-        run: ./build.sh "${{ github.workspace }}/artifacts" "${{ steps.branch.outputs.name }}"
+        run: python3 tools/build.py dist --channel "${{ steps.channel.outputs.name }}"
 
       - name: Upload artifact
         uses: actions/upload-artifact@v4
         with:
-          name: ${{ env.addon_id }}-${{ steps.branch.outputs.name }}
-          path: ${{ github.workspace }}/artifacts/*.zip
+          name: ${{ env.ADDON_ID }}-${{ steps.channel.outputs.name }}-release-zip
+          path: dist/*.zip
+          if-no-files-found: error
 
   release:
-    needs: build
-    runs-on: ubuntu-latest
+    name: release
+    needs: package
+    runs-on: ubuntu-24.04
+    permissions:
+      contents: write # draft GitHub release + asset upload
     if: |
       startsWith(github.ref, 'refs/tags/') ||
       (github.event_name == 'workflow_dispatch' && github.event.inputs.dry_run != 'true')
     steps:
-      - name: Checkout
-        uses: actions/checkout@v5
-
-      - name: Detect branch from tag
-        id: branch
-        run: |
-          if [[ "$GITHUB_REF_NAME" == */* ]]; then
-            echo "name=${GITHUB_REF_NAME%%/*}" >> $GITHUB_OUTPUT
-          else
-            echo "name=$(git rev-parse --abbrev-ref HEAD)" >> $GITHUB_OUTPUT
-          fi
+      - uses: actions/checkout@v5
 
       - name: Download artifact
         uses: actions/download-artifact@v4
         with:
-          name: ${{ env.addon_id }}-${{ steps.branch.outputs.name }}
-          path: artifacts
+          name: ${{ env.ADDON_ID }}-${{ needs.package.outputs.channel }}-release-zip
+          path: dist
 
-      - name: Get version and changelog
+      - name: Get changelog
         id: meta
+        shell: bash
         run: |
-          version=$(sed -n 's/.*<addon[^>]* version="\([^"]*\)".*/\1/p' addon.xml | head -1)
-          echo "version=$version" >> $GITHUB_OUTPUT
-
+          set -euo pipefail
+          version="${{ needs.package.outputs.version }}"
+          channel="${{ needs.package.outputs.channel }}"
           if [[ "$GITHUB_REF" == refs/tags/* ]]; then
-            echo "tag=$GITHUB_REF_NAME" >> $GITHUB_OUTPUT
+            echo "tag=$GITHUB_REF_NAME" >> "$GITHUB_OUTPUT"
           else
-            branch=$(git rev-parse --abbrev-ref HEAD)
-            echo "tag=${branch}/v${version}" >> $GITHUB_OUTPUT
+            echo "tag=${channel}/v${version}" >> "$GITHUB_OUTPUT"
           fi
-
           if [[ -f changelog.txt ]]; then
-            changes=$(awk -v RS= 'NR==1' changelog.txt)
+            changes="$(awk -v RS= 'NR==1' changelog.txt)"
           else
             changes="Release $version"
           fi
-          EOF=$(dd if=/dev/urandom bs=15 count=1 status=none | base64)
-          echo "changes<<$EOF" >> $GITHUB_OUTPUT
-          echo "$changes" >> $GITHUB_OUTPUT
-          echo "$EOF" >> $GITHUB_OUTPUT
+          EOF="$(dd if=/dev/urandom bs=15 count=1 status=none | base64)"
+          {
+            echo "changes<<$EOF"
+            echo "$changes"
+            echo "$EOF"
+          } >> "$GITHUB_OUTPUT"
+          ls -la dist/
 
-      - name: Create release
+      - name: Create draft release
         uses: softprops/action-gh-release@v2
         with:
           tag_name: ${{ steps.meta.outputs.tag }}
-          name: ${{ env.addon_id }} ${{ steps.meta.outputs.version }} (${{ steps.branch.outputs.name }})
+          name: ${{ env.ADDON_ID }} ${{ needs.package.outputs.version }} (${{ needs.package.outputs.channel }})
           body: ${{ steps.meta.outputs.changes }}
           draft: true
-          files: artifacts/*.zip
+          files: dist/*.zip

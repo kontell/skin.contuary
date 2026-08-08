@@ -1,0 +1,106 @@
+# Quality gates + PR install zip. Shape mirrors plugin.video.kofin ci.yml:
+# this file is the every-PR gate; release.yml handles tags.
+#
+# Both channels share this file. omega and piers have no common ancestor, so a
+# change here has to be applied to each by hand — see CLAUDE.md.
+name: CI
+
+on:
+  push:
+    branches: [omega, piers]
+  pull_request:
+
+permissions:
+  contents: read
+
+env:
+  ADDON_ID: skin.contuary
+
+jobs:
+  xml:
+    name: xml
+    runs-on: ubuntu-24.04
+    steps:
+      - uses: actions/checkout@v5
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+      - name: XML is well-formed
+        # A malformed include is a silent failure: Kodi logs a parse error, drops
+        # the include and renders the window without it. This repo had no gate
+        # for that at all. tools/check_xml.py explains why comments are stripped
+        # before parsing (Kodi's pugixml tolerates `--` inside a comment; the XML
+        # spec does not, and several files here rely on that).
+        run: python3 tools/check_xml.py
+
+  package:
+    name: package
+    runs-on: ubuntu-24.04
+    steps:
+      - uses: actions/checkout@v5
+
+      - name: Resolve channel
+        id: channel
+        shell: bash
+        run: |
+          set -euo pipefail
+          # A PR is labelled with the channel it targets, not the branch it came
+          # from: a lyrics-overlay branch cut from piers builds a piers zip. On a
+          # branch push the branch itself is the channel.
+          if [[ "${{ github.event_name }}" == "pull_request" ]]; then
+            ref="${{ github.base_ref }}"
+          else
+            ref="${{ github.ref_name }}"
+          fi
+          case "$ref" in
+            omega|piers) channel="$ref" ;;
+            *)
+              echo "::warning::branch '$ref' is neither omega nor piers; building unsuffixed"
+              channel=""
+              ;;
+          esac
+          echo "name=$channel" >> "$GITHUB_OUTPUT"
+          echo "resolved channel: ${channel:-<none>}"
+
+      - name: Build zip
+        shell: bash
+        run: |
+          set -euo pipefail
+          if [[ -n "${{ steps.channel.outputs.name }}" ]]; then
+            python3 tools/build.py dist --channel "${{ steps.channel.outputs.name }}"
+          else
+            python3 tools/build.py dist
+          fi
+
+      - name: Name zip for this run
+        id: name
+        shell: bash
+        run: |
+          set -euo pipefail
+          shopt -s nullglob
+          zips=(dist/${ADDON_ID}-*.zip)
+          if [[ ${#zips[@]} -ne 1 ]]; then
+            echo "expected exactly one zip in dist/, got: ${zips[*]:-none}" >&2
+            exit 1
+          fi
+          src="${zips[0]}"
+          base="$(basename "$src" .zip)"
+          sha7="$(echo "${{ github.sha }}" | cut -c1-7)"
+          if [[ "${{ github.event_name }}" == "pull_request" ]]; then
+            dest="dist/${base}-pr${{ github.event.pull_request.number }}-${sha7}.zip"
+          else
+            dest="dist/${base}-${sha7}.zip"
+          fi
+          mv "$src" "$dest"
+          echo "zip=$dest" >> "$GITHUB_OUTPUT"
+          ls -la dist/
+
+      - name: Upload artifact
+        uses: actions/upload-artifact@v4
+        with:
+          # The channel is in the artifact name so an omega PR zip and a piers
+          # PR zip are told apart in the Actions UI, which they were not before.
+          name: ${{ env.ADDON_ID }}-${{ steps.channel.outputs.name || 'nochannel' }}-zip
+          path: ${{ steps.name.outputs.zip }}
+          retention-days: 14
+          if-no-files-found: error
