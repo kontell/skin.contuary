@@ -5,6 +5,48 @@ editing the home screen. The iteration loop (kodi-remote / kodi-shot /
 kodi-diff / kodi-logtail / kodi-builtin) lives in Claude's auto-memory,
 not here.
 
+## Build, install and release
+
+```bash
+tools/build.py [OUTDIR] [--channel omega|piers]   # installable zip (default ./dist)
+tools/dev-install.sh                              # rsync into ~/.kodi/addons + ReloadSkin()
+tools/check_xml.py                                # what CI gates on
+```
+
+`build.sh` is gone. It was `git archive HEAD`, so it could only package committed
+content — there was no way to install uncommitted skin work, which is why this repo
+had no dev loop. `tools/build.py` packages the working tree instead, and reports any
+packaged file git does not have committed, so a release cut from a dirty tree says
+so rather than quietly shipping it. Its exclude list mirrors the `export-ignore`
+list in `.gitattributes`; keep the two in step, since either alone is a file that
+ships when it should not.
+
+`tools/dev-install.sh` runs `ReloadSkin()`, which re-reads `xml/` but **not**
+`addon.xml` — a `<res>` change still needs a full Kodi restart, and the script says
+so when it notices `addon.xml` changed.
+
+`tools/check_xml.py` is the gate this repo never had: a malformed include is a
+silent failure, where Kodi logs a parse error, drops the include and renders the
+window without it. It strips comments before parsing, deliberately — Kodi's pugixml
+ends a comment at the first `-->` and does not enforce the XML rule that `--` may
+not appear inside one, and `xml/Includes_Lyrics.xml` has prose comments containing
+`--` on both channels that Kodi loads perfectly.
+
+### The two channels have no common ancestor
+
+`omega` and `piers` are unrelated histories, both currently at the same version.
+A change made on one reaches the other **only** by being re-applied by hand, and
+`git log omega..piers` will never be a useful list of what is missing. This is
+accepted rather than fixed: omega goes to minimal maintenance once Piers ships, so
+the porting cost is bounded and shrinking.
+
+Releases are per-channel, tagged `omega/vX.Y.Z` and `piers/vX.Y.Z`. `release.yml`
+asserts the tag matches `addon.xml` *and* that the tag is an ancestor of its own
+channel branch — exact here, precisely because the histories are disjoint — so an
+`omega/v*` tag cut on piers history fails instead of publishing the wrong skin.
+Publish the draft yourself: a release published by a workflow using the default
+`GITHUB_TOKEN` raises no event, so `notify-repo.yml` would never fire.
+
 ## Resolution variants
 
 The skin authors XML in a single `xml/` tree. The active logical coord
