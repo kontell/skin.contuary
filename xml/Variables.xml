@@ -475,6 +475,15 @@
 		<value condition="!String.IsEmpty(Skin.String(HomeFanart.path))">$INFO[Skin.String(HomeFanart.path)]weather$INFO[Skin.String(HomeFanart.ext)]</value>
 	</variable>
 	<variable name="ListWatchedIconVar">
+		<!-- Kofin's offline downloads. First, because these variables are
+		     first-match-wins: placed lower, ListItem.IsResumable and the
+		     playcount lines win and a partly watched download shows no badge
+		     at all. The addon writes one art row (kofin.downloaded) and
+		     leaves the three states to be chosen here, so that a playback
+		     never has to rewrite the database. -->
+		<value condition="!String.IsEmpty(ListItem.Art(kofin.downloaded)) + ListItem.IsResumable">special://home/addons/plugin.video.kofin/resources/media/downloaded-resume.png</value>
+		<value condition="!String.IsEmpty(ListItem.Art(kofin.downloaded)) + Integer.IsGreater(ListItem.Playcount,0)">special://home/addons/plugin.video.kofin/resources/media/downloaded-watched.png</value>
+		<value condition="!String.IsEmpty(ListItem.Art(kofin.downloaded))">special://home/addons/plugin.video.kofin/resources/media/downloaded.png</value>
 		<value condition="ListItem.IsRecording">windows/pvr/record.png</value>
 		<value condition="ListItem.IsCollection">overlays/set.png</value>
 		<value condition="ListItem.HasVideoVersions + !$EXP[videoasset_true]">overlays/versions.png</value>
@@ -487,6 +496,12 @@
 		<value condition="!ListItem.IsParentFolder">OverlayUnwatched.png</value>
 	</variable>
 	<variable name="ItemStatusIconVar">
+		<!-- Same three, same reason, same position (see ListWatchedIconVar).
+		     Kofin badges the season and the show as well as the episode, so
+		     these fire on the aggregate rows this variable serves too. -->
+		<value condition="!String.IsEmpty(ListItem.Art(kofin.downloaded)) + ListItem.IsResumable">special://home/addons/plugin.video.kofin/resources/media/downloaded-resume.png</value>
+		<value condition="!String.IsEmpty(ListItem.Art(kofin.downloaded)) + Integer.IsGreater(ListItem.Playcount,0)">special://home/addons/plugin.video.kofin/resources/media/downloaded-watched.png</value>
+		<value condition="!String.IsEmpty(ListItem.Art(kofin.downloaded))">special://home/addons/plugin.video.kofin/resources/media/downloaded.png</value>
 		<value condition="[String.IsEqual(Listitem.DBType,tvshow) | String.IsEqual(Listitem.DBType,season)] + String.IsEqual(ListItem.Property(WatchedEpisodes),ListItem.Property(TotalEpisodes)) | String.IsEqual(ListItem.DBtype,set) + String.IsEqual(ListItem.Property(Watched),ListItem.Property(Total))">OverlayWatched.png</value>
 		<value condition="String.IsEqual(ListItem.DBtype,tvshow) | String.IsEqual(ListItem.DBtype,set) | String.IsEqual(ListItem.DBType,season)">lists/played-total.png</value>
 		<value condition="ListItem.IsRecording">windows/pvr/record.png</value>
