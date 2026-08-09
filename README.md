@@ -8,6 +8,7 @@ Simple Mod of Kodi Default Skin (Estuary)
 - Suitable for 16:9 displays only
 - Scale the UI using [script.skin.contuary](https://github.com/kontell/script.skin.contuary/).
   - Settings -> Interface -> Skin -> Configure skin -> General -> Resolution
+- Status icons for Kofin downloads
 
 ## Installation
 
