@@ -1,3 +1,6 @@
+[B]2.3.0[/B]
+• Lists: show a status icon on items the Kofin add-on has downloaded for offline playback, with its own states for part-watched and watched. Shows and seasons are marked when they hold a download
+
 [B]2.2.0[/B]
 • Music visualisation: show song lyrics from a Jellyfin server, supplied by the Kofin Lyrics add-on. Lines scroll in time with the music, starting at the top of the panel and scrolling once the sung line reaches the middle
 • New "Lyrics over track info" setting in the music settings dialog: by default the lyrics panel steps aside while the track info or OSD is on screen, since the two overlap
