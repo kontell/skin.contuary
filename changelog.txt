@@ -1,3 +1,6 @@
+[B]2.3.1[/B]
+• Posters: show the Kofin download icon on a downloaded item that has not been played yet. It previously appeared only once the item was part-watched or watched, so a fresh download looked no different from one that was never fetched
+
 [B]2.3.0[/B]
 • Lists: show a status icon on items the Kofin add-on has downloaded for offline playback, with its own states for part-watched and watched. Shows and seasons are marked when they hold a download
 
