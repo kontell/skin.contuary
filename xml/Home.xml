@@ -198,6 +198,7 @@
 						</include>
 						<include content="WidgetListCategories" condition="Library.HasContent(music) + !Skin.HasSetting(home_no_categories_widget)">
 							<param name="content_path" value="library://music/"/>
+							<param name="additional_music_items" value="true"/>
 							<param name="widget_header" value=""/>
 							<param name="widget_target" value="music"/>
 							<param name="list_id" value="7900"/>

@@ -309,6 +309,7 @@
 		<param name="icon_height">120</param>
 		<param name="additional_movie_items">false</param>
 		<param name="additional_tvshow_items">false</param>
+		<param name="additional_music_items">false</param>
 		<param name="visible">true</param>
 		<param name="browse">auto</param>
 		<definition>
@@ -411,6 +412,7 @@
 				</focusedlayout>
 				<include condition="$PARAM[additional_movie_items]" content="MovieSubmenuItems" />
 				<include condition="$PARAM[additional_tvshow_items]" content="TVShowSubmenuItems" />
+				<include condition="$PARAM[additional_music_items]" content="MusicSubmenuItems" />
 				<content target="$PARAM[widget_target]" limit="$PARAM[item_limit]" browse="$PARAM[browse_mode]">$PARAM[content_path]</content>
 			</control>
 		</definition>
@@ -438,6 +440,25 @@
 				<onclick>ActivateWindow(videos,plugin://script.embuary.info/nextaired,return)</onclick>
 				<thumb>DefaultYear.png</thumb>
 				<visible>System.AddonIsEnabled(script.embuary.info)</visible>
+			</item>
+		</content>
+	</include>
+	<!-- The music counterpart of the two above. It needs an <onclick> to open a
+	     pop-up in place: everything an addon feeds into library://music/ arrives
+	     as a folder, and Kodi's default action for a folder widget item is
+	     ActivateWindow, which only skin XML can override.
+
+	     Label and icon come from the addon rather than the skin, so its own
+	     translations carry the button and there is no skin string to keep in
+	     step. Both resolve to nothing when the addon is absent, but the item is
+	     hidden by then anyway. -->
+	<include name="MusicSubmenuItems">
+		<content>
+			<item>
+				<label>$ADDON[script.music.restore 30010]</label>
+				<onclick>RunScript(script.music.restore)</onclick>
+				<thumb>special://home/addons/script.music.restore/resources/button.png</thumb>
+				<visible>System.AddonIsEnabled(script.music.restore)</visible>
 			</item>
 		</content>
 	</include>
