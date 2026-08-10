@@ -1,4 +1,5 @@
-[B]2.3.1[/B]
+[B]2.4.0[/B]
+• Music home screen: a "Recent queues" button on the categories row, opening the Restore Music Queue add-on's pop-up in place. Shown whenever that add-on is enabled. The add-on used to edit the skin's own files to put it there, and a skin update took it away again
 • Posters: show the Kofin download icon on a downloaded item that has not been played yet. It previously appeared only once the item was part-watched or watched, so a fresh download looked no different from one that was never fetched
 
 [B]2.3.0[/B]
