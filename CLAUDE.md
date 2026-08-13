@@ -5,6 +5,18 @@ editing the home screen. The iteration loop (kodi-remote / kodi-shot /
 kodi-diff / kodi-logtail / kodi-builtin) lives in Claude's auto-memory,
 not here.
 
+## Kodi knowledge lives in kodi-drive
+
+Shared Kodi knowledge is **not** in this file. Use the `kodi-drive:*` skills, or read
+`../kodi-drive/README.md`.
+
+Directly relevant: `kodi-skin-xml` (reload semantics, silent include failures, grouplist
+auto-wiring, first-match-wins variables), `kodi-skin-res-scaling` (coordinate spaces and
+WindowXML precedence), `kodi-screenshot-review`, `kodi-addon-release`, `kodi-addon-identity`.
+
+**Do not add generally-useful Kodi findings here** — contribute them to kodi-drive. This file
+holds only what is specific to *this* skin.
+
 ## Build, install and release
 
 ```bash
@@ -75,13 +87,7 @@ The full set of supported options lives in `OPTIONS` at the top of
 `script.skin.contuary/default.py` — add an entry there to expose a new
 resolution.
 
-**Dev tree vs installed tree.** There are two copies of `xml/`:
-
-- Dev: `/media/minipie/bluecon/docs/IT/devel/skins/skin.contuary/xml/`
-- Installed: `/home/conor/.kodi/addons/skin.contuary/xml/`
-
-`ReloadSkin()` reads the installed tree. Edits made only to dev are
-invisible until copied across. Keep the two in sync.
+**Dev tree vs installed tree.** `ReloadSkin()` reads the **installed** copy of `xml/`, not your working tree, so an edit made only in the checkout is invisible. `tools/dev-install.sh` copies across. See `kodi-skin-xml`.
 
 ## IconButton vs IconButtonLarge
 
@@ -130,17 +136,8 @@ Keep this in mind when aligning widgets with off-widget elements.
 
 ## Parameterising shared includes
 
-When you need to tweak *only one caller* of a shared include, add a
-param with a default that preserves existing behaviour rather than
-forking the include. Applied to `CategoryLabel`:
-
-- `posx` (default 55) — left offset of the label
-- `font` (default `font13`) — lets the weather caller pick a smaller font
-
-Pattern: add `<param name="X">default</param>` at the top of the
-`<include>`, reference as `$PARAM[X]` in the definition, then pass
-`<param name="X" value="..."/>` only at the call site that needs a
-change. Unrelated callers keep the default and stay untouched.
+Moved to `kodi-skin-xml` — `<param>` / `$PARAM[X]`, and why forking a shared include costs you
+every future fix twice.
 
 ## Main Menu Title
 
@@ -227,44 +224,9 @@ references on `lists/focus.png`.
 
 ## Skin `<res>` and script-addon WindowXML overrides
 
-`addon.xml` can declare a non-1080p logical coord space, e.g.
-`<res width="2256" height="1269" aspect="16:9" default="true" folder="xml"/>`.
-Skin XML is then authored in those units, which Kodi maps to the
-physical display. Estuary-derived skins tolerate this with top-left
-anchoring and relative sizing.
+Moved to `kodi-skin-res-scaling` — coordinate spaces, which files get scaled, why a skin's file
+wins over an add-on's by basename, and why a `<res>` change needs a full restart.
 
-**Trap: forking a script-addon's WindowXMLDialog into the skin.** If
-the skin ships a file with the same filename as a script addon's
-window XML (e.g. `script-embuary-video.xml` matching
-`script.embuary.info`'s movie-info dialog), Kodi prefers the skin's
-copy. Two paths with different scaling semantics:
+**The rule that matters for this skin: do not fork a script add-on's WindowXML into `xml/`.**
+Doing so silently opts that dialog out of auto-scaling while keeping its 1080-based numbers.
 
-- **Addon's own** `resources/skins/default/1080i/foo.xml` → Kodi treats
-  the `1080i` folder as a declared 1920×1080 coord system and scales
-  the whole dialog to the skin's `<res>` space. Works at any res.
-- **Skin's `xml/foo.xml`** → Kodi treats contents as already in the
-  skin's coord space. Literal `<width>1920</width>` renders as 85 % of
-  screen at 2256×1269 — dialog pins top-left, content clipped or
-  undersized.
-
-Rule: **don't fork script-addon WindowXMLs into the skin** unless
-you're prepared to rescale them every time `<res>` changes. For mods
-to an addon's dialog (extra menu items, theming), prefer contributing
-upstream or letting the originating addon apply its own patch — e.g.
-KodiSeerr's Advanced-settings "Inject request button into Embuary
-info" action injects a seven-line `<item>` block plus an icon into
-`script.embuary.info` directly, so embuary's auto-scaling still
-applies.
-
-**Diagnosing which file Kodi loaded.** Tail `kodi.log` while opening
-the dialog and look for `Window Init (...)` lines — they print the
-full path, revealing skin-override vs addon-original. Example from
-the embuary debugging session:
-
-```
-Window Init (/.../skin.contuary/xml/script-embuary-video.xml)
-Window Init (/.../script.embuary.info/resources/skins/default/1080i/script-embuary-person.xml)
-```
-
-The first is a skin override (won't scale), the second is the addon
-original (auto-scales).
