@@ -431,6 +431,24 @@
 				<thumb>DefaultYear.png</thumb>
 				<visible>System.AddonIsEnabled(script.embuary.info)</visible>
 			</item>
+			<!-- Kofin SyncPlay and Who's watching? fire-and-exit plugin routes,
+			     same pattern as MusicSubmenuItems: RunPlugin so the dialogs
+			     open over Home instead of ActivateWindow walking off it.
+			     Visibility follows the addon root — kofin mirrors those two
+			     entries onto window properties because a <visible> cannot
+			     read an addon setting. Labels and icons come from the addon. -->
+			<item>
+				<label>$ADDON[plugin.video.kofin 30041]</label>
+				<onclick>RunPlugin(plugin://plugin.video.kofin/?mode=adduser)</onclick>
+				<thumb>special://home/addons/plugin.video.kofin/resources/media/person-search.png</thumb>
+				<visible>System.AddonIsEnabled(plugin.video.kofin) + String.IsEqual(Window(Home).Property(kofin.menu.who),true)</visible>
+			</item>
+			<item>
+				<label>$ADDON[plugin.video.kofin 30560]</label>
+				<onclick>RunPlugin(plugin://plugin.video.kofin/?mode=syncplay)</onclick>
+				<thumb>special://home/addons/plugin.video.kofin/resources/media/syncplay-groups.png</thumb>
+				<visible>System.AddonIsEnabled(plugin.video.kofin) + String.IsEqual(Window(Home).Property(kofin.menu.syncplay),true)</visible>
+			</item>
 		</content>
 	</include>
 	<include name="TVShowSubmenuItems">
