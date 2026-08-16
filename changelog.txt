@@ -1,4 +1,7 @@
-v2.5.0
+v2.6.0
+• Search: a "Search Kofin" entry in the search dialog, opening the Kofin add-on's own search of your Jellyfin server. Shown whenever Kofin is installed. It finds what the local library search cannot — a Jellyfin library you browse rather than sync has no Kodi rows to search
+
+[B]2.5.0[/B]
 • Movies home screen: SyncPlay and Who's watching? buttons on the categories row, opening the Kofin dialogs in place. Shown only when those entries are visible in the add-on itself
 
 [B]2.4.0[/B]

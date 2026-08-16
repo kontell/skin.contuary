@@ -29,6 +29,24 @@
 						<onclick>Dialog.Close(all)</onclick>
 						<onclick>ActivateWindow(addonbrowser,addons://search/,return)</onclick>
 					</item>
+					<!-- Kofin's own search, over the Jellyfin server. With the
+					     other add-on search below it, after the two Kodi-native
+					     ones. It covers what script.globalsearch cannot: a
+					     Jellyfin library that is browsed rather than synced has
+					     no Kodi rows to find.
+
+					     ActivateWindow rather than the RunPlugin the home
+					     buttons use — this route answers with a listing, not a
+					     dialog. No InstallAddon arm either: Kofin is not in the
+					     official repository, so the entry hides instead of
+					     offering an install that cannot succeed. -->
+					<item>
+						<label>$LOCALIZE[31615]</label>
+						<onclick>Dialog.Close(all)</onclick>
+						<onclick condition="System.AddonIsEnabled(plugin.video.kofin)">ActivateWindow(videos,"plugin://plugin.video.kofin/?mode=search",return)</onclick>
+						<onclick condition="System.HasAddon(plugin.video.kofin) + !System.AddonIsEnabled(plugin.video.kofin)">EnableAddon(plugin.video.kofin)</onclick>
+						<visible>System.HasAddon(plugin.video.kofin)</visible>
+					</item>
 					<item>
 						<label>$LOCALIZE[31114]</label>
 						<onclick>Dialog.Close(all)</onclick>
