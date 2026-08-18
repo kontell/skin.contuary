@@ -1,8 +1,7 @@
-v2.7.0
-• Home: add per-library Movies and Shows sections from Kofin, created in Skin settings → Main menu items → Jellyfin library sections. Each section clones the stock stack with paths scoped to that library (synced Kodi nodes or live plugin browse). Stock Movies/Shows stay; the existing widget toggles apply to every section of that type
-
 v2.6.0
+• Home: add per-library Movies and Shows sections from Kofin, created in Skin settings → Main menu items → Jellyfin library sections. Each section clones the stock stack with paths scoped to that library (synced Kodi nodes or live plugin browse). Stock Movies/Shows stay; the existing widget toggles apply to every section of that type
 • Search: a "Search Kofin" entry in the search dialog, opening the Kofin add-on's own search of your Jellyfin server. Shown whenever Kofin is installed. It finds what the local library search cannot — a Jellyfin library you browse rather than sync has no Kodi rows to search
+• Movies and TV shows home screens: the Embuary Info buttons now follow that add-on's own settings, so In cinemas, In cinemas soon and Next aired can each be switched off in Embuary Info's Skin settings rather than by editing the skin. Adds a "Search The Movie DB" button beside them
 
 [B]2.5.0[/B]
 • Movies home screen: SyncPlay and Who's watching? buttons on the categories row, opening the Kofin dialogs in place. Shown only when those entries are visible in the add-on itself
