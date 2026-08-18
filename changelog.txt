@@ -1,3 +1,6 @@
+v2.7.0
+• Home: add per-library Movies and Shows sections from Kofin, created in Skin settings → Main menu items → Jellyfin library sections. Each section clones the stock stack with paths scoped to that library (synced Kodi nodes or live plugin browse). Stock Movies/Shows stay; the existing widget toggles apply to every section of that type
+
 v2.6.0
 • Search: a "Search Kofin" entry in the search dialog, opening the Kofin add-on's own search of your Jellyfin server. Shown whenever Kofin is installed. It finds what the local library search cannot — a Jellyfin library you browse rather than sync has no Kodi rows to search
 

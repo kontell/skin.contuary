@@ -870,7 +870,27 @@ msgctxt "#31177"
 msgid "Choose weather icon pack"
 msgstr ""
 
-#empty strings from id 31178 to 31596
+#: /xml/SkinSettings.xml
+msgctxt "#31178"
+msgid "Jellyfin library sections"
+msgstr ""
+
+#: /xml/Home.xml
+msgctxt "#31179"
+msgid "This library is empty or still syncing."
+msgstr ""
+
+#: /xml/Includes_SettingsDialog.xml
+msgctxt "#31180"
+msgid "These widget choices apply to every Movies section on the home screen, including Jellyfin library sections."
+msgstr ""
+
+#: /xml/Includes_SettingsDialog.xml
+msgctxt "#31181"
+msgid "These widget choices apply to every TV shows section on the home screen, including Jellyfin library sections."
+msgstr ""
+
+#empty strings from id 31182 to 31596
 
 #: /xml/Includes_SettingsDialog.xml
 #. Button to select Player Process Info window

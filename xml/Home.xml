@@ -2,6 +2,7 @@
 <window>
 	<defaultcontrol>9000</defaultcontrol>
 	<backgroundcolor>background</backgroundcolor>
+	<onload condition="System.HasAddon(script.skin.contuary)">RunScript(script.skin.contuary,_ensure)</onload>
 	<controls>
 		<control type="button" id="20000">
 			<include>HiddenObject</include>
@@ -185,6 +186,7 @@
 						<param name="scrollbar_id" value="6010"/>
 					</include>
 				</control>
+				<include content="KofinGeneratedSections" />
 				<control type="group" id="7000">
 					<visible>String.IsEqual(Container(9000).ListItem.Property(id),music)</visible>
 					<include content="Visible_Right_Delayed">
@@ -1038,6 +1040,7 @@
 							<property name="id">movies</property>
 							<visible>!Skin.HasSetting(HomeMenuNoMovieButton)</visible>
 						</item>
+						<include content="KofinGeneratedMovieMenuItems" />
 						<item>
 							<label>$LOCALIZE[20343]</label>
 							<onclick condition="Library.HasContent(tvshows) + Skin.HasSetting(home_no_tvshows_categories_widget) + !System.GetBool(myvideos.flatten)">ActivateWindow(Videos,videodb://tvshows/,return)</onclick>
@@ -1049,6 +1052,7 @@
 							<property name="id">tvshows</property>
 							<visible>!Skin.HasSetting(HomeMenuNoTVShowButton)</visible>
 						</item>
+						<include content="KofinGeneratedShowMenuItems" />
 						<item>
 							<label>$LOCALIZE[2]</label>
 							<onclick>ActivateWindow(Music,root,return)</onclick>

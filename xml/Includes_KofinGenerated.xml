@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<includes>
+	<include name="KofinGeneratedSections">
+		<!-- stub: no generated sections -->
+	</include>
+	<include name="KofinGeneratedMovieMenuItems">
+		<!-- stub: no generated movie items -->
+	</include>
+	<include name="KofinGeneratedShowMenuItems">
+		<!-- stub: no generated show items -->
+	</include>
+</includes>
