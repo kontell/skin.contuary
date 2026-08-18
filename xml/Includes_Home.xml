@@ -419,17 +419,32 @@
 	</include>
 	<include name="MovieSubmenuItems">
 		<content>
+			<!-- Embuary Info's three buttons. Visibility follows the addon, the
+			     same way the Kofin entries below do it: a <visible> cannot read
+			     an addon setting, so the addon's service mirrors each one onto
+			     a window property and this gates on that. Turning one off in
+			     Embuary Info's Skin settings removes the button from here. -->
 			<item>
 				<label>$LOCALIZE[31146]</label>
 				<onclick>ActivateWindow(videos,plugin://script.embuary.info/movie/now_playing,return)</onclick>
 				<thumb>DefaultStudios.png</thumb>
-				<visible>System.AddonIsEnabled(script.embuary.info)</visible>
+				<visible>System.AddonIsEnabled(script.embuary.info) + String.IsEqual(Window(Home).Property(embuary.menu.now_playing),true)</visible>
 			</item>
 			<item>
 				<label>$LOCALIZE[31147]</label>
 				<onclick>ActivateWindow(videos,plugin://script.embuary.info/movie/upcoming,return)</onclick>
 				<thumb>DefaultYear.png</thumb>
-				<visible>System.AddonIsEnabled(script.embuary.info)</visible>
+				<visible>System.AddonIsEnabled(script.embuary.info) + String.IsEqual(Window(Home).Property(embuary.menu.upcoming),true)</visible>
+			</item>
+			<!-- Search is a fire-and-exit route: it opens Embuary Info's own
+			     select and keyboard dialogs rather than returning a listing, so
+			     it wants RunPlugin. ActivateWindow would walk off Home into a
+			     directory that never lists anything. -->
+			<item>
+				<label>$LOCALIZE[31616]</label>
+				<onclick>RunPlugin(plugin://script.embuary.info/search)</onclick>
+				<thumb>DefaultAddonsSearch.png</thumb>
+				<visible>System.AddonIsEnabled(script.embuary.info) + String.IsEqual(Window(Home).Property(embuary.menu.search),true)</visible>
 			</item>
 			<!-- Kofin SyncPlay and Who's watching? fire-and-exit plugin routes,
 			     same pattern as MusicSubmenuItems: RunPlugin so the dialogs
@@ -457,7 +472,7 @@
 				<label>$LOCALIZE[31027]</label>
 				<onclick>ActivateWindow(videos,plugin://script.embuary.info/nextaired,return)</onclick>
 				<thumb>DefaultYear.png</thumb>
-				<visible>System.AddonIsEnabled(script.embuary.info)</visible>
+				<visible>System.AddonIsEnabled(script.embuary.info) + String.IsEqual(Window(Home).Property(embuary.menu.nextaired),true)</visible>
 			</item>
 		</content>
 	</include>
