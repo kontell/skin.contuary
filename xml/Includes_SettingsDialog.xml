@@ -242,6 +242,13 @@
 		</control>
 	</include>
 	<include name="SettingsDialogMovieWidgetsContent">
+		<control type="label">
+			<width>100%</width>
+			<height>80</height>
+			<label>$LOCALIZE[31180]</label>
+			<font>font12</font>
+			<wrapmultiline>true</wrapmultiline>
+		</control>
 		<control type="radiobutton" id="22101">
 			<include>DialogSettingButton</include>
 			<label>$LOCALIZE[31148]</label>
@@ -295,6 +302,13 @@
 		</control>
 	</include>
 	<include name="SettingsDialogTVShowWidgetsContent">
+		<control type="label">
+			<width>100%</width>
+			<height>80</height>
+			<label>$LOCALIZE[31181]</label>
+			<font>font12</font>
+			<wrapmultiline>true</wrapmultiline>
+		</control>
 		<control type="radiobutton" id="22101">
 			<include>DialogSettingButton</include>
 			<label>$LOCALIZE[31148]</label>

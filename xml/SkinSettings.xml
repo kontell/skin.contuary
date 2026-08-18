@@ -163,6 +163,13 @@
 				<pagecontrol>60</pagecontrol>
 				<ondown>610</ondown>
 				<visible>Container(9000).HasFocus(2)</visible>
+				<control type="button" id="628">
+					<label>$LOCALIZE[31178]</label>
+					<label2>$INFO[Skin.String(kofin_menu_count)]</label2>
+					<include>DefaultSettingButton</include>
+					<enable>System.HasAddon(script.skin.contuary)</enable>
+					<onclick>RunScript(script.skin.contuary,kofinmenu)</onclick>
+				</control>
 				<control type="radiobutton" id="611">
 					<label>$LOCALIZE[342]</label>
 					<include>DefaultSettingButton</include>
