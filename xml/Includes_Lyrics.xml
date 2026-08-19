@@ -24,6 +24,16 @@
        kofin.lyric.path     the list's directory; carries the song id, so the
                             path changes per song and Kodi re-reads it
        kofin.lyric.control  set by us, read by kofin (see MusicVisualisation)
+       kofin.lyric.panel    set by us, read by the lyrics addon: the backdrop
+                            ids it may resize. Skin XML cannot read geometry
+                            from a property, so the user's window-height
+                            setting is written onto these controls and the
+                            list from the addon's service instead
+       kofin.lyric.size     set by the lyrics addon: how wide the playing
+                            song's lines run -- narrow, medium or wide. The
+                            backdrops and the list switch on it below, which
+                            is as close as skin XML can get to sizing the
+                            panel to the song
        kofin.lyric.interactive  set by the addon while its own window has taken
                             over for scrolling -- this overlay stands aside,
                             because Kodi's keymap gives the arrow keys to
@@ -37,9 +47,12 @@
 			<!-- 40 from the right edge, 100 below the top, 180 above the
 			     bottom: 1080 - 100 - 180 = 800. Authored in the skin's own
 			     coordinate space, so it tracks resolution changes with
-			     everything else. -->
+			     everything else. The width is the ceiling a wide song may
+			     take, matching the lyrics addon's own window; narrower songs
+			     use the bucket variants below, so the ceiling only shows
+			     when the lines need it. -->
 			<right>40</right>
-			<width>700</width>
+			<width>1240</width>
 			<top>100</top>
 			<height>800</height>
 			<include>Visible_Right</include>
@@ -48,19 +61,50 @@
 			     is up. Yielding is the default; kofin_lyrics_over_osd keeps
 			     both on screen for anyone who would rather have the overlap. -->
 			<visible>!String.IsEmpty(Window(Home).Property(kofin.lyric.show)) + String.IsEmpty(Window(Home).Property(kofin.lyric.interactive)) + [Skin.HasSetting(kofin_lyrics_over_osd) | ![Player.ShowInfo | Window.IsActive(musicosd)]]</visible>
-			<control type="image">
+			<!-- One backdrop per width class, right-anchored, crossfading as
+			     the addon's kofin.lyric.size changes between songs. Three
+			     authored variants rather than one resized control because
+			     skin geometry cannot bind a property (an $INFO width renders
+			     zero-wide). The wide variant is also the fallback: with the
+			     property absent -- an older lyrics addon, or none -- the
+			     overlay is simply its full self.
+
+			     All three carry ids so the lyrics addon can drive their
+			     height to the user's window-height setting; hidden variants
+			     accept the write like any other control. -->
+			<control type="image" id="9501">
 				<left>0</left>
 				<top>0</top>
-				<width>700</width>
+				<width>1240</width>
 				<height>800</height>
 				<!-- The same texture and diffuse the track-info panel uses, so
 				     the two read as one surface rather than two dialogs. -->
 				<texture colordiffuse="80FFFFFF">dialogs/dialog-bg-nobo.png</texture>
+				<animation effect="fade" time="300">VisibleChange</animation>
+				<visible>!String.IsEqual(Window(Home).Property(kofin.lyric.size),narrow) + !String.IsEqual(Window(Home).Property(kofin.lyric.size),medium)</visible>
+			</control>
+			<control type="image" id="9502">
+				<left>360</left>
+				<top>0</top>
+				<width>880</width>
+				<height>800</height>
+				<texture colordiffuse="80FFFFFF">dialogs/dialog-bg-nobo.png</texture>
+				<animation effect="fade" time="300">VisibleChange</animation>
+				<visible>String.IsEqual(Window(Home).Property(kofin.lyric.size),medium)</visible>
+			</control>
+			<control type="image" id="9503">
+				<left>720</left>
+				<top>0</top>
+				<width>520</width>
+				<height>800</height>
+				<texture colordiffuse="80FFFFFF">dialogs/dialog-bg-nobo.png</texture>
+				<animation effect="fade" time="300">VisibleChange</animation>
+				<visible>String.IsEqual(Window(Home).Property(kofin.lyric.size),narrow)</visible>
 			</control>
 			<control type="list" id="9500">
 				<left>20</left>
 				<top>10</top>
-				<width>660</width>
+				<width>1200</width>
 				<height>780</height>
 				<!-- 13 rows of 60. A plain list, not a fixedlist: a fixedlist
 				     pins the sung line mid-panel from the very first line, so a
@@ -73,9 +117,17 @@
 				<onleft>9500</onleft>
 				<onright>9500</onright>
 				<content>$INFO[Window(Home).Property(kofin.lyric.path)]</content>
-				<itemlayout height="60" width="660">
+				<!-- The item layouts cannot move at runtime, so the list slides
+				     as a whole to keep its centre on whichever backdrop is up:
+				     the layouts centre text on their own 1200, and these
+				     offsets are backdrop-centre minus layout-centre. Buckets
+				     are mutually exclusive, so at most one slide is active and
+				     a bucket change glides between them. -->
+				<animation effect="slide" end="180,0" time="300" tween="sine" easing="inout" condition="String.IsEqual(Window(Home).Property(kofin.lyric.size),medium)">Conditional</animation>
+				<animation effect="slide" end="360,0" time="300" tween="sine" easing="inout" condition="String.IsEqual(Window(Home).Property(kofin.lyric.size),narrow)">Conditional</animation>
+				<itemlayout height="60" width="1200">
 					<control type="label">
-						<width>660</width>
+						<width>1200</width>
 						<height>60</height>
 						<font>font27</font>
 						<textcolor>C0FFFFFF</textcolor>
@@ -85,9 +137,9 @@
 						<label>$INFO[ListItem.Label]</label>
 					</control>
 				</itemlayout>
-				<focusedlayout height="60" width="660">
+				<focusedlayout height="60" width="1200">
 					<control type="label">
-						<width>660</width>
+						<width>1200</width>
 						<height>60</height>
 						<font>font32</font>
 						<textcolor>FFFFFFFF</textcolor>

@@ -2,10 +2,14 @@
 <window>
 	<defaultcontrol></defaultcontrol>
 	<backgroundcolor>background</backgroundcolor>
-	<!-- Name the lyrics list for plugin.video.kofin to drive. Cleared on
-	     unload, so the addon only drives a control that is on screen. -->
+	<!-- Name the lyrics list for plugin.video.kofin to drive, and the overlay
+	     backdrops the lyrics addon may resize to its window-height setting.
+	     Cleared on unload, so the addon only drives controls that are on
+	     screen. -->
 	<onload>SetProperty(kofin.lyric.control,9500,Home)</onload>
+	<onload>SetProperty(kofin.lyric.panel,9501 9502 9503,Home)</onload>
 	<onunload>ClearProperty(kofin.lyric.control,Home)</onunload>
+	<onunload>ClearProperty(kofin.lyric.panel,Home)</onunload>
 	<onload condition="System.AddonIsEnabled(script.artistslideshow) + !Skin.HasSetting(hide_background_fanart)">RunScript(script.artistslideshow)</onload>
 	<controls>
 		<control type="visualisation" id="2">
