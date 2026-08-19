@@ -1004,5 +1004,5 @@ msgid "Search Kofin"
 msgstr ""
 
 msgctxt "#31616"
-msgid "Search The Movie DB"
+msgid "Search TMDB"
 msgstr ""
