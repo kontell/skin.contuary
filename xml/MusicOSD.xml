@@ -40,7 +40,11 @@
 				<onup>87</onup>
 				<ondown>noop</ondown>
 				<onleft>70048</onleft>
-				<onright>70040</onright>
+				<!-- The grouplist, not its first button by id. That button is now
+				     conditional (chapters), and naming an id here skips straight
+				     past it when it is present and dead-ends when it is not.
+				     Focusing the group lands on its first *visible* child. -->
+				<onright>202</onright>
 				<control type="radiobutton" id="600">
 					<include content="OSDButton">
 						<param name="texture" value="osd/fullscreen/buttons/previous.png"/>
