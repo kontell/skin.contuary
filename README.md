@@ -6,7 +6,8 @@ Simple Mod of Kodi Default Skin (Estuary)
 
 - Icons Only Main Menu
 - Suitable for 16:9 displays only
-- Scale the UI using [script.skin.contuary](https://github.com/kontell/script.skin.contuary/).
+  - If you want to use it with a different aspect ratio uncomment the relevant line in addon.xml
+- Scale the UI using [script.skin.contuary](https://github.com/kontell/script.skin.contuary/)
   - Settings -> Interface -> Skin -> Configure skin -> General -> Resolution
 - [Kofin](https://github.com/kontell/plugin.video.kofin)
   - Adds download status glyphs to movie & show posters
