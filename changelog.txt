@@ -1,3 +1,22 @@
+v2.8.0
+- Music OSD: a chapters button, shown while something with chapters is
+  playing. It opens Kodi's chapter list, which until now was reachable only
+  during video playback. Create bookmark and Clear bookmarks are hidden
+  there for audio — they write to Kodi's video database, which means nothing
+  for an audiobook
+- Music OSD: moving right from the transport controls no longer skips the
+  first button of the right-hand group
+- Home: shorten the TMDB search button to "Search TMDB"
+- Removed the "Hide play speed OSD on tempo change" setting. It suppressed
+  the seek bar while an add-on nudged Kodi's play speed to stay in sync;
+  inputstream.tempo handles tempo itself now and no longer touches play
+  speed, so there was nothing left to suppress
+
+Note for AudioBookShelf users: chapter seeking through an add-on that
+supplies its own stream is broken in Kodi 22.0 beta 1 itself and jumps to
+the start of the book. Kodi builds since mid-July have the fix. Chapters in
+ordinary files are unaffected.
+
 v2.7.0
 - Size the lyrics overlay to the song, and let the addon set its height
 
