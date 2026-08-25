@@ -1,6 +1,13 @@
 <?xml version="1.0" encoding="utf-8"?>
 <window>
-	<defaultcontrol always="true">2</defaultcontrol>
+	<!-- The list, not Create bookmark. That button is hidden for audio,
+	     where this dialog is a chapter picker, and a hidden defaultcontrol
+	     leaves the window with nothing focused at all: the list draws its
+	     selection and then swallows every key. An <onload> SetFocus does
+	     not rescue it — defaultcontrol is applied after onload runs.
+	     The list is the one control always present, and the buttons stay
+	     one Up away for video via the panel's <onup>. -->
+	<defaultcontrol always="true">11</defaultcontrol>
 	<include>Animation_DialogPopupOpenClose</include>
 	<controls>
 		<control type="button">
@@ -48,11 +55,13 @@
 					<param name="id" value="2" />
 					<param name="label" value="$LOCALIZE[294]" />
 					<param name="width" value="350" />
+					<param name="visible" value="Player.HasVideo" />
 				</include>
 				<include content="DefaultDialogButton">
 					<param name="id" value="3" />
 					<param name="label" value="$LOCALIZE[296]" />
 					<param name="width" value="350" />
+					<param name="visible" value="Player.HasVideo" />
 				</include>
 				<include content="DefaultDialogButton">
 					<param name="id" value="4" />
