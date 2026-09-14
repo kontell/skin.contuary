@@ -12,7 +12,7 @@ Simple Mod of Kodi Default Skin (Estuary)
   - Adds download status glyphs to movie & show posters
   - Adds an entry to the global search dialog
   - SyncPlay & Who's watching buttons in the Movies categories widget
-  - Generate an entire main menu section based on a Jellyfin library (not useful for dynamic libraries until [this](https://github.com/xbmc/xbmc/pull/29039) fix lands)
+  - Generate an entire main menu section based on a Jellyfin library (use only with synced libraries until [this](https://github.com/xbmc/xbmc/pull/29039) fix lands)
 - [Kotome](https://github.com/kontell/plugin.audio.kotome)
   - Adds bookmark button to OSD when listening to audiobooks
 - [Restore Music Queue](https://github.com/kontell/script.music.restore)
