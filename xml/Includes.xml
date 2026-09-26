@@ -359,7 +359,7 @@
 					<label>$INFO[ListItem.Premiered]</label>
 				</control>
 				<include content="MediaFlag">
-					<param name="flag_visible" value="!String.IsEmpty(ListItem.Duration) + !Control.IsVisible(504)" />
+					<param name="flag_visible" value="!String.IsEmpty(ListItem.Duration) + !Control.IsVisible(504) + !Container.Content(albums)" />
 					<param name="flag_label" value="$INFO[ListItem.Duration]" />
 				</include>
 				<include content="MediaFlag">
