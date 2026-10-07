@@ -442,6 +442,16 @@
 						<param name="icon" value="icons/infodialogs/choose_image.png" />
 						<param name="label" value="$LOCALIZE[13405]" />
 					</include>
+					<!-- id 12 is Kodi's own Artist information button: hidden on this
+					     dialog when the item is an artist, and its click is consumed.
+					     Filmography is a separate control so it can sit beside Choose art. -->
+					<include content="InfoDialogButton">
+						<param name="id" value="14" />
+						<param name="icon" value="icons/infodialogs/info.png" />
+						<param name="label" value="$LOCALIZE[31182]" />
+						<param name="visible" value="String.IsEqual(ListItem.DBType,artist) + System.AddonIsEnabled(script.embuary.info)" />
+						<param name="onclick_1" value="RunScript(script.embuary.info,call=person,query='$ESCINFO[ListItem.Label]')" />
+					</include>
 					<include content="InfoDialogButton">
 						<param name="id" value="12" />
 						<param name="icon" value="icons/infodialogs/info.png" />
