@@ -458,7 +458,7 @@
 							<param name="list_id" value="12500"/>
 							<param name="item_treshold" value="1"/>
 							<param name="label_top" value="100"/>
-							<param name="panel_top" value="120"/>
+							<param name="panel_top" value="110"/>
 						</include>
 						<include content="WidgetListPVR" condition="System.HasPVRAddon + !Skin.HasSetting(home_no_tv_savedsearches_widget)">
 							<param name="content_path" value="pvr://search/tv/savedsearches"/>

@@ -1,9 +1,14 @@
 v2.9.0
 - Synced with Estuary from Kodi 22 RC1. The home screen, colours, and Contuary widgets are unchanged.
-- Media flags now use icons and group the video, audio, and subtitle details. Fullscreen info still shows the premiered date. Album lists still show a single duration.
+- Media flags now use icons and group the video, audio, and subtitle details.
 - Video information gains a media-details section. Bookmarks show on the seek bar. Player info shows the subtitle codec and language.
 - Skin settings gains Movie title format, next to Resolution.
 - The game OSD matches Estuary's current RetroPlayer menus.
+- Home: a touch can select the first widget row.
+- Artist information: a Filmography button to the right of Choose art.
+- Lyrics: leaving the visualisation slides the overlay off to the right with the rest of the skin.
+- Lyrics: A fourth width sits between the old small and middle sizes, so the panel can sit closer to the longest line.
+- The skin requires the Contuary skin helper, so Kodi installs it with the skin.
 
 v2.8.0
 - Music OSD: a chapters button, shown while something with chapters is
