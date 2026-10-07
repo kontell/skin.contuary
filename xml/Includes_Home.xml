@@ -20,7 +20,13 @@
 				<left>$PARAM[posx]</left>
 				<top>$PARAM[posy]</top>
 				<width>900</width>
-				<height>90</height>
+				<!-- 10px past the text. The label is top-aligned, so the
+				     glyphs stay put. The extra height, with each following
+				     panel authored 10px higher, puts the first panel's flow
+				     position at 0. A grouplist only gives touch to a child
+				     that is fully on screen, and itemgap -160 was leaving
+				     that panel at -10, where a tap never arrives. -->
+				<height>100</height>
 				<font>$PARAM[font]</font>
 				<label>$PARAM[label]</label>
 				<shadowcolor>text_shadow</shadowcolor>
@@ -64,7 +70,7 @@
 			</include>
 			<control type="panel" id="$PARAM[list_id]">
 				<left>0</left>
-				<top>115</top>
+				<top>105</top>
 				<visible>Integer.IsGreater(Container($PARAM[list_id]).NumItems,0) | Container($PARAM[list_id]).IsUpdating</visible>
 				<right>0</right>
 				<height>529</height>
@@ -194,7 +200,7 @@
 			</include>
 			<control type="panel" id="$PARAM[list_id]">
 				<left>0</left>
-				<top>105</top>
+				<top>95</top>
 				<right>0</right>
 				<height>387</height>
 				<include content="WidgetListCommon">
@@ -261,7 +267,7 @@
 			</include>
 			<control type="panel" id="$PARAM[list_id]">
 				<left>0</left>
-				<top>120</top>
+				<top>110</top>
 				<right>0</right>
 				<height>473</height>
 				<onclick condition="$PARAM[onclick_condition]">$PARAM[onclick_action]</onclick>
@@ -326,7 +332,7 @@
 			</include>
 			<control type="panel" id="$PARAM[list_id]">
 				<left>0</left>
-				<top>110</top>
+				<top>100</top>
 				<right>0</right>
 				<height>274</height>
 				<include content="WidgetListCommon">
@@ -504,7 +510,7 @@
 		<param name="browse_mode">auto</param>
 		<param name="panel_height">406</param>
 		<param name="label_top">80</param>
-		<param name="panel_top">120</param>
+		<param name="panel_top">110</param>
 		<definition>
 			<include content="CategoryLabel">
 				<param name="label">$PARAM[widget_header]</param>
@@ -728,7 +734,7 @@
 			</include>
 			<control type="panel" id="$PARAM[list_id]">
 				<left>0</left>
-				<top>90</top>
+				<top>80</top>
 				<right>0</right>
 				<height>377</height>
 				<include content="WidgetListCommon">
