@@ -30,10 +30,13 @@
                             setting is written onto these controls and the
                             list from the addon's service instead
        kofin.lyric.size     set by the lyrics addon: how wide the playing
-                            song's lines run -- narrow, medium or wide. The
-                            backdrops and the list switch on it below, which
-                            is as close as skin XML can get to sizing the
-                            panel to the song
+                            song's lines run -- narrow, mid, medium or wide.
+                            The backdrops and the list switch on it below,
+                            which is as close as skin XML can get to sizing
+                            the panel to the song. An older addon that only
+                            sends narrow/medium/wide still lands on a panel:
+                            medium is the wider of the two middle sizes, and
+                            wide remains the fallback
        kofin.lyric.interactive  set by the addon while its own window has taken
                             over for scrolling -- this overlay stands aside,
                             because Kodi's keymap gives the arrow keys to
@@ -56,20 +59,22 @@
 			<top>100</top>
 			<height>800</height>
 			<include>Visible_Right</include>
+			<include>OpenClose_Right</include>
 			<!-- The track-info panel is bottom-anchored and its labels run out
 			     to x=1890, so it collides with this whenever info or the OSD
 			     is up. Yielding is the default; kofin_lyrics_over_osd keeps
 			     both on screen for anyone who would rather have the overlap. -->
 			<visible>!String.IsEmpty(Window(Home).Property(kofin.lyric.show)) + String.IsEmpty(Window(Home).Property(kofin.lyric.interactive)) + [Skin.HasSetting(kofin_lyrics_over_osd) | ![Player.ShowInfo | Window.IsActive(musicosd)]]</visible>
 			<!-- One backdrop per width class, right-anchored, crossfading as
-			     the addon's kofin.lyric.size changes between songs. Three
+			     the addon's kofin.lyric.size changes between songs. Four
 			     authored variants rather than one resized control because
 			     skin geometry cannot bind a property (an $INFO width renders
-			     zero-wide). The wide variant is also the fallback: with the
-			     property absent -- an older lyrics addon, or none -- the
-			     overlay is simply its full self.
+			     zero-wide). Small (narrow, 520) and large (wide, 1240) are
+			     the old ends; mid (760) and medium (1000) split the gap that
+			     used to be a single 880. The wide variant is also the
+			     fallback: with the property absent the overlay is its full self.
 
-			     All three carry ids so the lyrics addon can drive their
+			     All four carry ids so the lyrics addon can drive their
 			     height to the user's window-height setting; hidden variants
 			     accept the write like any other control. -->
 			<control type="image" id="9501">
@@ -81,16 +86,25 @@
 				     the two read as one surface rather than two dialogs. -->
 				<texture colordiffuse="80FFFFFF">dialogs/dialog-bg-nobo.png</texture>
 				<animation effect="fade" time="300">VisibleChange</animation>
-				<visible>!String.IsEqual(Window(Home).Property(kofin.lyric.size),narrow) + !String.IsEqual(Window(Home).Property(kofin.lyric.size),medium)</visible>
+				<visible>!String.IsEqual(Window(Home).Property(kofin.lyric.size),narrow) + !String.IsEqual(Window(Home).Property(kofin.lyric.size),mid) + !String.IsEqual(Window(Home).Property(kofin.lyric.size),medium)</visible>
 			</control>
-			<control type="image" id="9502">
-				<left>360</left>
+			<control type="image" id="9504">
+				<left>240</left>
 				<top>0</top>
-				<width>880</width>
+				<width>1000</width>
 				<height>800</height>
 				<texture colordiffuse="80FFFFFF">dialogs/dialog-bg-nobo.png</texture>
 				<animation effect="fade" time="300">VisibleChange</animation>
 				<visible>String.IsEqual(Window(Home).Property(kofin.lyric.size),medium)</visible>
+			</control>
+			<control type="image" id="9502">
+				<left>480</left>
+				<top>0</top>
+				<width>760</width>
+				<height>800</height>
+				<texture colordiffuse="80FFFFFF">dialogs/dialog-bg-nobo.png</texture>
+				<animation effect="fade" time="300">VisibleChange</animation>
+				<visible>String.IsEqual(Window(Home).Property(kofin.lyric.size),mid)</visible>
 			</control>
 			<control type="image" id="9503">
 				<left>720</left>
@@ -118,12 +132,13 @@
 				<onright>9500</onright>
 				<content>$INFO[Window(Home).Property(kofin.lyric.path)]</content>
 				<!-- The item layouts cannot move at runtime, so the list slides
-				     as a whole to keep its centre on whichever backdrop is up:
-				     the layouts centre text on their own 1200, and these
-				     offsets are backdrop-centre minus layout-centre. Buckets
-				     are mutually exclusive, so at most one slide is active and
-				     a bucket change glides between them. -->
-				<animation effect="slide" end="180,0" time="300" tween="sine" easing="inout" condition="String.IsEqual(Window(Home).Property(kofin.lyric.size),medium)">Conditional</animation>
+				     as a whole to keep its centre on whichever backdrop is up.
+				     The layouts centre text on their own 1200, whose centre
+				     sits at x=620, and these offsets are backdrop-centre minus
+				     that. Buckets are mutually exclusive, so at most one slide
+				     is active and a bucket change glides between them. -->
+				<animation effect="slide" end="120,0" time="300" tween="sine" easing="inout" condition="String.IsEqual(Window(Home).Property(kofin.lyric.size),medium)">Conditional</animation>
+				<animation effect="slide" end="240,0" time="300" tween="sine" easing="inout" condition="String.IsEqual(Window(Home).Property(kofin.lyric.size),mid)">Conditional</animation>
 				<animation effect="slide" end="360,0" time="300" tween="sine" easing="inout" condition="String.IsEqual(Window(Home).Property(kofin.lyric.size),narrow)">Conditional</animation>
 				<itemlayout height="60" width="1200">
 					<control type="label">
