@@ -41,7 +41,7 @@
 					     official repository, so the entry hides instead of
 					     offering an install that cannot succeed. -->
 					<item>
-						<label>$LOCALIZE[31615]</label>
+						<label>$LOCALIZE[31618]</label>
 						<onclick>Dialog.Close(all)</onclick>
 						<onclick condition="System.AddonIsEnabled(plugin.video.kofin)">ActivateWindow(videos,"plugin://plugin.video.kofin/?mode=search",return)</onclick>
 						<onclick condition="System.HasAddon(plugin.video.kofin) + !System.AddonIsEnabled(plugin.video.kofin)">EnableAddon(plugin.video.kofin)</onclick>
