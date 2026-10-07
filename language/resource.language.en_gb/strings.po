@@ -909,7 +909,12 @@ msgctxt "#31181"
 msgid "These widget choices apply to every TV shows section on the home screen, including Jellyfin library sections."
 msgstr ""
 
-#empty strings from id 31182 to 31596
+#: /xml/DialogMusicInfo.xml
+msgctxt "#31182"
+msgid "Filmography"
+msgstr ""
+
+#empty strings from id 31183 to 31596
 
 #: /xml/Includes_SettingsDialog.xml
 #. Button to select Player Process Info window
