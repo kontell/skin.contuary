@@ -1,3 +1,10 @@
+v2.9.0
+- Synced with Estuary from Kodi 22 RC1. The home screen, colours, and Contuary widgets are unchanged.
+- Media flags now use icons and group the video, audio, and subtitle details. Fullscreen info still shows the premiered date. Album lists still show a single duration.
+- Video information gains a media-details section. Bookmarks show on the seek bar. Player info shows the subtitle codec and language.
+- Skin settings gains Movie title format, next to Resolution.
+- The game OSD matches Estuary's current RetroPlayer menus.
+
 v2.8.0
 - Music OSD: a chapters button, shown while something with chapters is
   playing. It opens Kodi's chapter list, which until now was reachable only

@@ -81,6 +81,12 @@
 					<enable>System.HasAddon(script.skin.contuary)</enable>
 					<onclick>RunScript(script.skin.contuary)</onclick>
 				</control>
+				<control type="button" id="709">
+					<label>$LOCALIZE[31047]</label>
+					<include>DefaultSettingButton</include>
+					<onclick>Skin.SelectBool(31047, 571|OriginalTitleFormat_Default, 31049|OriginalTitleFormat_Only, 31050|OriginalTitleFormat_1st, 31051|OriginalTitleFormat_2nd)</onclick>
+					<label2>$VAR[OriginalTitleSetting]</label2>
+				</control>
 			</control>
 			<control type="grouplist" id="600">
 				<top>133</top>
