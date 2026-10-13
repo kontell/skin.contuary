@@ -31,6 +31,11 @@
 	<expression name="infodialog_active">Window.IsActive(musicinformation) | Window.IsActive(songinformation) | Window.IsActive(movieinformation) | Window.IsActive(addoninformation) | Window.IsActive(pvrguideinfo) | Window.IsActive(pvrrecordinginfo) | Window.IsActive(pictureinfo) | Window.IsVisible(script-embuary-video.xml) | Window.IsVisible(script-embuary-person.xml) | Window.IsVisible(script-embuary-image.xml)</expression>
 	<expression name="sidebar_visible">ControlGroup(9000).HasFocus | Control.HasFocus(6130) | Control.HasFocus(6131)</expression>
 	<expression name="videoasset_true">Container.Content(videoassets) | Container.Content(videoversions) | Container.Content(videoextras)</expression>
+	<!-- Kofin's download badge, under either of the two art keys it is
+	     written by. The SQL build writes kofin.downloaded straight into the
+	     art table; the API build goes through Kodi's setters, which store no
+	     art type with a dot in it, and writes kofindownloaded. -->
+	<expression name="kofin_downloaded">!String.IsEmpty(ListItem.Art(kofin.downloaded)) | !String.IsEmpty(ListItem.Art(kofindownloaded))</expression>
 	<include name="CommonScrollbars">
 		<param name="bottom_offset">list_bottom_offset</param>
 		<definition>
