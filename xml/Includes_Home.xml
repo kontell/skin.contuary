@@ -493,6 +493,16 @@
 	     hidden by then anyway. -->
 	<include name="MusicSubmenuItems">
 		<content>
+			<!-- Kodi's own playlist history (kontell/xbmc#20), placed as Estuary
+			     places it (#22). No condition can tell whether this Kodi has the
+			     Playlist.Restore builtin, so the item always shows, and on a Kodi
+			     without it does nothing. The add-on below is the same feature for
+			     any Kodi, and shows whenever it is enabled. -->
+			<item>
+				<label>$LOCALIZE[40807]</label>
+				<onclick>Playlist.Restore</onclick>
+				<thumb>DefaultMusicPlaylistHistory.png</thumb>
+			</item>
 			<item>
 				<label>$ADDON[script.music.restore 30010]</label>
 				<onclick>RunScript(script.music.restore)</onclick>
