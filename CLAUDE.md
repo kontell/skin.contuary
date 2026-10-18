@@ -8,9 +8,9 @@ not here.
 ## Build, install and release
 
 ```bash
-tools/build.py [OUTDIR] [--channel omega|piers]   # installable zip (default ./dist)
-tools/dev-install.sh                              # rsync into ~/.kodi/addons + ReloadSkin()
-tools/check_xml.py                                # what CI gates on
+tools/build.py [OUTDIR] [--channel omega|piers|kodi23]   # installable zip (default ./dist)
+tools/dev-install.sh                                     # rsync into ~/.kodi/addons + ReloadSkin()
+tools/check_xml.py                                       # what CI gates on
 ```
 
 `build.sh` is gone. It was `git archive HEAD`, so it could only package committed
@@ -32,18 +32,42 @@ ends a comment at the first `-->` and does not enforce the XML rule that `--` ma
 not appear inside one, and `xml/Includes_Lyrics.xml` has prose comments containing
 `--` on both channels that Kodi loads perfectly.
 
-### The two channels have no common ancestor
+### Channels
 
-`omega` and `piers` are unrelated histories, both currently at the same version.
-A change made on one reaches the other **only** by being re-applied by hand, and
-`git log omega..piers` will never be a useful list of what is missing. This is
-accepted rather than fixed: omega goes to minimal maintenance once Piers ships, so
-the porting cost is bounded and shrinking.
+Three branches, one per Kodi version: `omega` (Kodi 21), `piers` (Kodi 22) and
+`master` (Kodi's development branch, v23). Each releases under the channel name
+repository.kontell serves it from, which is the branch name except for master,
+whose channel is `kodi23`.
 
-Releases are per-channel, tagged `omega/vX.Y.Z` and `piers/vX.Y.Z`. `release.yml`
-asserts the tag matches `addon.xml` *and* that the tag is an ancestor of its own
-channel branch — exact here, precisely because the histories are disjoint — so an
+`omega` and `piers` are unrelated histories. A change made on one reaches the
+other **only** by being re-applied by hand, and `git log omega..piers` will never
+be a useful list of what is missing. This is accepted rather than fixed: omega goes
+to minimal maintenance once Piers ships, so the porting cost is bounded and
+shrinking.
+
+`master` was branched from `piers` after 2.9.1 and takes piers' changes by merging
+`piers` into it; `git log piers..master` is exactly what master adds. Never merge
+master into piers. Each channel syncs Estuary from its own xbmc branch: piers from
+xbmc `Piers`, master from xbmc `master` (last synced at fe8292d101, as a
+three-way merge from Piers 0c8d37a220). Master carries Estuary changes from open kontell/xbmc PRs that
+need core changes stock Kodi does not have yet: the song list's resume bar (#24),
+Restore playlist in the music categories row (#22) and the music OSD's play speed
+button (#15). The first and last hide themselves without their core change;
+Restore playlist does not, since its `Playlist.Restore` builtin has no condition
+to test.
+
+From 22.90.0 on, versions use Kodi's binary add-on format: the major is the Kodi
+release (21 omega, 22 piers), and a development channel sits at `.90` of the
+release before it, so master is 22.90.x until v23 ships.
+
+Releases are per-channel, tagged `omega/vX.Y.Z`, `piers/vX.Y.Z` and
+`kodi23/vX.Y.Z` (cut on master), with zips suffixed to match; repository.kontell
+places each by that prefix and suffix. `release.yml` asserts the tag matches
+`addon.xml` *and* that the tag is an ancestor of its channel's branch, so an
 `omega/v*` tag cut on piers history fails instead of publishing the wrong skin.
+Since everything on piers is also in master's history, a `kodi23/v*` tag must
+additionally *not* be in piers'. kodi23 releases are drafted as pre-releases,
+which repository.kontell.dev serves from `dev/kodi23`.
 Publish the draft yourself: a release published by a workflow using the default
 `GITHUB_TOKEN` raises no event, so `notify-repo.yml` would never fire.
 

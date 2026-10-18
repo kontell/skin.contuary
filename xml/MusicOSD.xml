@@ -247,6 +247,14 @@
 					<onclick condition="String.IsEmpty(Skin.String(LyricScript_Path))">Close</onclick>
 					<onclick condition="String.IsEmpty(Skin.String(LyricScript_Path))">RunScript($INFO[Skin.String(LyricScript_Path)])</onclick>
 				</control>
+				<control type="radiobutton" id="70056">
+					<include content="OSDButton">
+						<param name="texture" value="osd/fullscreen/buttons/tempo.png"/>
+					</include>
+					<onclick>Dialog.Close(MusicOSD)</onclick>
+					<onclick>ActivateWindow(1110)</onclick>
+					<visible>Player.TempoEnabled</visible>
+				</control>
 				<control type="radiobutton" id="70048">
 					<include content="OSDButton">
 						<param name="texture" value="osd/fullscreen/buttons/settings.png"/>

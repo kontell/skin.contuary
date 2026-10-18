@@ -12,7 +12,8 @@ for three reasons specific to this repo:
 * the skin ships a different file set (no README, no Screenshot) — EXCLUDE_TOP
   below mirrors the ``export-ignore`` list in .gitattributes, which is what the
   superseded build.sh relied on via ``git archive``;
-* releases are per-channel, so the zip name carries ``-omega`` / ``-piers``;
+* releases are per-channel, so the zip name carries ``-omega`` / ``-piers`` /
+  ``-kodi23``, the repository.kontell directory it is served from;
 * it packages the *working tree*, where ``git archive HEAD`` packaged the commit.
   That is the point — it is what makes tools/dev-install.sh able to install
   uncommitted work — but it also means a release built from a dirty tree would
@@ -22,7 +23,7 @@ for three reasons specific to this repo:
 Keep EXCLUDE_TOP and .gitattributes in step. Either alone is a file that ships
 when it should not.
 
-Usage: build.py [OUTDIR] [--channel omega|piers]   (default OUTDIR: ./dist)
+Usage: build.py [OUTDIR] [--channel omega|piers|kodi23]   (default OUTDIR: ./dist)
 """
 
 import os
@@ -66,7 +67,7 @@ EXCLUDE_TOP = {
 }
 EXCLUDE_SUFFIX = (".pyc", ".pyo")
 
-CHANNELS = ("omega", "piers")
+CHANNELS = ("omega", "piers", "kodi23")
 
 
 def addon_meta():

@@ -1,13 +1,14 @@
 # Quality gates + PR install zip. Shape mirrors plugin.video.kofin ci.yml:
 # this file is the every-PR gate; release.yml handles tags.
 #
-# Both channels share this file. omega and piers have no common ancestor, so a
-# change here has to be applied to each by hand — see CLAUDE.md.
+# Every channel shares this file. omega has no common ancestor with piers, so a
+# change here reaches omega only by hand; master takes it from piers by merge —
+# see CLAUDE.md.
 name: CI
 
 on:
   push:
-    branches: [omega, piers]
+    branches: [omega, piers, master]
   pull_request:
 
 permissions:
@@ -46,7 +47,8 @@ jobs:
           set -euo pipefail
           # A PR is labelled with the channel it targets, not the branch it came
           # from: a lyrics-overlay branch cut from piers builds a piers zip. On a
-          # branch push the branch itself is the channel.
+          # branch push the branch itself is the channel, except master, which
+          # builds kodi23.
           if [[ "${{ github.event_name }}" == "pull_request" ]]; then
             ref="${{ github.base_ref }}"
           else
@@ -54,8 +56,9 @@ jobs:
           fi
           case "$ref" in
             omega|piers) channel="$ref" ;;
+            master) channel=kodi23 ;;
             *)
-              echo "::warning::branch '$ref' is neither omega nor piers; building unsuffixed"
+              echo "::warning::branch '$ref' is not a channel; building unsuffixed"
               channel=""
               ;;
           esac

@@ -1,3 +1,18 @@
+v22.90.0
+- A pre-release for Kodi 23, in development. Versions now follow Kodi's add-on numbering, where 22.90 comes before 23.
+- Synced with Estuary from Kodi 23's development branch. The home screen and Contuary widgets are unchanged.
+- Media flag icons take the theme's accent colour, and the dots between details are dimmed.
+- Video OSD: rewind and fast forward seek while paused, rather than resuming playback.
+- Slideshow: shows each picture's date and time when Kodi's setting for it is on.
+- Volume: the passthrough icon shows the level when Kodi's passthrough volume control is on.
+- Games: the achievements settings gain a hardcore mode toggle.
+- PVR: the channel OSD's heading names the provider and group it was opened from.
+- Video versions: labels and icons are correct when versions are flattened into the library.
+- Song lists show how far into a song you are, for add-ons that give songs a resume point.
+- Home: the music categories row starts with Restore playlist.
+- Music OSD: a play speed button.
+- These three need Kodi changes that are not in Kodi 23 yet (kontell/xbmc #24, #22 and #15). Without them the song progress and the play speed button stay hidden, and Restore playlist does nothing.
+
 v2.9.1
 - Kofin's download badge shows with its API build (0.9x), in lists and on artwork.
 

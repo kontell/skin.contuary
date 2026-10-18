@@ -226,6 +226,16 @@
 				<label>$VAR[ListLabel2Var]</label>
 				<shadowcolor>text_shadow</shadowcolor>
 			</control>
+			<control type="progress">
+				<left>35</left>
+				<right>40</right>
+				<top>62</top>
+				<height>3</height>
+				<texturebg colordiffuse="00FFFFFF">colors/white.png</texturebg>
+				<midtexture>colors/white.png</midtexture>
+				<info>ListItem.PercentPlayed</info>
+				<visible>ListItem.IsResumable</visible>
+			</control>
 		</focusedlayout>
 		<itemlayout height="list_item_height" condition="Container.Content(songs)">
 			<control type="label">
@@ -243,6 +253,16 @@
 				<label>$VAR[ListLabel2Var]</label>
 				<textcolor>grey</textcolor>
 				<shadowcolor>text_shadow</shadowcolor>
+			</control>
+			<control type="progress">
+				<left>35</left>
+				<right>40</right>
+				<top>62</top>
+				<height>3</height>
+				<texturebg colordiffuse="00FFFFFF">colors/white.png</texturebg>
+				<midtexture colordiffuse="button_focus">colors/white.png</midtexture>
+				<info>ListItem.PercentPlayed</info>
+				<visible>ListItem.IsResumable</visible>
 			</control>
 		</itemlayout>
 	</include>
