@@ -20,7 +20,7 @@
 	</extension>
 	<extension point="xbmc.addon.metadata">
 		<summary lang="en_GB">Contuary - A light mod of Estuary for Kodi 23</summary>
-		<description lang="en_GB">Contuary is a lightly modified version of the default Estuary skin. A pre-release for Kodi 23, in development, based on Estuary for Kodi 22 (Piers).</description>
+		<description lang="en_GB">Contuary is a lightly modified version of the default Estuary skin. A pre-release for Kodi 23, based on its Estuary while it is in development.</description>
 		<platform>all</platform>
 		<license>GPL-2.0-or-later</license>
 		<assets>

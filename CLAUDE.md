@@ -45,7 +45,9 @@ shrinking.
 
 `master` was branched from `piers` after 2.9.1 and takes piers' changes by merging
 `piers` into it; `git log piers..master` is exactly what master adds. Never merge
-master into piers. Master carries Estuary changes from open kontell/xbmc PRs that
+master into piers. Each channel syncs Estuary from its own xbmc branch: piers from
+xbmc `Piers`, master from xbmc `master` (last synced at fe8292d101, as a
+three-way merge from Piers 0c8d37a220). Master carries Estuary changes from open kontell/xbmc PRs that
 need core changes stock Kodi does not have yet: the song list's resume bar (#24),
 Restore playlist in the music categories row (#22) and the music OSD's play speed
 button (#15). The first and last hide themselves without their core change;
