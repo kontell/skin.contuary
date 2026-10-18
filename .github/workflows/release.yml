@@ -1,18 +1,23 @@
 # Tag release: gate, build the channel's zip, draft a GitHub release whose body
 # is the top paragraph of changelog.txt.
 #
-# Releases are per-channel: omega/vX.Y.Z, piers/vX.Y.Z and master/vX.Y.Z. The
-# channel is the tag's own prefix, and the guard below refuses a tag pointing
-# into another channel's history. omega has no common ancestor with the others;
-# master is branched from piers, so the guard also refuses a master tag that
-# piers has. Both checks are exact rather than heuristic.
+# Releases are per-channel: omega/vX.Y.Z, piers/vX.Y.Z and kodi23/vX.Y.Z. The
+# channel is the tag's own prefix and the repository.kontell directory the build
+# is served from. Each is cut on the branch of the same name, except kodi23,
+# which is cut on master.
 #
-# master follows Kodi's development branch, so its releases are pre-releases.
+# The guard below refuses a tag pointing into another channel's history. omega
+# has no common ancestor with the others; master is branched from piers, so the
+# guard also refuses a kodi23 tag that piers has. Both checks are exact rather
+# than heuristic.
+#
+# master follows Kodi's development branch, so kodi23 releases are pre-releases,
+# which repository.kontell serves from dev/kodi23.
 name: Release
 
 on:
   push:
-    tags: ["omega/v*", "piers/v*", "master/v*"]
+    tags: ["omega/v*", "piers/v*", "kodi23/v*"]
   workflow_dispatch:
     inputs:
       dry_run:
@@ -47,6 +52,7 @@ jobs:
     runs-on: ubuntu-24.04
     outputs:
       channel: ${{ steps.channel.outputs.name }}
+      branch: ${{ steps.channel.outputs.branch }}
       version: ${{ steps.channel.outputs.version }}
     steps:
       - uses: actions/checkout@v5
@@ -63,19 +69,26 @@ jobs:
           if [[ "$GITHUB_REF" == refs/tags/* ]]; then
             tag="$GITHUB_REF_NAME"
             channel="${tag%%/*}"
+            case "$channel" in
+              omega|piers) branch="$channel" ;;
+              kodi23) branch=master ;;
+              *) echo "channel '$channel' is not omega, piers or kodi23" >&2; exit 1 ;;
+            esac
           else
-            channel="$(git rev-parse --abbrev-ref HEAD)"
             tag=""
+            branch="$(git rev-parse --abbrev-ref HEAD)"
+            case "$branch" in
+              omega|piers) channel="$branch" ;;
+              master) channel=kodi23 ;;
+              *) echo "branch '$branch' is not omega, piers or master" >&2; exit 1 ;;
+            esac
           fi
-          case "$channel" in
-            omega|piers|master) ;;
-            *) echo "channel '$channel' is not omega, piers or master" >&2; exit 1 ;;
-          esac
           version="$(sed -n 's/.*<addon[^>]* version="\([^"]*\)".*/\1/p' addon.xml | head -1)"
           echo "name=$channel" >> "$GITHUB_OUTPUT"
+          echo "branch=$branch" >> "$GITHUB_OUTPUT"
           echo "version=$version" >> "$GITHUB_OUTPUT"
           echo "tag=$tag" >> "$GITHUB_OUTPUT"
-          echo "channel=$channel version=$version tag=${tag:-<none>}"
+          echo "channel=$channel branch=$branch version=$version tag=${tag:-<none>}"
 
       - name: Assert tag matches addon.xml version
         if: startsWith(github.ref, 'refs/tags/')
@@ -97,16 +110,17 @@ jobs:
         run: |
           set -euo pipefail
           channel="${{ steps.channel.outputs.name }}"
-          git fetch --quiet origin "$channel"
-          if ! git merge-base --is-ancestor "$GITHUB_REF_NAME" "origin/$channel"; then
-            echo "::error::tag $GITHUB_REF_NAME is not an ancestor of origin/$channel." \
-                 "A ${channel} tag on the other channel's history would publish the wrong" \
-                 "skin into ${channel}/ in the repository. Retag on $channel."
+          branch="${{ steps.channel.outputs.branch }}"
+          git fetch --quiet origin "$branch"
+          if ! git merge-base --is-ancestor "$GITHUB_REF_NAME" "origin/$branch"; then
+            echo "::error::tag $GITHUB_REF_NAME is not an ancestor of origin/$branch." \
+                 "A ${channel} tag on another branch's history would publish the wrong" \
+                 "skin into ${channel}/ in the repository. Retag on $branch."
             exit 1
           fi
           # Everything on piers reaches master by merge, so the check above
-          # passes a master tag on a piers commit.
-          if [[ "$channel" == master ]]; then
+          # passes a kodi23 tag on a piers commit.
+          if [[ "$branch" == master ]]; then
             git fetch --quiet origin piers
             if git merge-base --is-ancestor "$GITHUB_REF_NAME" origin/piers; then
               echo "::error::tag $GITHUB_REF_NAME is in origin/piers' history, so it" \
@@ -114,7 +128,7 @@ jobs:
               exit 1
             fi
           fi
-          echo "$GITHUB_REF_NAME is in origin/$channel — correct channel."
+          echo "$GITHUB_REF_NAME is in origin/$branch — correct channel."
 
       - name: Build zip
         run: python3 tools/build.py dist --channel "${{ steps.channel.outputs.name }}"
@@ -176,5 +190,5 @@ jobs:
           name: ${{ env.ADDON_ID }} ${{ needs.package.outputs.version }} (${{ needs.package.outputs.channel }})
           body: ${{ steps.meta.outputs.changes }}
           draft: true
-          prerelease: ${{ needs.package.outputs.channel == 'master' }}
+          prerelease: ${{ needs.package.outputs.channel == 'kodi23' }}
           files: dist/*.zip

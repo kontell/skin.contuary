@@ -8,7 +8,7 @@ not here.
 ## Build, install and release
 
 ```bash
-tools/build.py [OUTDIR] [--channel omega|piers|master]   # installable zip (default ./dist)
+tools/build.py [OUTDIR] [--channel omega|piers|kodi23]   # installable zip (default ./dist)
 tools/dev-install.sh                                     # rsync into ~/.kodi/addons + ReloadSkin()
 tools/check_xml.py                                       # what CI gates on
 ```
@@ -35,7 +35,9 @@ not appear inside one, and `xml/Includes_Lyrics.xml` has prose comments containi
 ### Channels
 
 Three branches, one per Kodi version: `omega` (Kodi 21), `piers` (Kodi 22) and
-`master` (Kodi's development branch, v23).
+`master` (Kodi's development branch, v23). Each releases under the channel name
+repository.kontell serves it from, which is the branch name except for master,
+whose channel is `kodi23`.
 
 `omega` and `piers` are unrelated histories. A change made on one reaches the
 other **only** by being re-applied by hand, and `git log omega..piers` will never
@@ -59,12 +61,13 @@ release (21 omega, 22 piers), and a development channel sits at `.90` of the
 release before it, so master is 22.90.x until v23 ships.
 
 Releases are per-channel, tagged `omega/vX.Y.Z`, `piers/vX.Y.Z` and
-`master/vX.Y.Z`. `release.yml` asserts the tag matches `addon.xml` *and* that the
-tag is an ancestor of its own channel branch, so an `omega/v*` tag cut on piers
-history fails instead of publishing the wrong skin. Since everything on piers is
-also in master's history, a `master/v*` tag must additionally *not* be in piers'.
-Master releases are drafted as pre-releases, and repository.kontell routes only
-omega and piers, so a master build is reachable only from its GitHub release.
+`kodi23/vX.Y.Z` (cut on master), with zips suffixed to match; repository.kontell
+places each by that prefix and suffix. `release.yml` asserts the tag matches
+`addon.xml` *and* that the tag is an ancestor of its channel's branch, so an
+`omega/v*` tag cut on piers history fails instead of publishing the wrong skin.
+Since everything on piers is also in master's history, a `kodi23/v*` tag must
+additionally *not* be in piers'. kodi23 releases are drafted as pre-releases,
+which repository.kontell.dev serves from `dev/kodi23`.
 Publish the draft yourself: a release published by a workflow using the default
 `GITHUB_TOKEN` raises no event, so `notify-repo.yml` would never fire.
 

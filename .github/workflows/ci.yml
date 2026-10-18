@@ -47,14 +47,16 @@ jobs:
           set -euo pipefail
           # A PR is labelled with the channel it targets, not the branch it came
           # from: a lyrics-overlay branch cut from piers builds a piers zip. On a
-          # branch push the branch itself is the channel.
+          # branch push the branch itself is the channel, except master, which
+          # builds kodi23.
           if [[ "${{ github.event_name }}" == "pull_request" ]]; then
             ref="${{ github.base_ref }}"
           else
             ref="${{ github.ref_name }}"
           fi
           case "$ref" in
-            omega|piers|master) channel="$ref" ;;
+            omega|piers) channel="$ref" ;;
+            master) channel=kodi23 ;;
             *)
               echo "::warning::branch '$ref' is not a channel; building unsuffixed"
               channel=""
