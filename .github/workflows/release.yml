@@ -1,15 +1,18 @@
 # Tag release: gate, build the channel's zip, draft a GitHub release whose body
 # is the top paragraph of changelog.txt.
 #
-# Releases are per-channel: omega/vX.Y.Z and piers/vX.Y.Z. The channel is the
-# tag's own prefix, and the guard below refuses a tag pointing into the other
-# channel's history — omega and piers have no common ancestor, so that check is
-# exact rather than heuristic.
+# Releases are per-channel: omega/vX.Y.Z, piers/vX.Y.Z and master/vX.Y.Z. The
+# channel is the tag's own prefix, and the guard below refuses a tag pointing
+# into another channel's history. omega has no common ancestor with the others;
+# master is branched from piers, so the guard also refuses a master tag that
+# piers has. Both checks are exact rather than heuristic.
+#
+# master follows Kodi's development branch, so its releases are pre-releases.
 name: Release
 
 on:
   push:
-    tags: ["omega/v*", "piers/v*"]
+    tags: ["omega/v*", "piers/v*", "master/v*"]
   workflow_dispatch:
     inputs:
       dry_run:
@@ -65,8 +68,8 @@ jobs:
             tag=""
           fi
           case "$channel" in
-            omega|piers) ;;
-            *) echo "channel '$channel' is neither omega nor piers" >&2; exit 1 ;;
+            omega|piers|master) ;;
+            *) echo "channel '$channel' is not omega, piers or master" >&2; exit 1 ;;
           esac
           version="$(sed -n 's/.*<addon[^>]* version="\([^"]*\)".*/\1/p' addon.xml | head -1)"
           echo "name=$channel" >> "$GITHUB_OUTPUT"
@@ -100,6 +103,16 @@ jobs:
                  "A ${channel} tag on the other channel's history would publish the wrong" \
                  "skin into ${channel}/ in the repository. Retag on $channel."
             exit 1
+          fi
+          # Everything on piers reaches master by merge, so the check above
+          # passes a master tag on a piers commit.
+          if [[ "$channel" == master ]]; then
+            git fetch --quiet origin piers
+            if git merge-base --is-ancestor "$GITHUB_REF_NAME" origin/piers; then
+              echo "::error::tag $GITHUB_REF_NAME is in origin/piers' history, so it" \
+                   "is a piers build. Retag on a commit of master's own."
+              exit 1
+            fi
           fi
           echo "$GITHUB_REF_NAME is in origin/$channel — correct channel."
 
@@ -163,4 +176,5 @@ jobs:
           name: ${{ env.ADDON_ID }} ${{ needs.package.outputs.version }} (${{ needs.package.outputs.channel }})
           body: ${{ steps.meta.outputs.changes }}
           draft: true
+          prerelease: ${{ needs.package.outputs.channel == 'master' }}
           files: dist/*.zip
