@@ -1,3 +1,10 @@
+v22.90.0
+- A pre-release for Kodi 23, in development. Versions now follow Kodi's add-on numbering, where 22.90 comes before 23.
+- Song lists show how far into a song you are, for add-ons that give songs a resume point.
+- Home: the music categories row starts with Restore playlist.
+- Music OSD: a play speed button.
+- These three need Kodi changes that are not in Kodi 23 yet (kontell/xbmc #24, #22 and #15). Without them the song progress and the play speed button stay hidden, and Restore playlist does nothing.
+
 v2.9.1
 - Kofin's download badge shows with its API build (0.9x), in lists and on artwork.
 
