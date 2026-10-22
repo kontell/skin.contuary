@@ -52,9 +52,8 @@ xbmc `Piers`, master from xbmc `master` (last synced at fe8292d101, as a
 three-way merge from Piers 0c8d37a220). Master carries Estuary changes from open kontell/xbmc PRs that
 need core changes stock Kodi does not have yet: the song list's resume bar (#24),
 Restore playlist in the music categories row (#22) and the music OSD's play speed
-button (#15). The first and last hide themselves without their core change;
-Restore playlist does not, since its `Playlist.Restore` builtin has no condition
-to test.
+button (#15). All three hide themselves without their core change; Restore
+playlist shows only while `Playlist.HasHistory` (#20) is true.
 
 From 22.90.0 on, versions use Kodi's binary add-on format: the major is the Kodi
 release (21 omega, 22 piers), and a development channel sits at `.90` of the
