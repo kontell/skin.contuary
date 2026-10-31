@@ -17,84 +17,58 @@
 			<left>0</left>
 			<bottom>150</bottom>
 			<width>100%</width>
-			<height>430</height>
+			<height>365</height>
 			<control type="image">
 				<left>0</left>
 				<top>0</top>
 				<width>100%</width>
-				<height>430</height>
+				<height>365</height>
 				<texture colordiffuse="CC000000">colors/white.png</texture>
 			</control>
 			<control type="fixedlist" id="50">
 				<description>the preview thumbnails, one per interval, the one in the middle selected</description>
-				<left>-300</left>
+				<centerleft>50%</centerleft>
 				<top>10</top>
-				<width>2520</width>
-				<height>340</height>
+				<width>3240</width>
+				<height>260</height>
 				<orientation>horizontal</orientation>
-				<focusposition>3</focusposition>
+				<focusposition>4</focusposition>
 				<movement>0</movement>
-				<scrolltime tween="sine">200</scrolltime>
 				<preloaditems>2</preloaditems>
-				<itemlayout width="360" height="340">
-					<control type="group">
+				<itemlayout width="360" height="260">
+					<control type="image">
 						<left>15</left>
-						<control type="image">
-							<left>0</left>
-							<top>5</top>
-							<width>330</width>
-							<height>250</height>
-							<aspectratio>scale</aspectratio>
-							<texture>$INFO[ListItem.Art(thumb)]</texture>
-							<region>$INFO[ListItem.Property(region)]</region>
-						</control>
-						<control type="label">
-							<left>20</left>
-							<top>255</top>
-							<width>290</width>
-							<height>40</height>
-							<label>$INFO[ListItem.Label]</label>
-							<font>font12</font>
-							<shadowcolor>text_shadow</shadowcolor>
-							<align>center</align>
-						</control>
+						<top>5</top>
+						<width>330</width>
+						<height>250</height>
+						<aspectratio>scale</aspectratio>
+						<texture>$INFO[ListItem.Art(thumb)]</texture>
+						<region>$INFO[ListItem.Property(region)]</region>
 					</control>
 				</itemlayout>
-				<focusedlayout width="360" height="340">
-					<control type="group">
+				<focusedlayout width="360" height="260">
+					<control type="image">
 						<left>15</left>
-						<control type="image">
-							<left>0</left>
-							<top>5</top>
-							<width>330</width>
-							<height>250</height>
-							<aspectratio>scale</aspectratio>
-							<texture>$INFO[ListItem.Art(thumb)]</texture>
-							<region>$INFO[ListItem.Property(region)]</region>
-						</control>
-						<control type="label">
-							<left>20</left>
-							<top>255</top>
-							<width>290</width>
-							<height>40</height>
-							<label>$INFO[ListItem.Label]</label>
-							<font>font12</font>
-							<shadowcolor>text_shadow</shadowcolor>
-							<align>center</align>
-						</control>
-						<control type="image">
-							<left>0</left>
-							<top>5</top>
-							<width>330</width>
-							<height>250</height>
-							<texture border="4" infill="false" colordiffuse="button_focus">colors/white.png</texture>
-						</control>
+						<top>5</top>
+						<width>330</width>
+						<height>250</height>
+						<aspectratio>scale</aspectratio>
+						<texture>$INFO[ListItem.Art(thumb)]</texture>
+						<region>$INFO[ListItem.Property(region)]</region>
 					</control>
 				</focusedlayout>
 			</control>
+			<control type="image">
+				<description>the frame over the selected thumbnail, which the strip moves under</description>
+				<centerleft>50%</centerleft>
+				<top>15</top>
+				<width>330</width>
+				<height>250</height>
+				<texture border="4" infill="false" colordiffuse="button_focus">colors/white.png</texture>
+			</control>
 			<control type="label">
 				<left>0</left>
-				<top>350</top>
+				<top>285</top>
 				<width>100%</width>
 				<height>45</height>
 				<align>center</align>
@@ -105,7 +79,7 @@
 			</control>
 			<control type="label">
 				<left>0</left>
-				<top>393</top>
+				<top>328</top>
 				<width>100%</width>
 				<height>30</height>
 				<align>center</align>
